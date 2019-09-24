@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Progress } from 'consts/interfaces'
+import { observer } from 'mobx-react'
+import React from 'react'
+import { connect, ConnectedComponent, IStores } from 'stores'
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface Injects {
+	authStore: IStores['authStore']
 }
 
-export default App;
+@connect('authStore')
+@observer
+class App extends ConnectedComponent<Injects> {
+	render() {
+		console.log('render app')
+		return (
+			<>
+				<button onClick={this.injects.authStore.c}>change</button>
+				<div>status: {Progress[this.injects.authStore.initialProgress]}</div>
+			</>
+		)
+	}
+}
+
+export default App
