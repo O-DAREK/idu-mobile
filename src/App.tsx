@@ -1,24 +1,17 @@
 import { Progress } from 'consts/interfaces'
-import { observer } from 'mobx-react'
-import React from 'react'
-import { connect, ConnectedComponent, IStores } from 'stores'
+import { observer } from 'mobx-react-lite'
+import React, { useContext } from 'react'
+import { authStore } from 'stores'
 
-interface Injects {
-	authStore: IStores['authStore']
-}
+const App = observer(() => {
+	const store = useContext(authStore)
 
-@connect('authStore')
-@observer
-class App extends ConnectedComponent<Injects> {
-	render() {
-		console.log('render app')
-		return (
-			<>
-				<button onClick={this.injects.authStore.c}>change</button>
-				<div>status: {Progress[this.injects.authStore.initialProgress]}</div>
-			</>
-		)
-	}
-}
+	return (
+		<>
+			<button onClick={store.c}>change</button>
+			<div>status: {Progress[store.initialProgress]}</div>
+		</>
+	)
+})
 
 export default App
