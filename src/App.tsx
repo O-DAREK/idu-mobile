@@ -1,4 +1,4 @@
-import { Progress } from 'consts/interfaces'
+import { Progress } from 'constants/interfaces'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { authStore } from 'stores'
