@@ -1,17 +1,14 @@
-import { Progress } from 'constants/interfaces'
-import { observer } from 'mobx-react-lite'
-import React, { useContext } from 'react'
-import { authStore } from 'stores'
+import { useLocale } from 'locales'
+import React from 'react'
 
-const App = observer(() => {
-	const store = useContext(authStore)
+const App = () => {
+	const { HELLO } = useLocale()
 
 	return (
 		<>
-			<button onClick={store.c}>change</button>
-			<div>status: {Progress[store.initialProgress]}</div>
+			<div>{HELLO}</div>
 		</>
 	)
-})
+}
 
 export default App
