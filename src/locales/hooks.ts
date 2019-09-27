@@ -1,7 +1,31 @@
-import { strings } from 'locales'
 import { autorun } from 'mobx'
 import { useContext, useEffect, useState } from 'react'
 import { configStore } from 'stores'
+import strings, { Language } from './strings'
+
+const mappedStrings = (() => {
+	type MappedStrings = { [key in keyof typeof strings]: string }
+	let cacheLang: Language | undefined = undefined
+	let cacheMap: MappedStrings | undefined = undefined
+
+	return (to: Language): MappedStrings => {
+		if (to !== cacheLang) {
+			cacheLang = to
+			cacheMap = Object.keys(strings).reduce(
+				(prev, curr) => {
+					if (strings.hasOwnProperty(curr)) {
+						const key = curr as keyof typeof strings
+						prev[key] = strings[key][useContext(configStore).language]
+					}
+					return prev
+				},
+				{} as MappedStrings
+			)
+		}
+
+		return cacheMap!
+	}
+})()
 
 export const useLocale = () => {
 	const config = useContext(configStore)
@@ -13,16 +37,5 @@ export const useLocale = () => {
 		[]
 	)
 
-	let currStrings = Object.keys(strings).reduce(
-		(prev, curr) => {
-			if (strings.hasOwnProperty(curr)) {
-				const key = curr as keyof typeof strings
-				prev[key] = strings[key][lang]
-			}
-			return prev
-		},
-		{} as { [key in keyof typeof strings]: string }
-	)
-
-	return currStrings
+	return mappedStrings(lang)
 }
