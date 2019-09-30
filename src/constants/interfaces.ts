@@ -3,3 +3,5 @@ export enum Progress {
 	fulfilled,
 	rejected
 }
+
+export type Theme = 'dark' | 'light'

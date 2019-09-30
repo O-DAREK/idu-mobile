@@ -1,8 +1,10 @@
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/styles'
 import Login from 'components/Login'
-import React from 'react'
+import { observer } from 'mobx-react-lite'
+import React, { useContext } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { configStore } from 'stores'
 import { muiTheme } from 'styles/theme'
 
 const Router = () => (
@@ -16,15 +18,19 @@ const Router = () => (
 	</BrowserRouter>
 )
 
-const App = () => (
-	<StylesProvider injectFirst>
-		<MuiThemeProvider theme={muiTheme}>
-			<>
-				<CssBaseline />
-				<Router />
-			</>
-		</MuiThemeProvider>
-	</StylesProvider>
-)
+const App = observer(() => {
+	const config = useContext(configStore)
+
+	return (
+		<StylesProvider injectFirst>
+			<MuiThemeProvider theme={muiTheme(config.theme)}>
+				<>
+					<CssBaseline />
+					<Router />
+				</>
+			</MuiThemeProvider>
+		</StylesProvider>
+	)
+})
 
 export default App
