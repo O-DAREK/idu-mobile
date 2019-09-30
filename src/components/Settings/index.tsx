@@ -1,4 +1,5 @@
-import { Container as MuiContainer, Divider, Grid } from '@material-ui/core'
+import { Container as MuiContainer, Divider, Grid, Typography } from '@material-ui/core'
+import { useLocale } from 'locales'
 import React from 'react'
 import styled from 'styled-components'
 import ChangeLanguage from './ChangeLanguage'
@@ -9,20 +10,27 @@ const Container = styled(MuiContainer)`
 	padding-bottom: 20px;
 `
 
-const Settings: React.FC = () => (
-	<Container>
-		<Grid direction="column" spacing={3} container>
-			<Grid item>
-				<ChangeLanguage />
+const Settings: React.FC = () => {
+	const { SETTINGS } = useLocale()
+
+	return (
+		<Container>
+			<Grid direction="column" spacing={3} container>
+				<Grid item>
+					<Typography variant="h4">{SETTINGS}</Typography>
+				</Grid>
+				<Grid item>
+					<ChangeLanguage />
+				</Grid>
+				<Grid item>
+					<Divider />
+				</Grid>
+				<Grid item>
+					<ChangeTheme />
+				</Grid>
 			</Grid>
-			<Grid item>
-				<Divider />
-			</Grid>
-			<Grid item>
-				<ChangeTheme />
-			</Grid>
-		</Grid>
-	</Container>
-)
+		</Container>
+	)
+}
 
 export default Settings

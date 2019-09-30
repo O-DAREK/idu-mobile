@@ -16,6 +16,10 @@ const strings = {
 		en: 'Login',
 		pl: 'Zaloguj'
 	},
+	SETTINGS: {
+		en: 'Settings',
+		pl: 'Ustawienia'
+	},
 	CHANGE_LANGUAGE: {
 		en: 'Change language',
 		pl: 'Zmień język'
