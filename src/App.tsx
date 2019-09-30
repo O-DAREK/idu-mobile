@@ -1,4 +1,5 @@
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
+import { StylesProvider } from '@material-ui/styles'
 import Login from 'components/Login'
 import React from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
@@ -16,12 +17,14 @@ const Router = () => (
 )
 
 const App = () => (
-	<MuiThemeProvider theme={muiTheme}>
-		<>
-			<CssBaseline />
-			<Router />
-		</>
-	</MuiThemeProvider>
+	<StylesProvider injectFirst>
+		<MuiThemeProvider theme={muiTheme}>
+			<>
+				<CssBaseline />
+				<Router />
+			</>
+		</MuiThemeProvider>
+	</StylesProvider>
 )
 
 export default App
