@@ -19,6 +19,18 @@ const strings = {
 	CHANGE_LANGUAGE: {
 		en: 'Change language',
 		pl: 'Zmień język'
+	},
+	CHANGE_THEME: {
+		en: 'Change theme',
+		pl: 'Zmień motyw'
+	},
+	THEME_LIGHT: {
+		en: 'Light',
+		pl: 'Jasny'
+	},
+	THEME_DARK: {
+		en: 'Dark',
+		pl: 'Ciemny'
 	}
 }
 

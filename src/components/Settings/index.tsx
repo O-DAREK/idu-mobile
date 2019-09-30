@@ -1,7 +1,8 @@
-import { Container as MuiContainer } from '@material-ui/core'
+import { Container as MuiContainer, Divider, Grid } from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
-import ChangeSettings from './ChangeLanguage'
+import ChangeLanguage from './ChangeLanguage'
+import ChangeTheme from './ChangeTheme'
 
 const Container = styled(MuiContainer)`
 	padding-top: 20px;
@@ -10,7 +11,17 @@ const Container = styled(MuiContainer)`
 
 const Settings: React.FC = () => (
 	<Container>
-		<ChangeSettings />
+		<Grid direction="column" spacing={3} container>
+			<Grid item>
+				<ChangeLanguage />
+			</Grid>
+			<Grid item>
+				<Divider />
+			</Grid>
+			<Grid item>
+				<ChangeTheme />
+			</Grid>
+		</Grid>
 	</Container>
 )
 
