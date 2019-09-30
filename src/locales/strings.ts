@@ -4,9 +4,17 @@ export enum Language {
 }
 
 const strings = {
-	HELLO: {
-		en: 'hello',
-		pl: 'hej'
+	LOGIN: {
+		en: 'Login',
+		pl: 'Login'
+	},
+	PASSWORD: {
+		en: 'Password',
+		pl: 'Hasło'
+	},
+	LOG_IN: {
+		en: 'Login',
+		pl: 'Zaloguj'
 	}
 }
 
