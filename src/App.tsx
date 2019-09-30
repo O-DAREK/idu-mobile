@@ -1,14 +1,27 @@
-import { useLocale } from 'locales'
+import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
+import Login from 'components/Login'
 import React from 'react'
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { muiTheme } from 'styles/theme'
 
-const App = () => {
-	const { HELLO } = useLocale()
+const Router = () => (
+	<BrowserRouter>
+		<Switch>
+			<Route path="/login" exact>
+				<Login />
+			</Route>
+			<Redirect to="/login" />
+		</Switch>
+	</BrowserRouter>
+)
 
-	return (
+const App = () => (
+	<MuiThemeProvider theme={muiTheme}>
 		<>
-			<div>{HELLO}</div>
+			<CssBaseline />
+			<Router />
 		</>
-	)
-}
+	</MuiThemeProvider>
+)
 
 export default App
