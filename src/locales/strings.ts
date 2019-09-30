@@ -39,6 +39,18 @@ const strings = {
 	LOG_OUT: {
 		en: 'Logout',
 		pl: 'Wyloguj'
+	},
+	NEWS: {
+		en: 'News',
+		pl: 'Aktualności'
+	},
+	MESSAGES: {
+		en: 'Messages',
+		pl: 'Wiadomości'
+	},
+	CALENDAR: {
+		en: 'Calendar',
+		pl: 'Kalendarz'
 	}
 }
 
