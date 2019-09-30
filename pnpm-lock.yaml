@@ -1,5 +1,6 @@
 dependencies:
   '@material-ui/core': 4.4.3_react-dom@16.9.0+react@16.9.0
+  '@material-ui/styles': 4.4.3_react-dom@16.9.0+react@16.9.0
   mobx: 5.13.0
   mobx-react-lite: 1.4.1_mobx@5.13.0+react@16.9.0
   react: 16.9.0
@@ -1769,7 +1770,7 @@ packages:
       integrity: sha512-Cb05vLXsaCzssXD/iZKa0/qC6YOwbFWnYdnOEdkXZ3Fn2Ytz7rsnMgFejUSQV1luVhUBlEIm8DVz40N25WwW7w==
   /@material-ui/types/4.1.1:
     dependencies:
-      '@types/react': 16.9.2
+      '@types/react': 16.9.4
     dev: false
     resolution:
       integrity: sha512-AN+GZNXytX9yxGi0JOfxHrRTbhFybjUJ05rnsBVjcB+16e466Z0Xe5IxawuOayVZgTBNDxmPKo5j4V6OnMtaSQ==
@@ -1779,7 +1780,7 @@ packages:
       prop-types: 15.7.2
       react: 16.9.0
       react-dom: 16.9.0_react@16.9.0
-      react-is: 16.9.0
+      react-is: 16.10.1
     dev: false
     engines:
       node: '>=8.0.0'
@@ -1995,6 +1996,10 @@ packages:
   /@types/prop-types/15.7.2:
     resolution:
       integrity: sha512-f8JzJNWVhKtc9dg/dyDNfliTKNOJSLa7Oht/ElZdF/UbMUmAH3rLmAk3ODNjw0mZajDEgatA03tRjB4+Dp/tzA==
+  /@types/prop-types/15.7.3:
+    dev: false
+    resolution:
+      integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
   /@types/q/1.5.2:
     dev: true
     resolution:
@@ -2039,6 +2044,13 @@ packages:
       csstype: 2.6.6
     resolution:
       integrity: sha512-jYP2LWwlh+FTqGd9v7ynUKZzjj98T8x7Yclz479QdRhHfuW9yQ+0jjnD31eXSXutmBpppj5PYNLYLRfnZJvcfg==
+  /@types/react/16.9.4:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.6
+    dev: false
+    resolution:
+      integrity: sha512-ItGNmJvQ0IvWt8rbk5PLdpdQhvBVxAaXI9hDlx7UMd8Ie1iMIuwMNiKeTfmVN517CdplpyXvA22X4zm4jGGZnw==
   /@types/stack-utils/1.0.1:
     dev: true
     resolution:
@@ -6421,6 +6433,9 @@ packages:
       node: '>=6'
     peerDependencies:
       jest-resolve: '*'
+    peerDependenciesMeta:
+      jest-resolve:
+        optional: true
     resolution:
       integrity: sha512-pgFw2tm54fzgYvc/OHrnysABEObZCUNFnhjoRjaVOCN8NYc032/gVjPaHD4Aq6ApkSieWtfKAFQtmDKAmhupnQ==
   /jest-regex-util/24.9.0:
@@ -9163,6 +9178,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-DHRuRk3K4Lg9obI6J4Y+nKvtwjasYRU9CFL3ud42x9YJG1HbQjSNublapC/WBJOA726gNUbqbj0U2df9+uzspQ==
+  /react-is/16.10.1:
+    dev: false
+    resolution:
+      integrity: sha512-BXUMf9sIOPXXZWqr7+c5SeOKJykyVr2u0UDzEf4LNGc6taGkQe1A9DFD07umCIXz45RLr9oAAwZbAJ0Pkknfaw==
   /react-is/16.9.0:
     resolution:
       integrity: sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
@@ -10681,6 +10700,9 @@ packages:
       node: '>=6'
     peerDependencies:
       typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha512-1J/vefLC+BWSo+qe8OnJQfWTYRS6ingxjwqmHMqaMxXMj7kFtKLgAaYW3JeX3mktjgUL+etlU8/B4VUAUI9QGw==
   /tslib/1.10.0:
@@ -11485,6 +11507,7 @@ packages:
       integrity: sha512-ssa5JuRjMeZEUjg7bEL99AwpitxU/zWGAGpdj0di41pOEmJti8NR6kyUIJBkR78DTYNPZOU08luUo0GTHuB+ow==
 specifiers:
   '@material-ui/core': ^4.4.3
+  '@material-ui/styles': ^4.4.3
   '@types/jest': ^24.0.18
   '@types/node': ^12.7.5
   '@types/react': ^16.9.2
