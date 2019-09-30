@@ -9,8 +9,8 @@ export default class {
 		: 'light'
 
 	constructor() {
-		autorun(() => this.save())
 		this.load()
+		autorun(() => this.save())
 	}
 
 	@action
