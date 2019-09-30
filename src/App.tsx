@@ -1,6 +1,7 @@
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/styles'
 import Login from 'components/Login'
+import Settings from 'components/Settings'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
@@ -13,7 +14,9 @@ const Router = () => (
 			<Route path="/login" exact>
 				<Login />
 			</Route>
-			<Redirect to="/login" />
+			<Route path="/settings" exact>
+				<Settings />
+			</Route>
 		</Switch>
 	</BrowserRouter>
 )

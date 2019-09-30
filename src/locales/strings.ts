@@ -15,6 +15,10 @@ const strings = {
 	LOG_IN: {
 		en: 'Login',
 		pl: 'Zaloguj'
+	},
+	CHANGE_LANGUAGE: {
+		en: 'Change language',
+		pl: 'Zmień język'
 	}
 }
 
