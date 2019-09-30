@@ -35,6 +35,10 @@ const strings = {
 	THEME_DARK: {
 		en: 'Dark',
 		pl: 'Ciemny'
+	},
+	LOG_OUT: {
+		en: 'Logout',
+		pl: 'Wyloguj'
 	}
 }
 

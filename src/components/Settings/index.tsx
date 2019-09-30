@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import ChangeLanguage from './ChangeLanguage'
 import ChangeTheme from './ChangeTheme'
+import Logout from './Logout'
 
 const Container = styled(MuiContainer)`
 	padding-top: 20px;
@@ -27,6 +28,12 @@ const Settings: React.FC = () => {
 				</Grid>
 				<Grid item>
 					<ChangeTheme />
+				</Grid>
+				<Grid item>
+					<Divider />
+				</Grid>
+				<Grid item>
+					<Logout />
 				</Grid>
 			</Grid>
 		</Container>

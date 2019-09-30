@@ -1,5 +1,6 @@
 dependencies:
   '@material-ui/core': 4.4.3_react-dom@16.10.1+react@16.10.1
+  '@material-ui/icons': 4.4.3_e8bb2336988f138116083ff736018063
   '@material-ui/styles': 4.4.3_react-dom@16.10.1+react@16.10.1
   mobx: 5.13.1
   mobx-react-lite: 1.4.1_mobx@5.13.1+react@16.10.1
@@ -1724,6 +1725,21 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-Lz8sMFeCrtq5/pbhqClWFHpveL0huixjca0tw7uvh9xKKB7VyyYOyTu7RamSZLxb34UCSMPlobR+KK25Nqzkqw==
+  /@material-ui/icons/4.4.3_e8bb2336988f138116083ff736018063:
+    dependencies:
+      '@babel/runtime': 7.6.2
+      '@material-ui/core': 4.4.3_react-dom@16.10.1+react@16.10.1
+      react: 16.10.1
+      react-dom: 16.10.1_react@16.10.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    peerDependencies:
+      '@material-ui/core': ^4.0.0
+      react: ^16.8.0
+      react-dom: ^16.8.0
+    resolution:
+      integrity: sha512-HVVvUyc/78kmaBd93LkfWyGkXMM+zOMKzUfulWXxaV/fFAZ3N0pD0oHjWUd94zrOoF3tZP9JC7EPlIpIcZSNow==
   /@material-ui/styles/4.4.3_react-dom@16.10.1+react@16.10.1:
     dependencies:
       '@babel/runtime': 7.6.2
@@ -6422,6 +6438,9 @@ packages:
       node: '>=6'
     peerDependencies:
       jest-resolve: '*'
+    peerDependenciesMeta:
+      jest-resolve:
+        optional: true
     resolution:
       integrity: sha512-pgFw2tm54fzgYvc/OHrnysABEObZCUNFnhjoRjaVOCN8NYc032/gVjPaHD4Aq6ApkSieWtfKAFQtmDKAmhupnQ==
   /jest-regex-util/24.9.0:
@@ -10682,6 +10701,9 @@ packages:
       node: '>=6'
     peerDependencies:
       typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha512-1J/vefLC+BWSo+qe8OnJQfWTYRS6ingxjwqmHMqaMxXMj7kFtKLgAaYW3JeX3mktjgUL+etlU8/B4VUAUI9QGw==
   /tslib/1.10.0:
@@ -11486,6 +11508,7 @@ packages:
       integrity: sha512-ssa5JuRjMeZEUjg7bEL99AwpitxU/zWGAGpdj0di41pOEmJti8NR6kyUIJBkR78DTYNPZOU08luUo0GTHuB+ow==
 specifiers:
   '@material-ui/core': ^4.4.3
+  '@material-ui/icons': ^4.4.3
   '@material-ui/styles': ^4.4.3
   '@types/jest': ^24.0.18
   '@types/node': ^12.7.5
