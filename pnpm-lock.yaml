@@ -1,6 +1,7 @@
 dependencies:
   '@material-ui/core': 4.4.3_react-dom@16.10.1+react@16.10.1
   '@material-ui/icons': 4.4.3_e8bb2336988f138116083ff736018063
+  '@material-ui/lab': 4.0.0-alpha.27_e8bb2336988f138116083ff736018063
   '@material-ui/styles': 4.4.3_react-dom@16.10.1+react@16.10.1
   mobx: 5.13.1
   mobx-react-lite: 1.4.1_mobx@5.13.1+react@16.10.1
@@ -1749,6 +1750,24 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-HVVvUyc/78kmaBd93LkfWyGkXMM+zOMKzUfulWXxaV/fFAZ3N0pD0oHjWUd94zrOoF3tZP9JC7EPlIpIcZSNow==
+  /@material-ui/lab/4.0.0-alpha.27_e8bb2336988f138116083ff736018063:
+    dependencies:
+      '@babel/runtime': 7.6.2
+      '@material-ui/core': 4.4.3_react-dom@16.10.1+react@16.10.1
+      '@material-ui/utils': 4.4.0_react-dom@16.10.1+react@16.10.1
+      clsx: 1.0.4
+      prop-types: 15.7.2
+      react: 16.10.1
+      react-dom: 16.10.1_react@16.10.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    peerDependencies:
+      '@material-ui/core': ^4.4.0
+      react: ^16.8.0
+      react-dom: ^16.8.0
+    resolution:
+      integrity: sha512-Nl2F4bCws10BGWFJalAJZ9/qEGpxhUWvIGBye1KIeqfesRqc6A/L799sMbPSgXviasVD8s1RrstOKcyKI0A0Ew==
   /@material-ui/styles/4.4.3_react-dom@16.10.1+react@16.10.1:
     dependencies:
       '@babel/runtime': 7.6.2
@@ -11640,6 +11659,7 @@ packages:
 specifiers:
   '@material-ui/core': ^4.4.3
   '@material-ui/icons': ^4.4.3
+  '@material-ui/lab': ^4.0.0-alpha.27
   '@material-ui/styles': ^4.4.3
   '@types/jest': ^24.0.18
   '@types/node': ^12.7.5
