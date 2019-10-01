@@ -15,7 +15,9 @@
 		"react": "^16.9.0",
 		"react-dom": "^16.9.0",
 		"react-router-dom": "^5.0.1",
-		"styled-components": "^4.4.0"
+		"react-swipeable-views": "^0.13.3",
+		"styled-components": "^4.4.0",
+		"visible-height-css": "^1.0.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",
@@ -45,6 +47,7 @@
 		"@types/react": "^16.9.2",
 		"@types/react-dom": "^16.9.0",
 		"@types/react-router-dom": "^4.3.5",
+		"@types/react-swipeable-views": "^0.13.0",
 		"@types/styled-components": "^4.1.19",
 		"react-scripts": "^3.1.2",
 		"source-map-explorer": "^2.1.0",

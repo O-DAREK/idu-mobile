@@ -8,6 +8,7 @@ import React, { useContext, useEffect } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { configStore } from 'stores'
 import { muiTheme } from 'styles/theme'
+import { setVisibleHeight } from 'visible-height-css'
 
 const Router = () => (
 	<BrowserRouter>
@@ -30,13 +31,7 @@ const App = observer(() => {
 	const config = useContext(configStore)
 
 	useEffect(() => {
-		const setVisibleHeight = () =>
-			document.documentElement.style.setProperty(
-				'--visible-height',
-				`${window.innerHeight / 100}px`
-			)
 		setVisibleHeight()
-		window.addEventListener('resize', setVisibleHeight)
 	}, [])
 
 	return (
