@@ -3,21 +3,28 @@ import { Skeleton } from '@material-ui/lab'
 import React, { useEffect, useState } from 'react'
 
 const SkeletonMessagePreview = () => (
-	<Grid direction="column" container>
-		<Grid spacing={2} container>
-			<Grid xs={2} item>
-				<Skeleton height={6} />
-			</Grid>
-			<Grid xs={6} item>
-				<Skeleton height={6} />
-			</Grid>
+	<Grid spacing={2} alignItems="center" container>
+		<Grid xs="auto" item>
+			<Skeleton variant="circle" height={40} width={40} />
 		</Grid>
-		<Grid spacing={2} alignItems="center" container>
-			<Grid xs={1} item>
-				<Skeleton height={10} />
-			</Grid>
-			<Grid xs={8} item>
-				<Skeleton height={6} />
+		<Grid xs={true} item>
+			<Grid direction="column" container>
+				<Grid spacing={2} container>
+					<Grid xs={2} item>
+						<Skeleton height={6} />
+					</Grid>
+					<Grid xs={6} item>
+						<Skeleton height={6} />
+					</Grid>
+				</Grid>
+				<Grid spacing={2} alignItems="center" container>
+					<Grid xs={1} item>
+						<Skeleton height={10} />
+					</Grid>
+					<Grid xs={8} item>
+						<Skeleton height={6} />
+					</Grid>
+				</Grid>
 			</Grid>
 		</Grid>
 	</Grid>
