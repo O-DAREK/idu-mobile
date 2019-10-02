@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import styled from 'styled-components'
 import MessageList from './MessageList'
+import NewsList from './NewsList'
 
 const Content = styled(Container)`
 	margin-top: 20px;
@@ -12,31 +13,14 @@ const Content = styled(Container)`
 `
 
 const Login: React.FC = () => {
-	const [current, setCurrent] = useState(0)
+	const [current, setCurrent] = useState(1)
 	const { NEWS, MESSAGES, CALENDAR } = useLocale()
 
 	return (
 		<>
 			<SwipeableViews index={current} onChangeIndex={i => setCurrent(i)}>
 				<Content>
-					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis minus necessitatibus
-					mollitia tenetur placeat commodi, ratione odio harum rerum dolor. Vel eius illum
-					laboriosam obcaecati ducimus non voluptate nobis tenetur in veritatis, ut quae voluptates
-					reprehenderit molestiae atque natus molestias dolore. Id recusandae corporis culpa quae
-					necessitatibus debitis. Beatae facere dolorum quam optio fugiat praesentium, quidem
-					deleniti deserunt dignissimos voluptatum? Ducimus minus aliquid, est non possimus
-					reprehenderit. Dolor temporibus quod voluptatem iusto eveniet, rerum nostrum tempore eum
-					dolorem aspernatur accusantium a maiores error modi nemo repellendus non rem labore!
-					Dolorum repudiandae mollitia excepturi, doloremque, fuga dolore corporis architecto
-					voluptas asperiores hic recusandae optio earum dignissimos tempora nesciunt. Maiores
-					reiciendis laborum voluptatum pariatur, nisi, eum provident quod labore iste dolore omnis
-					deleniti! Nostrum itaque iusto doloribus vel nesciunt beatae veritatis nihil perspiciatis.
-					Enim, harum. Ipsa nisi dolorum id, sunt ea optio totam adipisci quae a, ipsum atque
-					quisquam inventore officia minus soluta, commodi harum vel eligendi. Unde impedit, qui
-					deleniti possimus pariatur at itaque commodi obcaecati! Commodi, nihil. Et nesciunt magnam
-					provident ad commodi tempora vel rerum nihil, velit natus? Incidunt, reprehenderit
-					adipisci repellat nisi numquam accusamus repudiandae totam nostrum iure perspiciatis eius
-					voluptates blanditiis, tempora deserunt vero omnis debitis fuga.
+					<NewsList />
 				</Content>
 				<Content>
 					<MessageList />
