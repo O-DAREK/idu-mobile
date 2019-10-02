@@ -27,7 +27,7 @@ const MessageList: React.FC = () => {
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		setTimeout(() => setLoading(false), 5000)
+		setTimeout(() => setLoading(false), 50000)
 	}, [])
 
 	return loading ? (
