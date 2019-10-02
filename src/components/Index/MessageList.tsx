@@ -1,12 +1,26 @@
+import { Grid } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import React, { useEffect, useState } from 'react'
 
 const SkeletonMessagePreview = () => (
-	<>
-		<Skeleton variant="circle" width={40} height={40} />
-		<Skeleton width="60%" height={6} /> • <Skeleton width="30%" height={6} /> <br />
-		<Skeleton width="80%" height={6} /> • <Skeleton width="10%" height={6} />
-	</>
+	<Grid direction="column" container>
+		<Grid spacing={2} container>
+			<Grid xs={2} item>
+				<Skeleton height={6} />
+			</Grid>
+			<Grid xs={6} item>
+				<Skeleton height={6} />
+			</Grid>
+		</Grid>
+		<Grid spacing={2} alignItems="center" container>
+			<Grid xs={1} item>
+				<Skeleton height={10} />
+			</Grid>
+			<Grid xs={8} item>
+				<Skeleton height={6} />
+			</Grid>
+		</Grid>
+	</Grid>
 )
 
 const MessageList: React.FC = () => {
