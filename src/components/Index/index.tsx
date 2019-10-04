@@ -13,7 +13,7 @@ const Content = styled(Container)`
 `
 
 const Login: React.FC = () => {
-	const [current, setCurrent] = useState(1)
+	const [current, setCurrent] = useState(0)
 	const { NEWS, MESSAGES, CALENDAR } = useLocale()
 
 	return (
