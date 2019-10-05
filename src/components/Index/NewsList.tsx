@@ -2,6 +2,7 @@ import { Divider, Grid, List, ListItem, ListItemText } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import { configStore } from 'stores'
 
 const SkeletonNewsPreview = () => (
@@ -24,17 +25,20 @@ const SkeletonNewsPreview = () => (
 
 const __mockNews = [
 	{
+		id: 1,
 		name: 'Zebranie rodzicow',
 		timestamp: +new Date(),
 		content:
 			'w czwartek odbedzie sie spotkanie rodzicielskie, prosze byc bo to mega wazne i nie obecnosc skutkuje usunieciem ze szkoly'
 	},
 	{
+		id: 2,
 		name: 'Piknik',
 		timestamp: +new Date() - 100000000,
 		content: 'bedzie piknik kiedys'
 	},
 	{
+		id: 3,
 		name: 'Wolontariat',
 		timestamp: +new Date() - 500000000,
 		content: 'pieniadze prosze dawac do sekretariatu teraz szybko potrzeba jest dawac'
@@ -43,6 +47,7 @@ const __mockNews = [
 
 const NewsList: React.FC = observer(() => {
 	const [loading, setLoading] = useState(true)
+	const history = useHistory()
 	const config = useContext(configStore)
 
 	useEffect(() => {
@@ -57,9 +62,9 @@ const NewsList: React.FC = observer(() => {
 							<SkeletonNewsPreview />
 						</ListItem>
 				  ))
-				: __mockNews.map(({ name, timestamp, content }, i) => (
-						<React.Fragment key={i}>
-							<ListItem button>
+				: __mockNews.map(({ name, timestamp, content, id }) => (
+						<React.Fragment key={id}>
+							<ListItem onClick={() => history.push(`/news/${id}`)} button>
 								<ListItemText
 									primary={`${name} • ${new Date(timestamp).toLocaleDateString(config.language, {
 										year: 'numeric',
