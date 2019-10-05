@@ -49,9 +49,19 @@ const __mockMessages = [
 			{
 				imSender: true,
 				value: 'Czy mozna prosze przelozyc sprawdzian?',
-				timestamp: +new Date() - 100000000
+				timestamp: +new Date() - 100000000,
+				read: true
 			},
-			{ imSender: false, value: 'Nie', timestamp: +new Date() }
+			{ imSender: false, value: 'Nie', timestamp: +new Date(), read: true }
+		]
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=4',
+		name: 'Piotroniusz Mick',
+		title: 'Oddawaj zeszyt',
+		texts: [
+			{ imSender: false, value: 'To co tytul', timestamp: +new Date() - 100000000, read: true },
+			{ imSender: true, value: 'Nie', timestamp: +new Date(), read: true }
 		]
 	},
 	{
@@ -62,17 +72,9 @@ const __mockMessages = [
 			{
 				imSender: false,
 				value: 'Czemu twoja rozprawka jest czcionka 13 a nie 12?',
-				timestamp: +new Date() - 100000000
+				timestamp: +new Date() - 100000000,
+				read: false
 			}
-		]
-	},
-	{
-		avatar: 'https://i.pravatar.cc/150?img=4',
-		name: 'Piotroniusz Mick',
-		title: 'Oddawaj zeszyt',
-		texts: [
-			{ imSender: false, value: 'To co tytul', timestamp: +new Date() - 100000000 },
-			{ imSender: true, value: 'Nie', timestamp: +new Date() }
 		]
 	}
 ]
@@ -114,6 +116,9 @@ const MessageList = observer(() => {
 										day: '2-digit'
 									}
 								)}`}
+								secondaryTypographyProps={
+									texts[texts.length - 1].read ? {} : { color: 'textPrimary' }
+								}
 							/>
 						</ListItem>
 						<Divider />
