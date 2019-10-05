@@ -1,6 +1,16 @@
-import { Grid } from '@material-ui/core'
+import {
+	Avatar,
+	Divider,
+	Grid,
+	List,
+	ListItem,
+	ListItemAvatar,
+	ListItemText
+} from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
-import React, { useEffect, useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import React, { useContext, useEffect, useState } from 'react'
+import { configStore } from 'stores'
 
 const SkeletonMessagePreview = () => (
 	<Grid spacing={2} alignItems="center" container>
@@ -30,22 +40,88 @@ const SkeletonMessagePreview = () => (
 	</Grid>
 )
 
-const MessageList: React.FC = () => {
+const __mockMessages = [
+	{
+		avatar: 'https://i.pravatar.cc/150?img=66',
+		name: 'Jan Hard',
+		title: 'Przelozenie sprawdzianu',
+		texts: [
+			{
+				imSender: true,
+				value: 'Czy mozna prosze przelozyc sprawdzian?',
+				timestamp: +new Date() - 100000000
+			},
+			{ imSender: false, value: 'Nie', timestamp: +new Date() }
+		]
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=6',
+		name: 'Ania Kotra',
+		title: 'Rozprawka',
+		texts: [
+			{
+				imSender: false,
+				value: 'Czemu twoja rozprawka jest czcionka 13 a nie 12?',
+				timestamp: +new Date() - 100000000
+			}
+		]
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=4',
+		name: 'Piotroniusz Mick',
+		title: 'Oddawaj zeszyt',
+		texts: [
+			{ imSender: false, value: 'To co tytul', timestamp: +new Date() - 100000000 },
+			{ imSender: true, value: 'Nie', timestamp: +new Date() }
+		]
+	}
+]
+
+const MessageList = observer(() => {
 	const [loading, setLoading] = useState(true)
+	const config = useContext(configStore)
 
 	useEffect(() => {
-		setTimeout(() => setLoading(false), 50000)
+		setTimeout(() => setLoading(false), 1000)
 	}, [])
 
-	return loading ? (
-		<>
-			{new Array(5).fill(null).map((_, i) => (
-				<SkeletonMessagePreview key={i} />
-			))}
-		</>
-	) : (
-		<>loaded</>
+	return (
+		<List>
+			{loading ? (
+				<>
+					{new Array(5).fill(null).map((_, i) => (
+						<ListItem key={i}>
+							<SkeletonMessagePreview />
+						</ListItem>
+					))}
+				</>
+			) : (
+				__mockMessages.map(({ avatar, name, title, texts }, i) => (
+					<React.Fragment key={i}>
+						<ListItem button>
+							<ListItemAvatar>
+								<Avatar alt="avatar" src={avatar} />
+							</ListItemAvatar>
+							<ListItemText
+								primary={`${name} • ${title}`}
+								secondary={`${texts[texts.length - 1].imSender ? 'Ty' : name}: ${
+									texts[texts.length - 1].value
+								} • ${new Date(texts[texts.length - 1].timestamp).toLocaleDateString(
+									config.language,
+									{
+										year: 'numeric',
+										month: 'short',
+										day: '2-digit'
+									}
+								)}`}
+							/>
+						</ListItem>
+						<Divider />
+					</React.Fragment>
+				))
+			)}
+		</List>
 	)
-}
+})
 
 export default MessageList
