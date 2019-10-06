@@ -4,9 +4,10 @@ import { action, autorun, observable } from 'mobx'
 
 export default class {
 	@observable language: Language = /en/i.test(window.navigator.language) ? Language.en : Language.pl
-	@observable theme: Theme = window.matchMedia(`(prefers-color-scheme: dark)`).matches
-		? 'dark'
-		: 'light'
+	@observable theme: Theme =
+		window.matchMedia && window.matchMedia(`(prefers-color-scheme: dark)`).matches
+			? 'dark'
+			: 'light'
 
 	constructor() {
 		this.load()
