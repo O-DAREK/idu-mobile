@@ -20,12 +20,13 @@ export default class {
 	@action
 	changeTheme = (to: Theme) => (this.theme = to)
 
-	save = () =>
+	private save = () =>
 		window.localStorage.setItem(
 			'ConfigStore',
 			JSON.stringify({ language: this.language, theme: this.theme })
 		)
 
 	@action
-	load = () => Object.assign(this, JSON.parse(window.localStorage.getItem('ConfigStore') || '{}'))
+	private load = () =>
+		Object.assign(this, JSON.parse(window.localStorage.getItem('ConfigStore') || '{}'))
 }
