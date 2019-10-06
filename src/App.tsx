@@ -2,6 +2,7 @@ import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/styles'
 import Index from 'components/Index'
 import Login from 'components/Login'
+import News from 'components/News'
 import Settings from 'components/Settings'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
@@ -21,6 +22,9 @@ const Router = () => (
 			</Route>
 			<Route path="/settings" exact>
 				<Settings />
+			</Route>
+			<Route path="/news/:id">
+				<News />
 			</Route>
 			<Redirect to="/" />
 		</Switch>

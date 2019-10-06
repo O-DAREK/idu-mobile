@@ -23,7 +23,7 @@ const SkeletonNewsPreview = () => (
 	</Grid>
 )
 
-const __mockNews = [
+export const __mockNews = [
 	{
 		id: 1,
 		name: 'Zebranie rodzicow',
