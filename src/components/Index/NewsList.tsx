@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { configStore } from 'stores'
+import { unixToShortDate } from 'utils'
 
 const SkeletonNewsPreview = () => (
 	<Grid direction="column" container>
@@ -66,11 +67,7 @@ const NewsList: React.FC = observer(() => {
 						<React.Fragment key={id}>
 							<ListItem onClick={() => history.push(`/news/${id}`)} button>
 								<ListItemText
-									primary={`${name} • ${new Date(timestamp).toLocaleDateString(config.language, {
-										year: 'numeric',
-										month: 'short',
-										day: '2-digit'
-									})}`}
+									primary={`${name} • ${unixToShortDate(timestamp, config.language)}`}
 									secondary={content}
 									secondaryTypographyProps={{ noWrap: true }}
 								/>

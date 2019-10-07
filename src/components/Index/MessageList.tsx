@@ -11,6 +11,7 @@ import { Skeleton } from '@material-ui/lab'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
 import { configStore } from 'stores'
+import { unixToShortDate } from 'utils'
 
 const SkeletonMessagePreview = () => (
 	<Grid spacing={2} alignItems="center" container>
@@ -108,14 +109,7 @@ const MessageList = observer(() => {
 								primary={`${name} • ${title}`}
 								secondary={`${texts[texts.length - 1].imSender ? 'Ty' : name}: ${
 									texts[texts.length - 1].value
-								} • ${new Date(texts[texts.length - 1].timestamp).toLocaleDateString(
-									config.language,
-									{
-										year: 'numeric',
-										month: 'short',
-										day: '2-digit'
-									}
-								)}`}
+								} • ${unixToShortDate(texts[texts.length - 1].timestamp, config.language)}`}
 								secondaryTypographyProps={
 									texts[texts.length - 1].read ? {} : { color: 'textPrimary' }
 								}
