@@ -15,7 +15,7 @@ const Settings: React.FC = () => {
 				<Grid item>
 					<Typography variant="h4">{SETTINGS}</Typography>
 				</Grid>
-				<Grid item>
+				<Grid style={{ width: '100%' }} item>
 					<ChangeLanguage />
 				</Grid>
 				<Grid item>
