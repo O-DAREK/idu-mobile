@@ -1,20 +1,11 @@
-import { Container as MuiContainer, Paper, Typography } from '@material-ui/core'
-import { __mockNews } from 'components/Index/NewsList'
+import { Typography } from '@material-ui/core'
+import { Container, PaddedPaper } from 'components'
+import { __mockNews } from 'components/Root/NewsList'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { useParams } from 'react-router'
 import { configStore } from 'stores'
-import styled from 'styled-components'
 import { unixToShortDate } from 'utils'
-
-const Container = styled(MuiContainer)`
-	margin-top: 20px;
-	margin-bottom: 20px;
-`
-
-const PaddedPaper = styled(Paper)`
-	padding: 20px;
-`
 
 interface Params {
 	id: string

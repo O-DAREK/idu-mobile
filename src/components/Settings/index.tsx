@@ -1,15 +1,10 @@
-import { Container as MuiContainer, Divider, Grid, Typography } from '@material-ui/core'
+import { Divider, Grid, Typography } from '@material-ui/core'
+import { Container } from 'components'
 import { useLocale } from 'locales'
 import React from 'react'
-import styled from 'styled-components'
 import ChangeLanguage from './ChangeLanguage'
 import ChangeTheme from './ChangeTheme'
 import Logout from './Logout'
-
-const Container = styled(MuiContainer)`
-	padding-top: 20px;
-	padding-bottom: 20px;
-`
 
 const Settings: React.FC = () => {
 	const { SETTINGS } = useLocale()
