@@ -1,7 +1,7 @@
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/styles'
-import Index from 'components/Index'
 import Login from 'components/Login'
+import Messages from 'components/Messages'
 import News from 'components/News'
 import Root from 'components/Root'
 import Settings from 'components/Settings'
@@ -26,6 +26,9 @@ const Router = () => (
 			</Route>
 			<Route path="/news/:id">
 				<News />
+			</Route>
+			<Route path="/messages/:id">
+				<Messages />
 			</Route>
 			<Redirect to="/" />
 		</Switch>
