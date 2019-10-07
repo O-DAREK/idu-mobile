@@ -3,6 +3,7 @@ import { StylesProvider } from '@material-ui/styles'
 import Index from 'components/Index'
 import Login from 'components/Login'
 import News from 'components/News'
+import Root from 'components/Root'
 import Settings from 'components/Settings'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
@@ -15,7 +16,7 @@ const Router = () => (
 	<BrowserRouter>
 		<Switch>
 			<Route path="/" exact>
-				<Index />
+				<Root />
 			</Route>
 			<Route path="/login" exact>
 				<Login />

@@ -10,6 +10,7 @@ import {
 import { Skeleton } from '@material-ui/lab'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import { configStore } from 'stores'
 import { unixToShortDate } from 'utils'
 
@@ -41,8 +42,9 @@ const SkeletonMessagePreview = () => (
 	</Grid>
 )
 
-const __mockMessages = [
+export const __mockMessages = [
 	{
+		id: 0,
 		avatar: 'https://i.pravatar.cc/150?img=66',
 		name: 'Jan Hard',
 		title: 'Przelozenie sprawdzianu',
@@ -57,15 +59,22 @@ const __mockMessages = [
 		]
 	},
 	{
+		id: 1,
 		avatar: 'https://i.pravatar.cc/150?img=4',
 		name: 'Piotroniusz Mick',
 		title: 'Oddawaj zeszyt',
 		texts: [
-			{ imSender: false, value: 'To co tytul', timestamp: +new Date() - 100000000, read: true },
+			{
+				imSender: false,
+				value: 'To co tytul',
+				timestamp: +new Date() - 100000000,
+				read: true
+			},
 			{ imSender: true, value: 'Nie', timestamp: +new Date(), read: true }
 		]
 	},
 	{
+		id: 2,
 		avatar: 'https://i.pravatar.cc/150?img=6',
 		name: 'Ania Kotra',
 		title: 'Rozprawka',
@@ -83,6 +92,7 @@ const __mockMessages = [
 const MessageList = observer(() => {
 	const [loading, setLoading] = useState(true)
 	const config = useContext(configStore)
+	const history = useHistory()
 
 	useEffect(() => {
 		setTimeout(() => setLoading(false), 1000)
@@ -99,9 +109,9 @@ const MessageList = observer(() => {
 					))}
 				</>
 			) : (
-				__mockMessages.map(({ avatar, name, title, texts }, i) => (
+				__mockMessages.map(({ id, avatar, name, title, texts }, i) => (
 					<React.Fragment key={i}>
-						<ListItem button>
+						<ListItem onClick={() => history.push(`/messages/${id}`)} button>
 							<ListItemAvatar>
 								<Avatar alt="avatar" src={avatar} />
 							</ListItemAvatar>

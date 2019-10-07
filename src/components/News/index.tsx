@@ -5,6 +5,7 @@ import React, { useContext } from 'react'
 import { useParams } from 'react-router'
 import { configStore } from 'stores'
 import styled from 'styled-components'
+import { unixToShortDate } from 'utils'
 
 const Container = styled(MuiContainer)`
 	margin-top: 20px;
@@ -37,11 +38,7 @@ const News = observer(() => {
 							{foundNews.content}
 						</Typography>
 						<Typography variant="overline">
-							{new Date(foundNews.timestamp).toLocaleDateString(config.language, {
-								year: 'numeric',
-								month: 'short',
-								day: '2-digit'
-							})}
+							{unixToShortDate(foundNews.timestamp, config.language)}
 						</Typography>
 					</>
 				)}
