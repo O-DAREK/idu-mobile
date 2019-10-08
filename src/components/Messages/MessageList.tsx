@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { internal } from 'constants/urls'
-import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { configStore } from 'stores'
@@ -90,7 +89,7 @@ export const __mockMessages = [
 	}
 ]
 
-const MessageList = observer(() => {
+const MessageList = () => {
 	const [loading, setLoading] = useState(true)
 	const config = useContext(configStore)
 	const history = useHistory()
@@ -132,6 +131,6 @@ const MessageList = observer(() => {
 			)}
 		</List>
 	)
-})
+}
 
 export default MessageList

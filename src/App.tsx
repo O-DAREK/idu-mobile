@@ -3,7 +3,6 @@ import { StylesProvider } from '@material-ui/styles'
 import Login from 'components/Login'
 import Messages from 'components/Messages'
 import News from 'components/News'
-import Root from 'components/Root'
 import Settings from 'components/Settings'
 import { internal } from 'constants/urls'
 import { observer } from 'mobx-react-lite'
@@ -16,22 +15,19 @@ import { setVisibleHeight } from 'visible-height-css'
 const Router = () => (
 	<BrowserRouter>
 		<Switch>
-			<Route path={internal.root()} exact>
-				<Root />
-			</Route>
 			<Route path={internal.login()} exact>
 				<Login />
 			</Route>
 			<Route path={internal.settings()} exact>
 				<Settings />
 			</Route>
-			<Route path={internal.specificNews()}>
+			<Route path={[internal.specificNews(), internal.news()]}>
 				<News />
 			</Route>
-			<Route path={internal.specificMessage()}>
+			<Route path={[internal.specificMessage(), internal.messages()]}>
 				<Messages />
 			</Route>
-			<Redirect to={internal.root()} />
+			<Redirect to={internal.login()} />
 		</Switch>
 	</BrowserRouter>
 )
