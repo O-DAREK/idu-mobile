@@ -8,6 +8,7 @@ import {
 	ListItemText
 } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
+import { internal } from 'constants/urls'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
@@ -111,7 +112,7 @@ const MessageList = observer(() => {
 			) : (
 				__mockMessages.map(({ id, avatar, name, title, texts }, i) => (
 					<React.Fragment key={i}>
-						<ListItem onClick={() => history.push(`/messages/${id}`)} button>
+						<ListItem onClick={() => history.push(internal.specificMessage(String(id)))} button>
 							<ListItemAvatar>
 								<Avatar alt="avatar" src={avatar} />
 							</ListItemAvatar>

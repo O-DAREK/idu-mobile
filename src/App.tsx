@@ -5,6 +5,7 @@ import Messages from 'components/Messages'
 import News from 'components/News'
 import Root from 'components/Root'
 import Settings from 'components/Settings'
+import { internal } from 'constants/urls'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
@@ -15,22 +16,22 @@ import { setVisibleHeight } from 'visible-height-css'
 const Router = () => (
 	<BrowserRouter>
 		<Switch>
-			<Route path="/" exact>
+			<Route path={internal.root()} exact>
 				<Root />
 			</Route>
-			<Route path="/login" exact>
+			<Route path={internal.login()} exact>
 				<Login />
 			</Route>
-			<Route path="/settings" exact>
+			<Route path={internal.settings()} exact>
 				<Settings />
 			</Route>
-			<Route path="/news/:id">
+			<Route path={internal.specificNews()}>
 				<News />
 			</Route>
-			<Route path="/messages/:id">
+			<Route path={internal.specificMessage()}>
 				<Messages />
 			</Route>
-			<Redirect to="/" />
+			<Redirect to={internal.root()} />
 		</Switch>
 	</BrowserRouter>
 )

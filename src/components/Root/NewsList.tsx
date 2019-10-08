@@ -1,5 +1,6 @@
 import { Divider, Grid, List, ListItem, ListItemText } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
+import { internal } from 'constants/urls'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
@@ -65,7 +66,7 @@ const NewsList: React.FC = observer(() => {
 				  ))
 				: __mockNews.map(({ name, timestamp, content, id }) => (
 						<React.Fragment key={id}>
-							<ListItem onClick={() => history.push(`/news/${id}`)} button>
+							<ListItem onClick={() => history.push(internal.specificNews(String(id)))} button>
 								<ListItemText
 									primary={`${name} • ${unixToShortDate(timestamp, config.language)}`}
 									secondary={content}
