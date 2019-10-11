@@ -1,9 +1,27 @@
-import { AppBar as MuiAppBar, Fab, IconButton, Paper, Toolbar, Typography } from '@material-ui/core'
+import {
+	AppBar as MuiAppBar,
+	Fab,
+	IconButton,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText,
+	Paper,
+	SwipeableDrawer,
+	Toolbar,
+	Typography
+} from '@material-ui/core'
 import { SvgIconComponent } from '@material-ui/icons'
+import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
+import MessageIcon from '@material-ui/icons/Message'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import SearchIcon from '@material-ui/icons/Search'
-import React from 'react'
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications'
+import { internal } from 'constants/urls'
+import { useLocale } from 'locales'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
 
 const Grow = styled.div`
@@ -40,15 +58,53 @@ interface Props {
 }
 
 const BottomAppBar: React.FC<Props> = ({ children, title, onFabClick, FabIcon }) => {
+	const [openDrawer, setOpenDrawer] = useState(false)
+	const history = useHistory()
+	const { MESSAGES, NEWS, SETTINGS } = useLocale()
+	const navigation = [
+		{
+			name: MESSAGES,
+			url: internal.messages(),
+			Icon: MessageIcon
+		},
+		{
+			name: NEWS,
+			url: internal.news(),
+			Icon: InfoIcon
+		},
+		{
+			name: SETTINGS,
+			url: internal.settings(),
+			Icon: SettingsApplicationsIcon
+		}
+	]
+
 	return (
 		<>
 			<Content square>
 				{title && <Title variant="h5">{title}</Title>}
 				{children}
 			</Content>
+			<SwipeableDrawer
+				anchor="bottom"
+				open={openDrawer}
+				onOpen={() => setOpenDrawer(true)}
+				onClose={() => setOpenDrawer(false)}
+			>
+				<List component="nav">
+					{navigation.map(({ name, url, Icon }) => (
+						<ListItem button onClick={() => history.push(url)} key={url}>
+							<ListItemIcon>
+								<Icon />
+							</ListItemIcon>
+							<ListItemText primary={name} />
+						</ListItem>
+					))}
+				</List>
+			</SwipeableDrawer>
 			<AppBarBottom position="fixed">
 				<Toolbar>
-					<IconButton edge="start">
+					<IconButton onClick={() => setOpenDrawer(true)} edge="start">
 						<MenuIcon />
 					</IconButton>
 					{FabIcon && (
