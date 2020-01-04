@@ -1,6 +1,6 @@
-import { styledTheme } from 'styles/theme'
+import { muiTheme } from 'styles/theme'
 
-type Theme = typeof styledTheme
+type Theme = ReturnType<typeof muiTheme>
 declare module 'styled-components' {
 	interface DefaultTheme extends Theme {}
 }

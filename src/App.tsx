@@ -9,6 +9,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { configStore } from 'stores'
+import { ThemeProvider } from 'styled-components'
 import { muiTheme } from 'styles/theme'
 import { ToastContainer } from 'utils/toast'
 import { setVisibleHeight } from 'visible-height-css'
@@ -35,20 +36,22 @@ const Router = () => (
 
 const App = observer(() => {
 	const config = useContext(configStore)
-
+	const theme = muiTheme(config.theme)
 	useEffect(() => {
 		setVisibleHeight()
 	}, [])
 
 	return (
 		<StylesProvider injectFirst>
-			<MuiThemeProvider theme={muiTheme(config.theme)}>
-				<>
-					<ToastContainer />
-					<CssBaseline />
-					<Router />
-				</>
-			</MuiThemeProvider>
+			<ThemeProvider theme={theme}>
+				<MuiThemeProvider theme={theme}>
+					<>
+						<ToastContainer />
+						<CssBaseline />
+						<Router />
+					</>
+				</MuiThemeProvider>
+			</ThemeProvider>
 		</StylesProvider>
 	)
 })
