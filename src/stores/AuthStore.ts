@@ -6,8 +6,10 @@ export default class {
 	@observable token: string | null = localStorage.getItem('token')
 
 	constructor() {
-		autorun(() => this.token && localStorage.setItem('token', this.token))
+		autorun(this.save)
 	}
+
+	private save = () => this.token && localStorage.setItem('token', this.token)
 
 	login = async (login: string, password: string) => {
 		const res = await fetch(api.login(), {
