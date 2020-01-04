@@ -1,5 +1,5 @@
 import { Button, Grid, Paper, TextField } from '@material-ui/core'
-import Snackbar from 'components/Snackbar'
+import { Snackbar, TopLoading } from 'components'
 import { internal } from 'constants/urls'
 import { useLocale } from 'locales'
 import React, { useContext, useState } from 'react'
@@ -26,6 +26,7 @@ const Login: React.FC = () => {
 
 	return (
 		<>
+			{loading && <TopLoading />}
 			{error && <Snackbar variant="error">{FAILED_LOGIN}</Snackbar>}
 			<Grid
 				direction="column"

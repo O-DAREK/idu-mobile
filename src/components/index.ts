@@ -1,3 +1,5 @@
 export { default as BottomAppBar } from './BottomAppBar'
 export { default as Container } from './Container'
 export { default as PaddedPaper } from './PaddedPaper'
+export { default as Snackbar } from './Snackbar'
+export { default as TopLoading } from './TopLoading'
