@@ -28,11 +28,7 @@ export const useLocale = () => {
 	const config = useContext(configStore)
 	const [lang, setLang] = useState(config.language)
 
-	useEffect(
-		() => autorun(() => setLang(config.language)),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	)
+	useEffect(() => autorun(() => setLang(config.language)), [config.language])
 
 	return mappedStrings(lang)
 }
