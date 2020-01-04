@@ -10,6 +10,7 @@ import React, { useContext, useEffect } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { configStore } from 'stores'
 import { muiTheme } from 'styles/theme'
+import { ToastContainer } from 'utils/toast'
 import { setVisibleHeight } from 'visible-height-css'
 
 const Router = () => (
@@ -43,6 +44,7 @@ const App = observer(() => {
 		<StylesProvider injectFirst>
 			<MuiThemeProvider theme={muiTheme(config.theme)}>
 				<>
+					<ToastContainer />
 					<CssBaseline />
 					<Router />
 				</>

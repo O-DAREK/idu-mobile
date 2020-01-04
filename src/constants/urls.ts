@@ -1,5 +1,6 @@
 export const api = {
-	base: 'https://idu.edu.pl'
+	base: () => 'http://idutest.dag.pl/api/v2',
+	login: () => api.base() + '/auth/login'
 }
 
 export const internal = {

@@ -8,6 +8,14 @@ const strings = {
 		en: 'Login',
 		pl: 'Login'
 	},
+	SUCCESSFUL_LOGIN: {
+		en: 'Logged in successfully',
+		pl: 'Zalogowano się poprawnie'
+	},
+	FAILED_LOGIN: {
+		en: 'Failed to log in',
+		pl: 'Nie udało sie zalogować'
+	},
 	PASSWORD: {
 		en: 'Password',
 		pl: 'Hasło'

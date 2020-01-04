@@ -1,10 +1,25 @@
-import { Progress } from 'constants/interfaces'
-import { action, observable } from 'mobx'
+import * as Responses from 'constants/responses'
+import { api } from 'constants/urls'
+import { autorun, observable, runInAction } from 'mobx'
 
 export default class {
-	@observable initialProgress: Progress = Progress.pending
+	@observable token: string | null = localStorage.getItem('token')
 
-	@action c = () =>
-		(this.initialProgress =
-			this.initialProgress === Progress.pending ? Progress.fulfilled : Progress.pending)
+	constructor() {
+		autorun(() => this.token && localStorage.setItem('token', this.token))
+	}
+
+	login = async (login: string, password: string) => {
+		const res = await fetch(api.login(), {
+			method: 'POST',
+			body: JSON.stringify({ login, password })
+		})
+
+		if (res.ok) {
+			const json = (await res.json()) as Responses.Login
+			runInAction(() => (this.token = json.token))
+		}
+
+		return res.ok || Promise.reject()
+	}
 }

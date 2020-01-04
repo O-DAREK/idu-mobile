@@ -11,16 +11,13 @@ const mappedStrings = (() => {
 	return (to: Language): MappedStrings => {
 		if (to !== cacheLang) {
 			cacheLang = to
-			cacheMap = Object.keys(strings).reduce(
-				(prev, curr) => {
-					if (strings.hasOwnProperty(curr)) {
-						const key = curr as keyof typeof strings
-						prev[key] = strings[key][useContext(configStore).language]
-					}
-					return prev
-				},
-				{} as MappedStrings
-			)
+			cacheMap = Object.keys(strings).reduce((prev, curr) => {
+				if (strings.hasOwnProperty(curr)) {
+					const key = curr as keyof typeof strings
+					prev[key] = strings[key][to]
+				}
+				return prev
+			}, {} as MappedStrings)
 		}
 
 		return cacheMap!
