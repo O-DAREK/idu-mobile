@@ -11,14 +11,8 @@ export default class {
 
 	constructor() {
 		this.load()
-		autorun(() => this.save())
+		autorun(this.save)
 	}
-
-	@action
-	changeLanguage = (to: Language) => (this.language = to)
-
-	@action
-	changeTheme = (to: Theme) => (this.theme = to)
 
 	private save = () =>
 		window.localStorage.setItem(
@@ -29,4 +23,10 @@ export default class {
 	@action
 	private load = () =>
 		Object.assign(this, JSON.parse(window.localStorage.getItem('ConfigStore') || '{}'))
+
+	@action
+	changeLanguage = (to: Language) => (this.language = to)
+
+	@action
+	changeTheme = (to: Theme) => (this.theme = to)
 }

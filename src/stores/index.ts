@@ -1,14 +1,14 @@
 import { configure } from 'mobx'
 import { createContext } from 'react'
-import AuthStore from './AuthStore'
 import ConfigStore from './ConfigStore'
+import UserStore from './UserStore'
 
 configure({ enforceActions: 'always' })
 
-export const authStore = createContext(new AuthStore())
+export const userStore = createContext(new UserStore())
 export const configStore = createContext(new ConfigStore())
 
 export interface IStores {
-	authStore: AuthStore
+	userStore: UserStore
 	configStore: ConfigStore
 }

@@ -1,6 +1,8 @@
 export const api = {
 	base: () => 'http://idutest.dag.pl/api/v2',
-	login: () => api.base() + '/auth/login'
+	login: () => api.base() + '/auth/login',
+	profile: () => api.base() + '/user/profile',
+	events: () => api.base() + '/user/events'
 }
 
 export const internal = {
@@ -8,7 +10,7 @@ export const internal = {
 	login: () => '/login',
 	settings: () => '/settings',
 	news: () => '/news',
-	specificNews: (id?: string) => `/news/${id || ':id'}`,
+	specificNews: (id?: string) => `${internal.news()}/${id || ':id'}`,
 	messages: () => '/messages',
-	specificMessage: (id?: string) => `/messages/${id || ':id'}`
+	specificMessage: (id?: string) => `${internal.messages()}/${id || ':id'}`
 }

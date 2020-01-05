@@ -4,7 +4,7 @@ import { internal } from 'constants/urls'
 import { useLocale } from 'locales'
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
-import { authStore } from 'stores'
+import { userStore } from 'stores'
 import styled from 'styled-components'
 import { usePromise } from 'utils/hooks'
 
@@ -16,7 +16,7 @@ const Login: React.FC = () => {
 	const { LOGIN, LOG_IN, PASSWORD, FAILED_LOGIN } = useLocale()
 	const [login, setLogin] = useState('')
 	const [password, setPassword] = useState('')
-	const auth = useContext(authStore)
+	const auth = useContext(userStore)
 	const [authLogin, result, loading, error] = usePromise(auth.login)
 	const history = useHistory()
 

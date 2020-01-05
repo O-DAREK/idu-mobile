@@ -22,7 +22,7 @@ describe('config store', () => {
 		expect(configStore.theme).toBeTruthy()
 	})
 
-	it('should default save to localstorage', () => {
+	it('should defaults saved to localstorage', () => {
 		expect(JSON.parse(window.localStorage.getItem('ConfigStore') || '{}')).toEqual({
 			language: configStore.language,
 			theme: configStore.theme
