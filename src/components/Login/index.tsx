@@ -54,6 +54,7 @@ const Login: React.FC = () => {
 							</Grid>
 							<Grid item>
 								<TextField
+									type="password"
 									label={PASSWORD}
 									variant="outlined"
 									value={password}
