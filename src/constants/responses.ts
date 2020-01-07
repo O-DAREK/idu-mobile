@@ -1,6 +1,18 @@
+import { Roles } from './interfaces'
+
 export type Login = {
 	token: string
 	exp: string
+}
+
+export type Profile = {
+	profile: {
+		id: number
+		first_name: string
+		last_name: string
+		mobile_phone: string
+		role: keyof typeof Roles
+	}
 }
 
 export type Events = {

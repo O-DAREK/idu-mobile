@@ -1,4 +1,5 @@
-import { Events, Login } from 'constants/responses'
+import { Roles } from 'constants/interfaces'
+import { Events, Login, Profile } from 'constants/responses'
 import UserStore from 'stores/UserStore'
 
 describe('user store', () => {
@@ -14,6 +15,8 @@ describe('user store', () => {
 	it('should have defaults', () => {
 		expect(userStore.token).toBe(undefined)
 		expect(userStore.events).toBe(undefined)
+		expect(userStore.profile).toBe(undefined)
+		expect(userStore.isLoggedIn).toEqual(false)
 	})
 
 	it('should have defaults saved to localstorage', () => {
@@ -100,13 +103,91 @@ describe('user store', () => {
 		})
 	})
 
+	describe('profile', () => {
+		it('should correctly fetch profile', async () => {
+			fetchMock.mockResponseOnce(
+				JSON.stringify({
+					profile: {
+						id: 4138,
+						first_name: 'Zack',
+						last_name: 'Boomer',
+						role: 'student',
+						mobile_phone: '123123'
+					}
+				} as Profile)
+			)
+			userStore.token = '123'
+
+			await expect(userStore.fetchProfile()).resolves.toEqual(true)
+			expect(userStore.profile).toEqual({
+				id: 4138,
+				firstName: 'Zack',
+				lastName: 'Boomer',
+				role: Roles.student,
+				mobilePhone: '123123'
+			})
+			expect(getLS().profile).toEqual({
+				id: 4138,
+				firstName: 'Zack',
+				lastName: 'Boomer',
+				role: Roles.student,
+				mobilePhone: '123123'
+			})
+		})
+		it('should fail for some reason', async () => {
+			const err = new Error('')
+			fetchMock.mockReject(err)
+			userStore.token = '123'
+
+			await expect(userStore.fetchProfile()).rejects.toBe(err)
+			expect(userStore.profile).toEqual(undefined)
+			expect(getLS().profile).toEqual(undefined)
+		})
+		it('should fail because of a lacking token', async () => {
+			await expect(userStore.fetchProfile()).rejects.toThrowError('token')
+			expect(userStore.profile).toEqual(undefined)
+			expect(getLS().profile).toEqual(undefined)
+		})
+	})
+
 	it('should load from localstorage', () => {
-		const data = { token: '123', events: [{ id: 123 }] }
+		const data = {
+			token: '123',
+			events: [{ id: 123 }],
+			profile: {
+				firstName: 'yes',
+				lastName: 'ha ha',
+				id: 12342,
+				role: Roles.student,
+				mobilePhone: '123123123'
+			}
+		}
 		window.localStorage.setItem('UserStore', JSON.stringify(data))
 
 		const userStore = new UserStore()
 
 		expect(userStore.token).toEqual(data.token)
 		expect(userStore.events).toEqual(data.events)
+		expect(userStore.profile).toEqual(data.profile)
+		expect(userStore.isLoggedIn).toEqual(true)
+	})
+
+	it('should correctly log out', () => {
+		userStore.token = '123'
+		userStore.events = []
+		userStore.profile = {
+			firstName: 'yes',
+			lastName: 'ha ha',
+			id: 12342,
+			role: Roles.student,
+			mobilePhone: '123123123'
+		}
+
+		userStore.logout()
+
+		expect(userStore.token).toEqual(undefined)
+		expect(userStore.events).toEqual(undefined)
+		expect(userStore.profile).toEqual(undefined)
+		expect(userStore.isLoggedIn).toEqual(false)
 	})
 })
