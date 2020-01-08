@@ -15,8 +15,6 @@ import { SvgIconComponent } from '@material-ui/icons'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import MessageIcon from '@material-ui/icons/Message'
-import MoreIcon from '@material-ui/icons/MoreVert'
-import SearchIcon from '@material-ui/icons/Search'
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications'
 import { internal } from 'constants/urls'
 import { useLocale } from 'locales'
@@ -51,16 +49,30 @@ const MiddleFab = styled(Fab)`
 	margin: 0 auto;
 `
 
-interface Props {
+interface InternalProps {
 	title?: string
 	FabIcon?: SvgIconComponent
 	onFabClick?: () => void
 }
 
-const BottomAppBar: React.FC<Props> = ({ children, title, onFabClick, FabIcon }) => {
+/* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
+const BottomAppBar: React.FC = ({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const history = useHistory()
 	const { MESSAGES, NEWS, SETTINGS } = useLocale()
+
+	const states: { [key: string]: InternalProps } = {
+		[internal.messages()]: {
+			title: MESSAGES
+		},
+		[internal.news()]: {
+			title: NEWS
+		},
+		[internal.settings()]: {
+			title: SETTINGS
+		}
+	}
+
 	const navigation = [
 		{
 			name: MESSAGES,
@@ -79,6 +91,12 @@ const BottomAppBar: React.FC<Props> = ({ children, title, onFabClick, FabIcon })
 		}
 	]
 
+	if (!(history.location.pathname in states)) {
+		return <>{children}</>
+	}
+
+	const { FabIcon, title, onFabClick } = states[history.location.pathname]
+
 	return (
 		<>
 			<Content square>
@@ -93,7 +111,15 @@ const BottomAppBar: React.FC<Props> = ({ children, title, onFabClick, FabIcon })
 			>
 				<List component="nav">
 					{navigation.map(({ name, url, Icon }) => (
-						<ListItem button onClick={() => history.push(url)} key={url}>
+						<ListItem
+							button
+							selected={history.location.pathname === url}
+							onClick={() => {
+								history.push(url)
+								setOpenDrawer(false)
+							}}
+							key={url}
+						>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
@@ -113,12 +139,12 @@ const BottomAppBar: React.FC<Props> = ({ children, title, onFabClick, FabIcon })
 						</MiddleFab>
 					)}
 					<Grow />
-					<IconButton>
+					{/* <IconButton>
 						<SearchIcon />
-					</IconButton>
-					<IconButton edge="end">
+					</IconButton> */}
+					{/* <IconButton edge="end">
 						<MoreIcon />
-					</IconButton>
+					</IconButton> */}
 				</Toolbar>
 			</AppBarBottom>
 		</>
