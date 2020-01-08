@@ -14,19 +14,23 @@ export default class {
 		autorun(this.save)
 	}
 
-	private save = () =>
+	private save = (): void =>
 		window.localStorage.setItem(
 			'ConfigStore',
 			JSON.stringify({ language: this.language, theme: this.theme })
 		)
 
 	@action
-	private load = () =>
+	private load = (): void =>
 		Object.assign(this, JSON.parse(window.localStorage.getItem('ConfigStore') || '{}'))
 
 	@action
-	changeLanguage = (to: Language) => (this.language = to)
+	changeLanguage = (to: Language): void => {
+		this.language = to
+	}
 
 	@action
-	changeTheme = (to: Theme) => (this.theme = to)
+	changeTheme = (to: Theme): void => {
+		this.theme = to
+	}
 }

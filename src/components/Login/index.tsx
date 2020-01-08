@@ -1,9 +1,7 @@
 import { Button, Grid, Paper, TextField } from '@material-ui/core'
 import { Snackbar, TopLoading } from 'components'
-import { internal } from 'constants/urls'
 import { useLocale } from 'locales'
 import React, { useContext, useState } from 'react'
-import { useHistory } from 'react-router'
 import { userStore } from 'stores'
 import styled from 'styled-components'
 import { usePromise } from 'utils/hooks'
@@ -16,13 +14,8 @@ const Login: React.FC = () => {
 	const { LOGIN, LOG_IN, PASSWORD, FAILED_LOGIN } = useLocale()
 	const [login, setLogin] = useState('')
 	const [password, setPassword] = useState('')
-	const auth = useContext(userStore)
-	const [authLogin, result, loading, error] = usePromise(auth.login)
-	const history = useHistory()
-
-	if (result) {
-		history.push(internal.messages())
-	}
+	const user = useContext(userStore)
+	const [userLogin, , loading, error] = usePromise(user.login)
 
 	return (
 		<>
@@ -62,7 +55,7 @@ const Login: React.FC = () => {
 								/>
 							</Grid>
 							<Grid item>
-								<Button variant="outlined" onClick={() => authLogin(login, password)}>
+								<Button variant="outlined" onClick={() => userLogin(login, password)}>
 									{LOG_IN}
 								</Button>
 							</Grid>

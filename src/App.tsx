@@ -8,33 +8,40 @@ import { internal } from 'constants/urls'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
-import { configStore } from 'stores'
+import { configStore, userStore } from 'stores'
 import { ThemeProvider } from 'styled-components'
 import { muiTheme } from 'styles/theme'
 import { ToastContainer } from 'utils/toast'
 import { setVisibleHeight } from 'visible-height-css'
 
-const Router = () => (
+const Router: React.FC<{ loggedIn: boolean }> = ({ loggedIn }) => (
 	<BrowserRouter>
-		<Switch>
-			<Route path={internal.login()} exact>
-				<Login />
-			</Route>
-			<Route path={internal.settings()} exact>
-				<Settings />
-			</Route>
-			<Route path={[internal.specificNews(), internal.news()]}>
-				<News />
-			</Route>
-			<Route path={[internal.specificMessage(), internal.messages()]}>
-				<Messages />
-			</Route>
-			<Redirect to={internal.login()} />
-		</Switch>
+		{loggedIn ? (
+			<Switch>
+				<Route path={internal.settings()} exact>
+					<Settings />
+				</Route>
+				<Route path={[internal.specificNews(), internal.news()]}>
+					<News />
+				</Route>
+				<Route path={[internal.specificMessage(), internal.messages()]}>
+					<Messages />
+				</Route>
+				<Redirect to={internal.news()} />
+			</Switch>
+		) : (
+			<Switch>
+				<Route path={internal.login()} exact>
+					<Login />
+				</Route>
+				<Redirect to={internal.login()} />
+			</Switch>
+		)}
 	</BrowserRouter>
 )
 
 const App = observer(() => {
+	const user = useContext(userStore)
 	const config = useContext(configStore)
 	const theme = muiTheme(config.theme)
 	useEffect(() => {
@@ -48,7 +55,7 @@ const App = observer(() => {
 					<>
 						<ToastContainer />
 						<CssBaseline />
-						<Router />
+						<Router loggedIn={user.isLoggedIn} />
 					</>
 				</MuiThemeProvider>
 			</ThemeProvider>

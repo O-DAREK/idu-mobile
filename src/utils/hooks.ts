@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export function usePromise<T extends any[], U>(
 	promise: (...args: T) => Promise<U>
@@ -6,6 +6,14 @@ export function usePromise<T extends any[], U>(
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 	const [result, setResult] = useState<U>()
+	const cancelled = useRef(false)
+
+	useEffect(
+		() => () => {
+			cancelled.current = true
+		},
+		[]
+	)
 
 	const callPromise = useCallback(
 		(...args: T) => {
@@ -14,15 +22,20 @@ export function usePromise<T extends any[], U>(
 			setLoading(true)
 			promise(...args)
 				.then(res => {
-					setResult(res)
-					setLoading(false)
+					if (!cancelled.current) {
+						setResult(res)
+						setLoading(false)
+					}
 				})
 				.catch(err => {
-					setError(err)
-					setLoading(false)
+					if (!cancelled.current) {
+						console.log('got error', { cancelled, err })
+						setError(err)
+						setLoading(false)
+					}
 				})
 		},
-		[promise]
+		[promise, cancelled]
 	)
 
 	return [callPromise, result, loading, error]

@@ -27,7 +27,7 @@ describe('user store', () => {
 		it('should correctly log in and store the token in localStorage', async () => {
 			fetchMock.mockResponseOnce(JSON.stringify({ token: '12345', exp: 'asd' } as Login))
 
-			await expect(userStore.login('123', '123')).resolves.toEqual(true)
+			await expect(userStore.login('123', '123')).resolves.toEqual('12345')
 			expect(userStore.token).toEqual('12345')
 			expect(getLS()).toEqual({ token: '12345' })
 		})
@@ -61,7 +61,18 @@ describe('user store', () => {
 			)
 			userStore.token = '123'
 
-			await expect(userStore.fetchEvents()).resolves.toEqual(true)
+			await expect(userStore.fetchEvents()).resolves.toEqual([
+				{
+					id: 4138,
+					name: 'Zebranie z rodzicami klas I, II, III',
+					startAt: '2020-01-09T17:54:00+01:00',
+					stopAt: '2020-01-09T08:54:00+01:00',
+					allDay: true,
+					allClasses: true,
+					backgroundColor: '#004080',
+					textColor: '#ffffff'
+				}
+			])
 			expect(userStore.events).toEqual([
 				{
 					id: 4138,
@@ -118,7 +129,13 @@ describe('user store', () => {
 			)
 			userStore.token = '123'
 
-			await expect(userStore.fetchProfile()).resolves.toEqual(true)
+			await expect(userStore.fetchProfile()).resolves.toEqual({
+				id: 4138,
+				firstName: 'Zack',
+				lastName: 'Boomer',
+				role: Roles.student,
+				mobilePhone: '123123'
+			})
 			expect(userStore.profile).toEqual({
 				id: 4138,
 				firstName: 'Zack',
