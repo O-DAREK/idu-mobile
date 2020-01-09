@@ -4,7 +4,7 @@ import { useLocale } from 'locales'
 import React, { useContext, useState } from 'react'
 import { userStore } from 'stores'
 import styled from 'styled-components'
-import { usePromise } from 'utils/hooks'
+import useAsync from 'use-async-react'
 
 const PaddedGrid = styled(Grid)`
 	padding: 20px;
@@ -15,7 +15,7 @@ const Login: React.FC = () => {
 	const [login, setLogin] = useState('')
 	const [password, setPassword] = useState('')
 	const user = useContext(userStore)
-	const [userLogin, , loading, error] = usePromise(user.login)
+	const { call: userLogin, loading, error } = useAsync(user.login)
 
 	return (
 		<>
