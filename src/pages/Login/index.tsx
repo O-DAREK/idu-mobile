@@ -12,8 +12,8 @@ const PaddedGrid = styled(Grid)`
 
 const Login: React.FC = () => {
 	const { LOGIN, LOG_IN, PASSWORD, FAILED_LOGIN } = useLocale()
-	const [login, setLogin] = useState('')
-	const [password, setPassword] = useState('')
+	const [login, setLogin] = useState('s.t.1234')
+	const [password, setPassword] = useState('password')
 	const user = useContext(userStore)
 	const { call: userLogin, loading, error } = useAsync(user.login)
 
