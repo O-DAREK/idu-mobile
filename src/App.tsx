@@ -1,6 +1,7 @@
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/styles'
 import { BottomAppBar } from 'components'
+import Events from 'components/Events'
 import Login from 'components/Login'
 import Messages from 'components/Messages'
 import News from 'components/News'
@@ -22,6 +23,9 @@ const Router: React.FC<{ loggedIn: boolean }> = ({ loggedIn }) => (
 				<Switch>
 					<Route path={internal.settings()} exact>
 						<Settings />
+					</Route>
+					<Route path={internal.events()} exact>
+						<Events />
 					</Route>
 					<Route path={[internal.specificNews(), internal.news()]}>
 						<News />

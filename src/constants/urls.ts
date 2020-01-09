@@ -11,6 +11,7 @@ export const internal = {
 	settings: () => '/settings',
 	news: () => '/news',
 	specificNews: (id?: string) => `${internal.news()}/${id || ':id'}`,
+	events: () => '/events',
 	messages: () => '/messages',
 	specificMessage: (id?: string) => `${internal.messages()}/${id || ':id'}`
 }
