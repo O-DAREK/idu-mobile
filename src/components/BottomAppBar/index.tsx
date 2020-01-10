@@ -12,6 +12,8 @@ import {
 	Typography
 } from '@material-ui/core'
 import { SvgIconComponent } from '@material-ui/icons'
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
+import EventIcon from '@material-ui/icons/Event'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import MessageIcon from '@material-ui/icons/Message'
@@ -21,6 +23,7 @@ import { useLocale } from 'locales'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import styled from 'styled-components'
+import { eev, EventNames } from './events'
 
 const Grow = styled.div`
 	flex-grow: 1;
@@ -49,17 +52,22 @@ const MiddleFab = styled(Fab)`
 	margin: 0 auto;
 `
 
+type ClickableSvg = {
+	Icon: SvgIconComponent
+	onClick: () => void
+}
+
 interface InternalProps {
 	title?: string
-	FabIcon?: SvgIconComponent
-	onFabClick?: () => void
+	fab?: ClickableSvg
+	actions?: ClickableSvg[]
 }
 
 /* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
 const BottomAppBar: React.FC = ({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const history = useHistory()
-	const { MESSAGES, NEWS, SETTINGS } = useLocale()
+	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
 
 	const states: { [key: string]: InternalProps } = {
 		[internal.messages()]: {
@@ -70,6 +78,15 @@ const BottomAppBar: React.FC = ({ children }) => {
 		},
 		[internal.settings()]: {
 			title: SETTINGS
+		},
+		[internal.events()]: {
+			title: EVENTS,
+			actions: [
+				{
+					Icon: EventIcon,
+					onClick: () => eev.emit(EventNames.EVENTS_CALENDAR)
+				}
+			]
 		}
 	}
 
@@ -78,6 +95,11 @@ const BottomAppBar: React.FC = ({ children }) => {
 			name: MESSAGES,
 			url: internal.messages(),
 			Icon: MessageIcon
+		},
+		{
+			name: EVENTS,
+			url: internal.events(),
+			Icon: CalendarTodayIcon
 		},
 		{
 			name: NEWS,
@@ -95,7 +117,7 @@ const BottomAppBar: React.FC = ({ children }) => {
 		return <>{children}</>
 	}
 
-	const { FabIcon, title, onFabClick } = states[history.location.pathname]
+	const { title, fab, actions } = states[history.location.pathname]
 
 	return (
 		<>
@@ -133,18 +155,17 @@ const BottomAppBar: React.FC = ({ children }) => {
 					<IconButton onClick={() => setOpenDrawer(true)} edge="start">
 						<MenuIcon />
 					</IconButton>
-					{FabIcon && (
-						<MiddleFab onClick={onFabClick} color="secondary">
-							<FabIcon />
+					{fab && (
+						<MiddleFab onClick={fab.onClick} color="secondary">
+							<fab.Icon />
 						</MiddleFab>
 					)}
 					<Grow />
-					{/* <IconButton>
-						<SearchIcon />
-					</IconButton> */}
-					{/* <IconButton edge="end">
-						<MoreIcon />
-					</IconButton> */}
+					{actions?.map(({ onClick, Icon }, i) => (
+						<IconButton onClick={onClick} key={i}>
+							<Icon />
+						</IconButton>
+					))}
 				</Toolbar>
 			</AppBarBottom>
 		</>

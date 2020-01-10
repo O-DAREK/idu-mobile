@@ -11,10 +11,16 @@ import Settings from 'pages/Settings'
 import React, { useContext, useEffect } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { configStore, userStore } from 'stores'
-import { ThemeProvider } from 'styled-components'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { muiTheme } from 'styles/theme'
 import { ToastContainer } from 'utils/toast'
 import { setVisibleHeight } from 'visible-height-css'
+
+const GlobalStyles = createGlobalStyle`
+	body, #root {
+		height: calc(100 * var(--visible-height, 1vh));
+	}
+`
 
 const Router: React.FC<{ loggedIn: boolean }> = ({ loggedIn }) => (
 	<BrowserRouter>
@@ -62,6 +68,7 @@ const App = observer(() => {
 					<>
 						<ToastContainer />
 						<CssBaseline />
+						<GlobalStyles />
 						<Router loggedIn={user.isLoggedIn} />
 					</>
 				</MuiThemeProvider>

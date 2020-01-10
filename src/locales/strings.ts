@@ -55,6 +55,10 @@ const strings = {
 	CALENDAR: {
 		en: 'Calendar',
 		pl: 'Kalendarz'
+	},
+	EVENTS: {
+		en: 'Events',
+		pl: 'Wydarzenia'
 	}
 }
 

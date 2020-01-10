@@ -1,17 +1,31 @@
 import DateFnsUtils from '@date-io/date-fns'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import React from 'react'
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import { buildListen, EventNames } from 'components/BottomAppBar/events'
+import React, { useEffect, useState } from 'react'
 
-const Events = () => {
+const Events: React.FC = () => {
+	const [showPicker, setShowPicker] = useState(false)
+	const [selectedDate, setSelectedDate] = useState<MaterialUiPickersDate>(new Date())
+
+	useEffect(
+		() =>
+			buildListen(EventNames.EVENTS_CALENDAR, () => {
+				setShowPicker(true)
+			}),
+		[]
+	)
+
 	return (
 		<MuiPickersUtilsProvider utils={DateFnsUtils}>
 			<DatePicker
-				label="Basic example"
-				value={new Date()}
+				value={selectedDate}
+				style={{ display: 'none' }}
+				onOpen={() => setShowPicker(true)}
+				onClose={() => setShowPicker(false)}
+				onChange={date => setSelectedDate(date)}
+				open={showPicker}
 				disableToolbar
-				// style={{ display: 'none' }}
-				onChange={(...a) => console.log(a)}
-				animateYearScrolling
 			/>
 		</MuiPickersUtilsProvider>
 	)

@@ -25,7 +25,7 @@ const Login: React.FC = () => {
 				direction="column"
 				alignItems="center"
 				justify="center"
-				style={{ minHeight: '100vh' }}
+				style={{ minHeight: '100%' }}
 				container
 			>
 				<Grid xs={11} item>
