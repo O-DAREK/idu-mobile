@@ -17,7 +17,7 @@ import EventIcon from '@material-ui/icons/Event'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import MessageIcon from '@material-ui/icons/Message'
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications'
+import SettingsIcon from '@material-ui/icons/Settings'
 import { internal } from 'constants/urls'
 import { useLocale } from 'locales'
 import React, { useState } from 'react'
@@ -109,7 +109,7 @@ const BottomAppBar: React.FC = ({ children }) => {
 		{
 			name: SETTINGS,
 			url: internal.settings(),
-			Icon: SettingsApplicationsIcon
+			Icon: SettingsIcon
 		}
 	]
 
