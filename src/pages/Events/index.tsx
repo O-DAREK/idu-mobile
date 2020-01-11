@@ -3,6 +3,7 @@ import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import React, { useEffect, useState } from 'react'
+import DayList from './DayList'
 
 const Events: React.FC = () => {
 	const [showPicker, setShowPicker] = useState(false)
@@ -17,17 +18,20 @@ const Events: React.FC = () => {
 	)
 
 	return (
-		<MuiPickersUtilsProvider utils={DateFnsUtils}>
-			<DatePicker
-				value={selectedDate}
-				style={{ display: 'none' }}
-				onOpen={() => setShowPicker(true)}
-				onClose={() => setShowPicker(false)}
-				onChange={date => setSelectedDate(date)}
-				open={showPicker}
-				disableToolbar
-			/>
-		</MuiPickersUtilsProvider>
+		<>
+			{selectedDate && <DayList date={selectedDate} />}
+			<MuiPickersUtilsProvider utils={DateFnsUtils}>
+				<DatePicker
+					value={selectedDate}
+					style={{ display: 'none' }}
+					onOpen={() => setShowPicker(true)}
+					onClose={() => setShowPicker(false)}
+					onChange={date => setSelectedDate(date)}
+					open={showPicker}
+					disableToolbar
+				/>
+			</MuiPickersUtilsProvider>
+		</>
 	)
 }
 
