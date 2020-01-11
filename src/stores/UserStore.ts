@@ -7,8 +7,8 @@ import { constructFetchErr } from 'utils'
 type Event = {
 	id: number
 	name: string
-	startAt: string
-	stopAt: string
+	startAt: Date
+	stopAt: Date
 	allDay: boolean
 	allClasses: boolean
 	backgroundColor: string
@@ -44,8 +44,15 @@ export default class {
 		)
 
 	@action
-	private load = (): void =>
+	private load = (): void => {
 		Object.assign(this, JSON.parse(window.localStorage.getItem('UserStore') || '{}'))
+
+		this.events = this.events?.map(e => ({
+			...e,
+			startAt: new Date(e.startAt),
+			stopAt: new Date(e.stopAt)
+		}))
+	}
 
 	login = async (login: string, password: string): Promise<NonNullable<this['token']>> => {
 		const res = await fetch(api.login(), {
@@ -97,19 +104,18 @@ export default class {
 		}
 
 		const json = (await res.json()) as Responses.Events
-		runInAction(
-			() =>
-				(this.events = json.events.map(e => ({
-					id: e.id,
-					name: e.name,
-					startAt: e.start_at,
-					stopAt: e.stop_at,
-					allDay: e.all_day,
-					allClasses: e.all_klasses,
-					backgroundColor: e.background_color,
-					textColor: e.text_color
-				})))
-		)
+		runInAction(() => {
+			this.events = json.events.map(e => ({
+				id: e.id,
+				name: e.name,
+				startAt: new Date(e.start_at),
+				stopAt: new Date(e.stop_at),
+				allDay: e.all_day,
+				allClasses: e.all_klasses,
+				backgroundColor: e.background_color,
+				textColor: e.text_color
+			}))
+		})
 
 		return (this.events as this['events'])!
 	}

@@ -43,14 +43,17 @@ describe('user store', () => {
 
 	describe('events', () => {
 		it('should correctly fetch events', async () => {
+			const start = new Date('2020-01-09T08:54:00+01:00')
+			const stop = new Date('2020-01-09T17:54:00+01:00')
+
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
 					events: [
 						{
 							id: 4138,
 							name: 'Zebranie z rodzicami klas I, II, III',
-							start_at: '2020-01-09T17:54:00+01:00',
-							stop_at: '2020-01-09T08:54:00+01:00',
+							start_at: start.toString(),
+							stop_at: stop.toString(),
 							all_day: true,
 							all_klasses: true,
 							background_color: '#004080',
@@ -65,8 +68,8 @@ describe('user store', () => {
 				{
 					id: 4138,
 					name: 'Zebranie z rodzicami klas I, II, III',
-					startAt: '2020-01-09T17:54:00+01:00',
-					stopAt: '2020-01-09T08:54:00+01:00',
+					startAt: start,
+					stopAt: stop,
 					allDay: true,
 					allClasses: true,
 					backgroundColor: '#004080',
@@ -77,20 +80,21 @@ describe('user store', () => {
 				{
 					id: 4138,
 					name: 'Zebranie z rodzicami klas I, II, III',
-					startAt: '2020-01-09T17:54:00+01:00',
-					stopAt: '2020-01-09T08:54:00+01:00',
+					startAt: start,
+					stopAt: stop,
 					allDay: true,
 					allClasses: true,
 					backgroundColor: '#004080',
 					textColor: '#ffffff'
 				}
 			])
+
 			expect(getLS().events).toEqual([
 				{
 					id: 4138,
 					name: 'Zebranie z rodzicami klas I, II, III',
-					startAt: '2020-01-09T17:54:00+01:00',
-					stopAt: '2020-01-09T08:54:00+01:00',
+					startAt: JSON.parse(JSON.stringify(start)),
+					stopAt: JSON.parse(JSON.stringify(stop)),
 					allDay: true,
 					allClasses: true,
 					backgroundColor: '#004080',
@@ -170,7 +174,7 @@ describe('user store', () => {
 	it('should load from localstorage', () => {
 		const data = {
 			token: '123',
-			events: [{ id: 123 }],
+			events: [],
 			profile: {
 				firstName: 'yes',
 				lastName: 'ha ha',
