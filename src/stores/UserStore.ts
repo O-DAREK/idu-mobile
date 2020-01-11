@@ -4,7 +4,7 @@ import { api } from 'constants/urls'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
-type Event = {
+export type Event = {
 	id: number
 	name: string
 	startAt: Date

@@ -20,7 +20,7 @@ import MessageIcon from '@material-ui/icons/Message'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { internal } from 'constants/urls'
 import { useLocale } from 'locales'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useHistory } from 'react-router'
 import styled from 'styled-components'
 import { eev, EventNames } from './events'
@@ -69,49 +69,55 @@ const BottomAppBar: React.FC = ({ children }) => {
 	const history = useHistory()
 	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
 
-	const states: { [key: string]: InternalProps } = {
-		[internal.messages()]: {
-			title: MESSAGES
-		},
-		[internal.news()]: {
-			title: NEWS
-		},
-		[internal.settings()]: {
-			title: SETTINGS
-		},
-		[internal.events()]: {
-			title: EVENTS,
-			actions: [
-				{
-					Icon: EventIcon,
-					onClick: () => eev.emit(EventNames.EVENTS_CALENDAR)
-				}
-			]
-		}
-	}
+	const states: { [key: string]: InternalProps } = useMemo(
+		() => ({
+			[internal.messages()]: {
+				title: MESSAGES
+			},
+			[internal.news()]: {
+				title: NEWS
+			},
+			[internal.settings()]: {
+				title: SETTINGS
+			},
+			[internal.events()]: {
+				title: EVENTS,
+				actions: [
+					{
+						Icon: EventIcon,
+						onClick: () => eev.emit(EventNames.EVENTS_CALENDAR)
+					}
+				]
+			}
+		}),
+		[MESSAGES, NEWS, SETTINGS, EVENTS]
+	)
 
-	const navigation = [
-		{
-			name: MESSAGES,
-			url: internal.messages(),
-			Icon: MessageIcon
-		},
-		{
-			name: EVENTS,
-			url: internal.events(),
-			Icon: CalendarTodayIcon
-		},
-		{
-			name: NEWS,
-			url: internal.news(),
-			Icon: InfoIcon
-		},
-		{
-			name: SETTINGS,
-			url: internal.settings(),
-			Icon: SettingsIcon
-		}
-	]
+	const navigation = useMemo(
+		() => [
+			{
+				name: MESSAGES,
+				url: internal.messages(),
+				Icon: MessageIcon
+			},
+			{
+				name: EVENTS,
+				url: internal.events(),
+				Icon: CalendarTodayIcon
+			},
+			{
+				name: NEWS,
+				url: internal.news(),
+				Icon: InfoIcon
+			},
+			{
+				name: SETTINGS,
+				url: internal.settings(),
+				Icon: SettingsIcon
+			}
+		],
+		[MESSAGES, NEWS, SETTINGS, EVENTS]
+	)
 
 	if (!(history.location.pathname in states)) {
 		return <>{children}</>

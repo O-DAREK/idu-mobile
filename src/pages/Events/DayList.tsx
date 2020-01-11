@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core'
 import { formatLong } from 'locales'
 import { observer } from 'mobx-react-lite'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { configStore, userStore } from 'stores'
 import styled from 'styled-components'
 
@@ -16,10 +16,6 @@ const Title = styled(Typography)`
 const DayList: React.FC<Props> = observer(({ date }) => {
 	const config = useContext(configStore)
 	const user = useContext(userStore)
-
-	useEffect(() => {
-		user.fetchEvents()
-	}, [])
 
 	return (
 		<>
