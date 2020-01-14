@@ -6,7 +6,6 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-	Paper,
 	SwipeableDrawer,
 	Toolbar,
 	Typography
@@ -29,7 +28,7 @@ const Grow = styled.div`
 	flex-grow: 1;
 `
 
-const Content = styled(Paper)`
+const Content = styled.div`
 	padding-bottom: 90px;
 	min-height: calc(100 * var(--visible-height, 1vh));
 `
@@ -127,7 +126,7 @@ const BottomAppBar: React.FC = ({ children }) => {
 
 	return (
 		<>
-			<Content square>
+			<Content>
 				{title && <Title variant="h5">{title}</Title>}
 				{children}
 			</Content>
