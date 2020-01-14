@@ -1,5 +1,6 @@
 import { Roles } from 'constants/interfaces'
 import { Events, Login, Profile } from 'constants/responses'
+import { UNAUTHORIZED } from 'http-status-codes'
 import UserStore from 'stores/UserStore'
 
 describe('user store', () => {
@@ -17,10 +18,40 @@ describe('user store', () => {
 		expect(userStore.events).toBe(undefined)
 		expect(userStore.profile).toBe(undefined)
 		expect(userStore.isLoggedIn).toEqual(false)
+		expect(userStore.forcedLogout).toEqual(false)
 	})
 
 	it('should have defaults saved to localstorage', () => {
 		expect(getLS('{"not": "empty"}')).toEqual({})
+	})
+
+	describe('forcedLogout', () => {
+		describe('set forcedLogout if unauthorized', () => {
+			it('fetchEvents', async () => {
+				fetchMock.mockResponseOnce(':)', { status: UNAUTHORIZED })
+				userStore.token = '123'
+
+				await expect(userStore.fetchEvents()).rejects.toBeTruthy()
+				expect(userStore.forcedLogout).toEqual(true)
+			})
+			it('fetchProfile', async () => {
+				fetchMock.mockResponseOnce(':)', { status: UNAUTHORIZED })
+				userStore.token = '123'
+
+				await expect(userStore.fetchProfile()).rejects.toBeTruthy()
+				expect(userStore.forcedLogout).toEqual(true)
+			})
+		})
+
+		it('reset forcedLogout on login', async () => {
+			fetchMock.mockResponseOnce(':)', { status: UNAUTHORIZED })
+			userStore.token = '123'
+
+			await expect(userStore.fetchProfile()).rejects.toBeTruthy()
+			await expect(userStore.login('', '')).rejects.toBeTruthy()
+
+			expect(userStore.forcedLogout).toEqual(false)
+		})
 	})
 
 	describe('login', () => {

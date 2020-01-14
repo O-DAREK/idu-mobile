@@ -8,5 +8,5 @@ export const unixToShortDate = (unix: number, lang: string) =>
 export const constructFetchErr = async (res: Response) =>
 	new Error(`${res.statusText} - ${(await res.json())?.errors}`)
 
-
-	export const createTime = (hours: number, minutes: number): string => `${hours.toString().padStart(0, '0')}:${minutes.toString().padStart(0, '0')}`
+export const createTime = (hours: number, minutes: number): string =>
+	`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
