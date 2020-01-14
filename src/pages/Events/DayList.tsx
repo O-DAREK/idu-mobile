@@ -1,37 +1,47 @@
-import { Typography } from '@material-ui/core'
-import { formatLong } from 'locales'
-import { observer } from 'mobx-react-lite'
+import { Container, Grid, Typography } from '@material-ui/core'
+import { formatLong, useLocale } from 'locales'
 import React, { useContext } from 'react'
-import { configStore, userStore } from 'stores'
+import { configStore } from 'stores'
+import { Event as EventType } from 'stores/UserStore'
 import styled from 'styled-components'
+import Event from './Event'
 
 interface Props {
-	date: Date
+	events: EventType[]
+	day: Date
 }
 
 const Title = styled(Typography)`
 	margin-left: 20px;
 `
 
-const DayList: React.FC<Props> = observer(({ date }) => {
+const DayList: React.FC<Props> = ({ events, day }) => {
 	const config = useContext(configStore)
-	const user = useContext(userStore)
+	const { NO_EVENTS } = useLocale()
+
+	const allDay = events.filter(e => e.allDay)
+	const normal = events.filter(e => !e.allDay)
 
 	return (
 		<>
-			<Title variant="h6">{formatLong(config.language, date)}</Title>
-			{/* {user.events?.map(e => (
-				<Event
-					key={e.id}
-					name={e.name}
-					from={[11, 23]}
-					to={[12, 32]}
-					color="#ff0000"
-					textColor="#ffffff"
-				/>
-			))} */}
+			<Title variant="h6">{formatLong(config.language, day)}</Title>
+			{events.length === 0 && <Typography>{NO_EVENTS}</Typography>}
+			<Container>
+				<Grid spacing={2} direction="column" container>
+					{normal.map(e => (
+						<Grid key={e.id} item>
+							<Event
+								name={e.name}
+								from={[e.startAt.getHours(), e.startAt.getMinutes()]}
+								to={[e.stopAt.getHours(), e.stopAt.getMinutes()]}
+								color={e.backgroundColor}
+							/>
+						</Grid>
+					))}
+				</Grid>
+			</Container>
 		</>
 	)
-})
+}
 
 export default DayList

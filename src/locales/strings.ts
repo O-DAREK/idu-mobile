@@ -59,6 +59,10 @@ const strings = {
 	EVENTS: {
 		en: 'Events',
 		pl: 'Wydarzenia'
+	},
+	NO_EVENTS: {
+		en: 'You have no events',
+		pl: 'Nie masz żadnych wydarzeń'
 	}
 }
 

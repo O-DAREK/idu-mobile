@@ -3,16 +3,24 @@ import { Badge } from '@material-ui/core'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
+import { observer } from 'mobx-react-lite'
 import IntervalTree from 'node-interval-tree'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { userStore } from 'stores'
 import { Event } from 'stores/UserStore'
 import DayList from './DayList'
 
-const Events: React.FC = () => {
+const Events: React.FC = observer(() => {
 	const [showPicker, setShowPicker] = useState(false)
-	const [selectedDate, setSelectedDate] = useState<MaterialUiPickersDate>(new Date())
+	const [selectedDate, setSelectedDate] = useState<MaterialUiPickersDate>(
+		(() => {
+			const d = new Date()
+			d.setHours(0, 0, 0, 0)
+			return d
+		})()
+	)
 	const user = useContext(userStore)
+	const dayInMillis = 1000 * 60 * 60 * 24
 
 	useEffect(() => {
 		user.fetchEvents()
@@ -32,7 +40,12 @@ const Events: React.FC = () => {
 
 	return (
 		<>
-			{selectedDate && <DayList date={selectedDate} />}
+			{selectedDate && (
+				<DayList
+					events={intervalTree.search(+selectedDate, +selectedDate + dayInMillis)}
+					day={selectedDate}
+				/>
+			)}
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
 				<DatePicker
 					value={selectedDate}
@@ -41,7 +54,7 @@ const Events: React.FC = () => {
 					onClose={() => setShowPicker(false)}
 					onChange={date => setSelectedDate(date)}
 					renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
-						if (day && intervalTree.search(+day, +day + 1000 * 60 * 60 * 24).some(e => e.allDay)) {
+						if (day && intervalTree.search(+day, +day + dayInMillis).some(e => e.allDay)) {
 							return (
 								<Badge color="secondary" variant="dot" overlap="circle">
 									{dayComponent}
@@ -56,6 +69,6 @@ const Events: React.FC = () => {
 			</MuiPickersUtilsProvider>
 		</>
 	)
-}
+})
 
 export default Events
