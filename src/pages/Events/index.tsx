@@ -41,7 +41,7 @@ const Events: React.FC = () => {
 					onClose={() => setShowPicker(false)}
 					onChange={date => setSelectedDate(date)}
 					renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
-						if (day && intervalTree.search(+day, +day + 1000 * 60 * 60 * 24).length !== 0) {
+						if (day && intervalTree.search(+day, +day + 1000 * 60 * 60 * 24).some(e => e.allDay)) {
 							return (
 								<Badge color="secondary" variant="dot" overlap="circle">
 									{dayComponent}
