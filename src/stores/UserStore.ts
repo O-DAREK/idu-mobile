@@ -1,6 +1,7 @@
 import { Roles } from 'constants/interfaces'
 import * as Responses from 'constants/responses'
 import { api } from 'constants/urls'
+import { UNAUTHORIZED } from 'http-status-codes'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
@@ -27,6 +28,7 @@ export default class {
 	@observable token?: string
 	@observable events?: Event[]
 	@observable profile?: Profile
+	@observable forcedLogout = false
 
 	constructor() {
 		this.load()
@@ -55,6 +57,8 @@ export default class {
 	}
 
 	login = async (login: string, password: string): Promise<NonNullable<this['token']>> => {
+		runInAction(() => (this.forcedLogout = false))
+
 		const res = await fetch(api.login(), {
 			method: 'POST',
 			headers: {
@@ -77,10 +81,11 @@ export default class {
 	}
 
 	@action
-	logout = (): void => {
+	logout = (forced = false): void => {
 		this.token = undefined
 		this.profile = undefined
 		this.events = undefined
+		this.forcedLogout = forced
 	}
 
 	@computed
@@ -100,6 +105,8 @@ export default class {
 		})
 
 		if (!res.ok) {
+			if (res.status === UNAUTHORIZED) this.logout(true)
+
 			throw await constructFetchErr(res)
 		}
 
@@ -132,6 +139,8 @@ export default class {
 		})
 
 		if (!res.ok) {
+			if (res.status === UNAUTHORIZED) this.logout(true)
+
 			throw await constructFetchErr(res)
 		}
 

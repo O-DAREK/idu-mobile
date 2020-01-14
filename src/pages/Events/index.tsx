@@ -23,7 +23,7 @@ const Events: React.FC = observer(() => {
 	const dayInMillis = 1000 * 60 * 60 * 24
 
 	useEffect(() => {
-		user.fetchEvents()
+		user.fetchEvents().catch()
 
 		return buildListen(EventNames.EVENTS_CALENDAR, () => {
 			setShowPicker(true)

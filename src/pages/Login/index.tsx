@@ -11,7 +11,7 @@ const PaddedGrid = styled(Grid)`
 `
 
 const Login: React.FC = () => {
-	const { LOGIN, LOG_IN, PASSWORD, FAILED_LOGIN } = useLocale()
+	const { LOGIN, LOG_IN, PASSWORD, FAILED_LOGIN, SESSION_EXPIRED } = useLocale()
 	const [login, setLogin] = useState('s.t.1234')
 	const [password, setPassword] = useState('password')
 	const user = useContext(userStore)
@@ -19,6 +19,7 @@ const Login: React.FC = () => {
 
 	return (
 		<>
+			{user.forcedLogout && <Snackbar variant="warning">{SESSION_EXPIRED}</Snackbar>}
 			{loading && <TopLoading />}
 			{error && <Snackbar variant="error">{FAILED_LOGIN}</Snackbar>}
 			<Grid

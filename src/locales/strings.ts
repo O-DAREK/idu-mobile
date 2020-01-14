@@ -63,6 +63,10 @@ const strings = {
 	NO_EVENTS: {
 		en: 'You have no events',
 		pl: 'Nie masz żadnych wydarzeń'
+	},
+	SESSION_EXPIRED: {
+		en: 'Your session has expired',
+		pl: 'Twoja sesja wygasła'
 	}
 }
 

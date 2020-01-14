@@ -15,7 +15,7 @@ const Logout: React.FC = observer(() => {
 				<Typography>{LOG_OUT}</Typography>
 			</Grid>
 			<Grid item>
-				<IconButton onClick={user.logout}>
+				<IconButton onClick={() => user.logout()}>
 					<ExitToApp />
 				</IconButton>
 			</Grid>
