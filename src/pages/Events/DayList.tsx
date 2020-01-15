@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from '@material-ui/core'
+import { Container, Grid, Paper, Typography } from '@material-ui/core'
 import { formatLong, useLocale } from 'locales'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
@@ -22,6 +22,23 @@ const StickyDate = styled(Typography)`
 	top: 0;
 `
 
+const AllDayEvent = styled(Paper)<{ bgColor: string; textColor: string }>`
+	padding: 10px;
+	color: ${p => p.textColor};
+	background-color: ${p => p.bgColor};
+	max-width: 200px;
+	height: 50px;
+	margin: 10px;
+	flex: 0 0 auto;
+`
+
+const HorizontalView = styled.div`
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	margin: 20px 0;
+`
+
 const DayList: React.FC<Props> = ({ events, day }) => {
 	const config = useContext(configStore)
 	const { NO_EVENTS } = useLocale()
@@ -34,6 +51,18 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 			<StickyDate variant="h6">{formatLong(config.language, day)}</StickyDate>
 			<Container>
 				{events.length === 0 && <FaintText>{NO_EVENTS}</FaintText>}
+				<HorizontalView>
+					{allDay.map(e => (
+						<AllDayEvent
+							bgColor={e.backgroundColor}
+							textColor={e.textColor}
+							key={e.id}
+							variant="outlined"
+						>
+							{e.name}
+						</AllDayEvent>
+					))}
+				</HorizontalView>
 				<Grid spacing={2} direction="column" container>
 					{normal.map(e => (
 						<Grid key={e.id} item>
