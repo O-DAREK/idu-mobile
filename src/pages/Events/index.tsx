@@ -8,6 +8,7 @@ import IntervalTree from 'node-interval-tree'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { userStore } from 'stores'
 import { Event } from 'stores/UserStore'
+import { ignoreRejection } from 'utils'
 import DayList from './DayList'
 
 const Events: React.FC = observer(() => {
@@ -23,7 +24,7 @@ const Events: React.FC = observer(() => {
 	const dayInMillis = 1000 * 60 * 60 * 24
 
 	useEffect(() => {
-		user.fetchEvents().catch()
+		ignoreRejection(user.fetchEvents())
 
 		return buildListen(EventNames.EVENTS_CALENDAR, () => {
 			setShowPicker(true)

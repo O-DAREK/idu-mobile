@@ -10,3 +10,5 @@ export const constructFetchErr = async (res: Response) =>
 
 export const createTime = (hours: number, minutes: number): string =>
 	`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
+
+	export const ignoreRejection = <T>(promise: Promise<T>) => promise.catch(() => {})
