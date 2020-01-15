@@ -11,8 +11,15 @@ interface Props {
 	day: Date
 }
 
-const Title = styled(Typography)`
-	margin-left: 20px;
+const FaintText = styled(Typography)`
+	opacity: 0.7;
+`
+
+const StickyDate = styled(Typography)`
+	position: sticky;
+	text-align: center;
+	background-color: ${p => p.theme.palette.background.default};
+	top: 0;
 `
 
 const DayList: React.FC<Props> = ({ events, day }) => {
@@ -24,9 +31,9 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 
 	return (
 		<>
-			<Title variant="h6">{formatLong(config.language, day)}</Title>
-			{events.length === 0 && <Typography>{NO_EVENTS}</Typography>}
+			<StickyDate variant="h6">{formatLong(config.language, day)}</StickyDate>
 			<Container>
+				{events.length === 0 && <FaintText>{NO_EVENTS}</FaintText>}
 				<Grid spacing={2} direction="column" container>
 					{normal.map(e => (
 						<Grid key={e.id} item>

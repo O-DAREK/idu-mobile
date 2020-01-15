@@ -10,18 +10,18 @@ interface Props {
 	color: string
 }
 
-const ColoredPaper = styled(Paper)<{ color: string }>`
-	border: 2px solid ${p => p.color};
+const AccentedPaper = styled(Paper)<{ accent: string }>`
+	border: 2px solid ${p => p.accent};
 	padding: 10px;
 `
 
 const Event: React.FC<Props> = ({ color, from, name, to }) => (
-	<ColoredPaper color={color}>
+	<AccentedPaper accent={color}>
 		<Typography component="p" paragraph>
 			{name}
 		</Typography>
 		<Typography variant="overline">{`${createTime(...from)}-${createTime(...to)}`}</Typography>
-	</ColoredPaper>
+	</AccentedPaper>
 )
 
 export default Event
