@@ -22,7 +22,10 @@ const StickyDate = styled(Typography)`
 	top: 0;
 `
 
-const AllDayEvent = styled(Paper)<{ bgColor: string; textColor: string }>`
+const AllDayEvent = styled(({ bgColor, textColor, ...rest }) => <Paper {...rest} />)<{
+	bgColor: string
+	textColor: string
+}>`
 	padding: 10px;
 	color: ${p => p.textColor};
 	background-color: ${p => p.bgColor};
