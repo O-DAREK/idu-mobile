@@ -1,10 +1,11 @@
-import { Container, Grid, Paper, Typography } from '@material-ui/core'
+import { Container, Grid, Typography } from '@material-ui/core'
 import { formatLong, useLocale } from 'locales'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
 import { Event as EventType } from 'stores/UserStore'
 import styled from 'styled-components'
-import Event from './Event'
+import SingleEvent from './SingleEvent'
+import AllDayEvent from './AllDayEvent'
 
 interface Props {
 	events: EventType[]
@@ -20,19 +21,6 @@ const StickyDate = styled(Typography)`
 	text-align: center;
 	background-color: ${p => p.theme.palette.background.default};
 	top: 0;
-`
-
-const AllDayEvent = styled(({ bgColor, textColor, ...rest }) => <Paper {...rest} />)<{
-	bgColor: string
-	textColor: string
-}>`
-	padding: 10px;
-	color: ${p => p.textColor};
-	background-color: ${p => p.bgColor};
-	max-width: 200px;
-	height: 50px;
-	margin: 10px;
-	flex: 0 0 auto;
 `
 
 const HorizontalView = styled.div`
@@ -69,7 +57,7 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 				<Grid spacing={2} direction="column" container>
 					{normal.map(e => (
 						<Grid key={e.id} item>
-							<Event
+							<SingleEvent
 								name={e.name}
 								from={[e.startAt.getHours(), e.startAt.getMinutes()]}
 								to={[e.stopAt.getHours(), e.stopAt.getMinutes()]}

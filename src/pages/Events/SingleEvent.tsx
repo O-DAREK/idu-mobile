@@ -15,7 +15,7 @@ const AccentedPaper = styled(Paper)<{ accent: string }>`
 	padding: 10px;
 `
 
-const Event: React.FC<Props> = ({ color, from, name, to }) => (
+const SingleEvent: React.FC<Props> = ({ color, from, name, to }) => (
 	<AccentedPaper accent={color}>
 		<Typography component="p" paragraph>
 			{name}
@@ -24,4 +24,4 @@ const Event: React.FC<Props> = ({ color, from, name, to }) => (
 	</AccentedPaper>
 )
 
-export default Event
+export default SingleEvent
