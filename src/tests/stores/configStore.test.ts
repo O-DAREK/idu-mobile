@@ -30,18 +30,18 @@ describe('config store', () => {
 	})
 
 	it('should save to localstorage', () => {
-		configStore.changeLanguage(Language.pl)
+		configStore.changeLanguage(Language.polish)
 		configStore.changeTheme('dark')
 
 		expect(JSON.parse(window.localStorage.getItem('ConfigStore') || '{}')).toEqual({
-			language: Language.pl,
+			language: Language.polish,
 			theme: 'dark'
 		})
 	})
 
 	it('should load from localstorage', () => {
 		const settings = {
-			language: Language.pl,
+			language: Language.polish,
 			theme: 'dark'
 		}
 
@@ -54,9 +54,9 @@ describe('config store', () => {
 	})
 
 	it('should change language', () => {
-		configStore.changeLanguage(Language.pl)
+		configStore.changeLanguage(Language.polish)
 
-		expect(configStore.language).toBe(Language.pl)
+		expect(configStore.language).toBe(Language.polish)
 	})
 
 	it('should change theme', () => {

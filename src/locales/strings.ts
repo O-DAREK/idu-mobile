@@ -1,6 +1,6 @@
 export enum Language {
-	en = 'en',
-	pl = 'pl'
+	english = 'en',
+	polish = 'pl'
 }
 
 const strings = {

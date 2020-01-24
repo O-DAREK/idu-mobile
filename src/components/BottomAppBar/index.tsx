@@ -6,6 +6,7 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
+	Slide,
 	SwipeableDrawer,
 	Toolbar,
 	Typography
@@ -28,8 +29,8 @@ const Grow = styled.div`
 	flex-grow: 1;
 `
 
-const Content = styled.div`
-	padding-bottom: 90px;
+const Content = styled.div<{ pad: boolean }>`
+	padding-bottom: ${p => (p.pad ? 90 : 0)}px;
 	min-height: calc(100 * var(--visible-height, 1vh));
 `
 
@@ -118,15 +119,13 @@ const BottomAppBar: React.FC = ({ children }) => {
 		[MESSAGES, NEWS, SETTINGS, EVENTS]
 	)
 
-	if (!(history.location.pathname in states)) {
-		return <>{children}</>
-	}
+	const show = history.location.pathname in states
 
-	const { title, fab, actions } = states[history.location.pathname]
+	const { title, fab, actions } = states[history.location.pathname] || {}
 
 	return (
 		<>
-			<Content>
+			<Content pad={show}>
 				{title && <Title variant="h5">{title}</Title>}
 				{children}
 			</Content>
@@ -155,6 +154,7 @@ const BottomAppBar: React.FC = ({ children }) => {
 					))}
 				</List>
 			</SwipeableDrawer>
+			<Slide direction="up" in={show}>
 			<AppBarBottom position="fixed">
 				<Toolbar>
 					<IconButton onClick={() => setOpenDrawer(true)} edge="start">
@@ -173,6 +173,7 @@ const BottomAppBar: React.FC = ({ children }) => {
 					))}
 				</Toolbar>
 			</AppBarBottom>
+			</Slide>
 		</>
 	)
 }
