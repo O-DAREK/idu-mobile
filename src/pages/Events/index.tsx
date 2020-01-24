@@ -38,11 +38,15 @@ const Events: React.FC = observer(() => {
 
 	useEffect(() => {
 		if (meta.isOnline) fetchEvents()
+	}, [meta.isOnline, fetchEvents])
 
-		return buildListen(EventNames.EVENTS_CALENDAR, () => {
-			setShowPicker(true)
-		})
-	}, [user, meta.isOnline, fetchEvents])
+	useEffect(
+		() =>
+			buildListen(EventNames.EVENTS_CALENDAR, () => {
+				setShowPicker(true)
+			}),
+		[]
+	)
 
 	const intervalTree = useMemo(() => {
 		const it = new IntervalTree<Event>()
