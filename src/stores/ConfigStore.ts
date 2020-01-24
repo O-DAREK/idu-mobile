@@ -3,7 +3,9 @@ import { Language } from 'locales/strings'
 import { action, autorun, observable } from 'mobx'
 
 export default class {
-	@observable language: Language = /en/i.test(window.navigator.language) ? Language.en : Language.pl
+	@observable language: Language = /en/i.test(window.navigator.language)
+		? Language.english
+		: Language.polish
 	@observable theme: Theme =
 		window.matchMedia && window.matchMedia(`(prefers-color-scheme: dark)`).matches
 			? 'dark'

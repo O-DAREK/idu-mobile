@@ -4,15 +4,23 @@ import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
+import enLocale from 'date-fns/locale/en-US'
+import plLocale from 'date-fns/locale/pl'
+import { Language } from 'locales'
 import { observer } from 'mobx-react-lite'
 import IntervalTree from 'node-interval-tree'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { metaStore, userStore } from 'stores'
+import { configStore, metaStore, userStore } from 'stores'
 import { Event } from 'stores/UserStore'
 import useAsync from 'use-async-react'
 import DayList from './DayList'
 
 const dayInMillis = 1000 * 60 * 60 * 24
+
+const locales: { [key in Language]: any } = {
+	pl: plLocale,
+	en: enLocale
+}
 
 const Events: React.FC = observer(() => {
 	const [showPicker, setShowPicker] = useState(false)
@@ -24,6 +32,7 @@ const Events: React.FC = observer(() => {
 		})()
 	)
 	const user = useContext(userStore)
+	const config = useContext(configStore)
 	const meta = useContext(metaStore)
 	const { call: fetchEvents, loading } = useAsync(user.fetchEvents)
 
@@ -52,7 +61,7 @@ const Events: React.FC = observer(() => {
 					day={selectedDate}
 				/>
 			)}
-			<MuiPickersUtilsProvider utils={DateFnsUtils}>
+			<MuiPickersUtilsProvider utils={DateFnsUtils} locale={locales[config.language]}>
 				<DatePicker
 					value={selectedDate}
 					style={{ display: 'none' }}
