@@ -19,9 +19,9 @@ const ChangeSettings: React.FC = observer(() => {
 						value={config.language}
 						onChange={e => config.changeLanguage(e.target.value as Language)}
 					>
-						{Object.keys(Language).map(e => (
-							<MenuItem value={e} key={e}>
-								{e}
+						{(Object.keys(Language) as (keyof typeof Language)[]).map(lang => (
+							<MenuItem value={Language[lang]} key={lang}>
+								{lang}
 							</MenuItem>
 						))}
 					</Select>
