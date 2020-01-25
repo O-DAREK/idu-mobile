@@ -18,7 +18,8 @@ const GlobalStyles = createGlobalStyle`
 const App = observer(() => {
 	const user = useContext(userStore)
 	const config = useContext(configStore)
-	const theme = muiTheme(config.theme)
+	const theme = muiTheme(config.theme, ...config.accentColors)
+
 	useEffect(() => {
 		setVisibleHeight()
 	}, [])

@@ -67,6 +67,18 @@ const strings = {
 	SESSION_EXPIRED: {
 		en: 'Your session has expired',
 		pl: 'Twoja sesja wygasła'
+	},
+	ACCENT_COLORS: {
+		en: 'Accent colors',
+		pl: 'Kolory akcentowe'
+	},
+	PRIMARY: {
+		en: 'Primary',
+		pl: 'Podstawowy'
+	},
+	SECONDARY: {
+		en: 'Secondary',
+		pl: 'Poboczny'
 	}
 }
 

@@ -1,11 +1,17 @@
 import { Divider, Grid } from '@material-ui/core'
 import { Container } from 'components'
-import React from 'react'
+import { buildListen, EventNames } from 'components/BottomAppBar/events'
+import React, { useContext, useEffect } from 'react'
+import { configStore } from 'stores'
+import ChangeColors from './ChangeColors'
 import ChangeLanguage from './ChangeLanguage'
 import ChangeTheme from './ChangeTheme'
 import Logout from './Logout'
 
 const Settings: React.FC = () => {
+	const config = useContext(configStore)
+	useEffect(() => buildListen(EventNames.SETTINGS_RESTORE, config.reset), [config])
+
 	return (
 		<Container>
 			<Grid direction="column" spacing={3} container>
@@ -17,6 +23,12 @@ const Settings: React.FC = () => {
 				</Grid>
 				<Grid item>
 					<ChangeTheme />
+				</Grid>
+				<Grid item>
+					<Divider />
+				</Grid>
+				<Grid item>
+					<ChangeColors />
 				</Grid>
 				<Grid item>
 					<Divider />

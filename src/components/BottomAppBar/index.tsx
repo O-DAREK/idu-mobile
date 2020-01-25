@@ -12,7 +12,7 @@ import {
 	Toolbar,
 	Typography
 } from '@material-ui/core'
-import { SvgIconComponent } from '@material-ui/icons'
+import { Restore as RestoreIcon, SvgIconComponent } from '@material-ui/icons'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 import EventIcon from '@material-ui/icons/Event'
 import InfoIcon from '@material-ui/icons/Info'
@@ -24,7 +24,7 @@ import { useLocale } from 'locales'
 import React, { useMemo, useState } from 'react'
 import { useHistory } from 'react-router'
 import styled from 'styled-components'
-import { eev, EventNames } from './events'
+import { emit, EventNames } from './events'
 
 const Grow = styled.div`
 	flex-grow: 1;
@@ -79,14 +79,20 @@ const BottomAppBar: React.FC = ({ children }) => {
 				title: NEWS
 			},
 			[internal.settings()]: {
-				title: SETTINGS
+				title: SETTINGS,
+				actions: [
+					{
+						Icon: RestoreIcon,
+						onClick: () => emit(EventNames.SETTINGS_RESTORE)
+					}
+				]
 			},
 			[internal.events()]: {
 				title: EVENTS,
 				actions: [
 					{
 						Icon: EventIcon,
-						onClick: () => eev.emit(EventNames.EVENTS_CALENDAR)
+						onClick: () => emit(EventNames.EVENTS_CALENDAR)
 					}
 				]
 			}

@@ -1,4 +1,5 @@
 import { Language } from 'locales'
+import { runInAction } from 'mobx'
 import ConfigStore from 'stores/ConfigStore'
 
 describe('config store', () => {
@@ -12,45 +13,68 @@ describe('config store', () => {
 			dispatchEvent: jest.fn()
 		}))
 	})
+	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem('ConfigStore') || dflt)
 
 	let configStore: ConfigStore
 	beforeEach(() => (configStore = new ConfigStore()))
 	afterEach(() => window.localStorage.removeItem('ConfigStore'))
 
 	it('should have defaults', () => {
-		expect(configStore.language).toBeTruthy()
-		expect(configStore.theme).toBeTruthy()
+		expect(typeof configStore.language).toBe('string')
+		expect(typeof configStore.theme).toBe('string')
+		expect(configStore.accentColors).toHaveLength(2)
+		expect(configStore.accentColors[0]).toMatch(/^#[0-9a-f]{6}$/i)
+		expect(configStore.accentColors[1]).toMatch(/^#[0-9a-f]{6}$/i)
+	})
+
+	it('should reset back to defaults', () => {
+		runInAction(() => {
+			configStore.theme = 'asd' as any
+			configStore.language = 'asd' as any
+			configStore.accentColors = ['#132123', '#432109']
+		})
+
+		configStore.reset()
+		expect(configStore.language).not.toBe('asd')
+		expect(configStore.theme).not.toBe('asd')
+		expect(configStore.accentColors).not.toEqual(['#132123', '#432109'])
 	})
 
 	it('should defaults saved to localstorage', () => {
-		expect(JSON.parse(window.localStorage.getItem('ConfigStore') || '{}')).toEqual({
+		expect(getLS()).toEqual({
 			language: configStore.language,
-			theme: configStore.theme
+			theme: configStore.theme,
+			accentColors: ['#2196f3', '#ff80ab']
 		})
 	})
 
 	it('should save to localstorage', () => {
 		configStore.changeLanguage(Language.polish)
 		configStore.changeTheme('dark')
+		configStore.changePrimaryColor('#111111')
+		configStore.changeSecondaryColor('#555555')
 
-		expect(JSON.parse(window.localStorage.getItem('ConfigStore') || '{}')).toEqual({
+		expect(getLS()).toEqual({
 			language: Language.polish,
-			theme: 'dark'
+			theme: 'dark',
+			accentColors: ['#111111', '#555555']
 		})
 	})
 
 	it('should load from localstorage', () => {
 		const settings = {
 			language: Language.polish,
-			theme: 'dark'
+			theme: 'dark',
+			accentColors: ['#111111', '#555555']
 		}
 
 		window.localStorage.setItem('ConfigStore', JSON.stringify(settings))
 
-		const configStore2 = new ConfigStore()
+		const configStore = new ConfigStore()
 
-		expect(configStore2.language).toBe(settings.language)
-		expect(configStore2.theme).toBe(settings.theme)
+		expect(configStore.language).toBe(settings.language)
+		expect(configStore.theme).toBe(settings.theme)
+		expect(configStore.accentColors).toEqual(settings.accentColors)
 	})
 
 	it('should change language', () => {
@@ -63,5 +87,12 @@ describe('config store', () => {
 		configStore.changeTheme('light')
 
 		expect(configStore.theme).toBe('light')
+	})
+
+	it('should change accent colors', () => {
+		configStore.changePrimaryColor('#123123')
+		configStore.changeSecondaryColor('#321321')
+
+		expect(configStore.accentColors).toEqual(['#123123', '#321321'])
 	})
 })
