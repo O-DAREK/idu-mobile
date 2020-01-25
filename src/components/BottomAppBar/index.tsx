@@ -1,6 +1,7 @@
 import {
 	AppBar as MuiAppBar,
 	Fab,
+	Grow as GrowTransition,
 	IconButton,
 	List,
 	ListItem,
@@ -127,7 +128,9 @@ const BottomAppBar: React.FC = ({ children }) => {
 		<>
 			<Content pad={show}>
 				{title && <Title variant="h5">{title}</Title>}
-				{children}
+				<GrowTransition in={true} key={title}>
+					<div>{children}</div>
+				</GrowTransition>
 			</Content>
 			<SwipeableDrawer
 				anchor="bottom"
