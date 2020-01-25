@@ -26,7 +26,7 @@ const BackBar: React.FC<Props> = ({ to }) => {
 		<StickyBar elevation={trigger ? 4 : 0}>
 			<Toolbar>
 				<CleanLink to={to}>
-					<IconButton edge="start" color="inherit">
+					<IconButton edge="start" color="default">
 						<ArrowBackIcon />
 					</IconButton>
 				</CleanLink>
