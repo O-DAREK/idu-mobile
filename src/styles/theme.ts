@@ -1,14 +1,15 @@
 import { createMuiTheme } from '@material-ui/core'
-import { blue } from '@material-ui/core/colors'
 import { Theme } from 'constants/interfaces'
 
-export const muiTheme = (themeType: Theme) =>
+export const muiTheme = (themeType: Theme, primary: string, secondary: string) =>
 	createMuiTheme({
 		palette: {
 			type: themeType,
-			primary: blue,
+			primary: {
+				main: primary
+			},
 			secondary: {
-				main: '#ff80ab'
+				main: secondary
 			}
 		}
 	})

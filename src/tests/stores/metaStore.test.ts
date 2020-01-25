@@ -15,6 +15,7 @@ describe('meta store', () => {
 	it('should have defaults', () => {
 		onlineGetter.mockReturnValue(false)
 		expect(metaStore.isOnline).toBe(false)
+		expect(metaStore.availableUpdate).toBe(false)
 	})
 
 	it('should react to onoffline', () => {
@@ -27,5 +28,10 @@ describe('meta store', () => {
 		onlineGetter.mockReturnValue(true)
 		eventMap.online()
 		expect(metaStore.isOnline).toBe(true)
+	})
+
+	it('should change availableUpdate status', () => {
+		metaStore.theresAnUpdate()
+		expect(metaStore.availableUpdate).toBe(true)
 	})
 })

@@ -10,6 +10,7 @@ export default class {
 		window.matchMedia && window.matchMedia(`(prefers-color-scheme: dark)`).matches
 			? 'dark'
 			: 'light'
+	@observable accentColors: [string, string] = ['#2196f3', '#ff80ab']
 
 	constructor() {
 		this.load()
@@ -19,7 +20,11 @@ export default class {
 	private save = (): void =>
 		window.localStorage.setItem(
 			'ConfigStore',
-			JSON.stringify({ language: this.language, theme: this.theme })
+			JSON.stringify({
+				language: this.language,
+				theme: this.theme,
+				accentColors: this.accentColors
+			})
 		)
 
 	@action
@@ -34,5 +39,15 @@ export default class {
 	@action
 	changeTheme = (to: Theme): void => {
 		this.theme = to
+	}
+
+	@action
+	changePrimaryColor = (to: string): void => {
+		this.accentColors[0] = to
+	}
+
+	@action
+	changeSecondaryColor = (to: string): void => {
+		this.accentColors[1] = to
 	}
 }
