@@ -10,7 +10,7 @@ import Logout from './Logout'
 
 const Settings: React.FC = () => {
 	const config = useContext(configStore)
-	useEffect(() => buildListen(EventNames.SETTINGS_RESTORE, config.reset), [])
+	useEffect(() => buildListen(EventNames.SETTINGS_RESTORE, config.reset), [config])
 
 	return (
 		<Container>
