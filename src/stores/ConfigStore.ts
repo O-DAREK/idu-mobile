@@ -3,16 +3,12 @@ import { Language } from 'locales/strings'
 import { action, autorun, observable } from 'mobx'
 
 export default class {
-	@observable language: Language = /en/i.test(window.navigator.language)
-		? Language.english
-		: Language.polish
-	@observable theme: Theme =
-		window.matchMedia && window.matchMedia(`(prefers-color-scheme: dark)`).matches
-			? 'dark'
-			: 'light'
-	@observable accentColors: [string, string] = ['#2196f3', '#ff80ab']
+	@observable language!: Language
+	@observable theme!: Theme
+	@observable accentColors!: [string, string]
 
 	constructor() {
+		this.reset()
 		this.load()
 		autorun(this.save)
 	}
@@ -30,6 +26,16 @@ export default class {
 	@action
 	private load = (): void =>
 		Object.assign(this, JSON.parse(window.localStorage.getItem('ConfigStore') || '{}'))
+
+	@action
+	reset = () => {
+		this.language = /en/i.test(window.navigator.language) ? Language.english : Language.polish
+		this.theme =
+			window.matchMedia && window.matchMedia(`(prefers-color-scheme: dark)`).matches
+				? 'dark'
+				: 'light'
+		this.accentColors = ['#2196f3', '#ff80ab']
+	}
 
 	@action
 	changeLanguage = (to: Language): void => {
