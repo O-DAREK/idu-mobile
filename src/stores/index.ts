@@ -9,9 +9,3 @@ configure({ enforceActions: 'always' })
 export const userStore = createContext(new UserStore())
 export const configStore = createContext(new ConfigStore())
 export const metaStore = createContext(new MetaStore())
-
-export interface IStores {
-	userStore: UserStore
-	configStore: ConfigStore
-	metaStore: MetaStore
-}
