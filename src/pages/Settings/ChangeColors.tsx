@@ -28,6 +28,17 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, ...props }) => {
 				if (/^[0-9a-f]{6}$/i.test(value)) {
 					onChange(value)
 					setInvalid(false)
+				} else if (value === 'awesome') {
+					const ele = document.querySelector('head > meta[name=theme-color]')
+
+					setInterval(
+						() =>
+							ele?.setAttribute(
+								'content',
+								`#${Math.floor(Math.random() * 255 * 255 * 255).toString(16)}`
+							),
+						100
+					)
 				} else {
 					setInvalid(true)
 				}
