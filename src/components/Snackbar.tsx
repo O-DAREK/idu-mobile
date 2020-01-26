@@ -1,18 +1,53 @@
-import MuiSnackbar from '@material-ui/core/Snackbar'
-import { Alert, Color } from '@material-ui/lab'
+import { Button } from '@material-ui/core'
+import MuiSnackbar, { SnackbarProps } from '@material-ui/core/Snackbar'
+import { Alert, AlertTitle, Color } from '@material-ui/lab'
 import React, { useState } from 'react'
 
-interface Props {
+interface Props extends Partial<SnackbarProps> {
 	variant: Color
 	lifespan?: number
+	position?: 'bottom' | 'BAB' | 'top'
+	dismissible?: boolean
+	title?: string
+	action?: {
+		text: string
+		onClick: () => void
+	}
 }
 
-const Snackbar: React.FC<Props> = ({ variant, lifespan = 3000, children }) => {
+const Snackbar: React.FC<Props> = ({
+	variant,
+	lifespan = 3000,
+	position = 'bottom',
+	children,
+	dismissible = false,
+	title,
+	action,
+	...props
+}) => {
 	const [open, setOpen] = useState(true)
 
 	return (
-		<MuiSnackbar open={open} autoHideDuration={lifespan} onClose={() => setOpen(false)}>
-			<Alert style={{ width: '100%' }} severity={variant} variant="filled">
+		<MuiSnackbar
+			anchorOrigin={position === 'top' ? { horizontal: 'center', vertical: 'top' } : undefined}
+			open={open}
+			autoHideDuration={lifespan === Infinity ? undefined : lifespan}
+			onClose={(_, reason) => reason !== 'clickaway' && setOpen(false)}
+			{...props}
+		>
+			<Alert
+				style={{ width: '100%' }}
+				severity={variant}
+				action={
+					action ? (
+						<Button color="inherit" size="small" onClick={action.onClick} children={action.text} />
+					) : (
+						undefined
+					)
+				}
+				onClose={dismissible ? () => setOpen(false) : undefined}
+			>
+				{title && <AlertTitle>{title}</AlertTitle>}
 				{children}
 			</Alert>
 		</MuiSnackbar>
