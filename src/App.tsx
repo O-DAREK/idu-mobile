@@ -20,6 +20,10 @@ const App = observer(() => {
 	const config = useContext(configStore)
 	const theme = muiTheme(config.theme, ...config.accentColors)
 
+	document
+		.querySelector('head > meta[name=theme-color]')
+		?.setAttribute('content', theme.palette.background.default)
+
 	useEffect(() => {
 		setVisibleHeight()
 	}, [])
