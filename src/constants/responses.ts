@@ -12,6 +12,8 @@ export type Profile = {
 		last_name: string
 		mobile_phone: string
 		role: keyof typeof Roles
+		messages_count: number
+		unread_messages_count: number
 	}
 }
 
