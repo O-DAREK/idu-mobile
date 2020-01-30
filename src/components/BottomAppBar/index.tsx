@@ -1,5 +1,6 @@
 import {
 	AppBar as MuiAppBar,
+	Badge,
 	Fab,
 	Grow as GrowTransition,
 	IconButton,
@@ -21,8 +22,10 @@ import MessageIcon from '@material-ui/icons/Message'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { internal } from 'constants/urls'
 import { useLocale } from 'locales'
-import React, { useMemo, useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router'
+import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { emit, EventNames } from './events'
 
@@ -65,10 +68,16 @@ interface InternalProps {
 }
 
 /* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
-const BottomAppBar: React.FC = ({ children }) => {
+const BottomAppBar: React.FC = observer(({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const history = useHistory()
 	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
+	const user = useContext(userStore)
+	const meta = useContext(metaStore)
+
+	useEffect(() => {
+		if (meta.isOnline) user.fetchProfile()
+	}, [meta.isOnline, user])
 
 	const states: { [key: string]: InternalProps } = useMemo(
 		() => ({
@@ -100,31 +109,32 @@ const BottomAppBar: React.FC = ({ children }) => {
 		[MESSAGES, NEWS, SETTINGS, EVENTS]
 	)
 
-	const navigation = useMemo(
-		() => [
-			{
-				name: MESSAGES,
-				url: internal.messages(),
-				Icon: MessageIcon
-			},
-			{
-				name: EVENTS,
-				url: internal.events(),
-				Icon: CalendarTodayIcon
-			},
-			{
-				name: NEWS,
-				url: internal.news(),
-				Icon: InfoIcon
-			},
-			{
-				name: SETTINGS,
-				url: internal.settings(),
-				Icon: SettingsIcon
-			}
-		],
-		[MESSAGES, NEWS, SETTINGS, EVENTS]
-	)
+	const navigation = [
+		{
+			name: MESSAGES,
+			url: internal.messages(),
+			Icon: () => (
+				<Badge color="secondary" badgeContent={user.profile?.unreadMessagesCount} max={99}>
+					<MessageIcon />
+				</Badge>
+			)
+		},
+		{
+			name: EVENTS,
+			url: internal.events(),
+			Icon: CalendarTodayIcon
+		},
+		{
+			name: NEWS,
+			url: internal.news(),
+			Icon: InfoIcon
+		},
+		{
+			name: SETTINGS,
+			url: internal.settings(),
+			Icon: SettingsIcon
+		}
+	]
 
 	const show = history.location.pathname in states
 
@@ -164,27 +174,27 @@ const BottomAppBar: React.FC = ({ children }) => {
 				</List>
 			</SwipeableDrawer>
 			<Slide direction="up" in={show}>
-			<AppBarBottom position="fixed">
-				<Toolbar>
-					<IconButton onClick={() => setOpenDrawer(true)} edge="start">
-						<MenuIcon />
-					</IconButton>
-					{fab && (
-						<MiddleFab onClick={fab.onClick} color="secondary">
-							<fab.Icon />
-						</MiddleFab>
-					)}
-					<Grow />
-					{actions?.map(({ onClick, Icon }, i) => (
-						<IconButton onClick={onClick} key={i}>
-							<Icon />
+				<AppBarBottom position="fixed">
+					<Toolbar>
+						<IconButton onClick={() => setOpenDrawer(true)} edge="start">
+							<MenuIcon />
 						</IconButton>
-					))}
-				</Toolbar>
-			</AppBarBottom>
+						{fab && (
+							<MiddleFab onClick={fab.onClick} color="secondary">
+								<fab.Icon />
+							</MiddleFab>
+						)}
+						<Grow />
+						{actions?.map(({ onClick, Icon }, i) => (
+							<IconButton onClick={onClick} key={i}>
+								<Icon />
+							</IconButton>
+						))}
+					</Toolbar>
+				</AppBarBottom>
 			</Slide>
 		</>
 	)
-}
+})
 
 export default BottomAppBar

@@ -5,7 +5,6 @@ import React, { useContext, useEffect } from 'react'
 import { configStore, userStore } from 'stores'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { muiTheme } from 'styles/theme'
-import { ToastContainer } from 'utils/toast'
 import { setVisibleHeight } from 'visible-height-css'
 import Router from './Router'
 
@@ -33,7 +32,6 @@ const App = observer(() => {
 			<ThemeProvider theme={theme}>
 				<MuiThemeProvider theme={theme}>
 					<>
-						<ToastContainer />
 						<CssBaseline />
 						<GlobalStyles />
 						<Router loggedIn={user.isLoggedIn} />

@@ -158,7 +158,9 @@ describe('user store', () => {
 						first_name: 'Zack',
 						last_name: 'Boomer',
 						role: 'student',
-						mobile_phone: '123123'
+						mobile_phone: '123123',
+						messages_count: 123,
+						unread_messages_count: 123
 					}
 				} as Profile)
 			)
@@ -169,21 +171,27 @@ describe('user store', () => {
 				firstName: 'Zack',
 				lastName: 'Boomer',
 				role: Roles.student,
-				mobilePhone: '123123'
+				mobilePhone: '123123',
+				messagesCount: 123,
+				unreadMessagesCount: 123
 			})
 			expect(userStore.profile).toEqual({
 				id: 4138,
 				firstName: 'Zack',
 				lastName: 'Boomer',
 				role: Roles.student,
-				mobilePhone: '123123'
+				mobilePhone: '123123',
+				messagesCount: 123,
+				unreadMessagesCount: 123
 			})
 			expect(getLS().profile).toEqual({
 				id: 4138,
 				firstName: 'Zack',
 				lastName: 'Boomer',
 				role: Roles.student,
-				mobilePhone: '123123'
+				mobilePhone: '123123',
+				messagesCount: 123,
+				unreadMessagesCount: 123
 			})
 		})
 		it('should fail for some reason', async () => {
@@ -232,7 +240,9 @@ describe('user store', () => {
 			lastName: 'ha ha',
 			id: 12342,
 			role: Roles.student,
-			mobilePhone: '123123123'
+			mobilePhone: '123123123',
+			messagesCount: 123,
+			unreadMessagesCount: 123
 		}
 
 		userStore.logout()

@@ -22,6 +22,8 @@ type Profile = {
 	lastName: string
 	mobilePhone: string
 	role: Roles
+	messagesCount: number
+	unreadMessagesCount: number
 }
 
 export default class {
@@ -151,7 +153,9 @@ export default class {
 				firstName: json.profile.first_name,
 				lastName: json.profile.last_name,
 				mobilePhone: json.profile.mobile_phone,
-				role: Roles[json.profile.role]
+				role: Roles[json.profile.role],
+				messagesCount: json.profile.messages_count,
+				unreadMessagesCount: json.profile.unread_messages_count
 			}
 		})
 
