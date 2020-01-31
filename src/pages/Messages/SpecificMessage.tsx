@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@material-ui/core'
 import { BackBar, Container, PaddedPaper } from 'components'
-import { internal } from 'constants/urls'
+import * as urls from 'constants/urls'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
@@ -17,7 +17,7 @@ const SpecificMessage: React.FC<Props> = observer(({ id }) => {
 
 	return (
 		<>
-			<BackBar to={internal.messages()} />
+			<BackBar to={urls.internal.messages()} />
 			<Container>
 				{!foundThread && <Typography>Sorry, couldnt find these messages</Typography>}
 				{foundThread && (

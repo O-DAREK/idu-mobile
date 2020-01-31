@@ -8,7 +8,7 @@ import {
 	ListItemText
 } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
-import { internal } from 'constants/urls'
+import * as urls from 'constants/urls'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { configStore } from 'stores'
@@ -111,7 +111,10 @@ const MessageList = () => {
 			) : (
 				__mockMessages.map(({ id, avatar, name, title, texts }, i) => (
 					<React.Fragment key={i}>
-						<ListItem onClick={() => history.push(internal.specificMessage(String(id)))} button>
+						<ListItem
+							onClick={() => history.push(urls.internal.specificMessage(String(id)))}
+							button
+						>
 							<ListItemAvatar>
 								<Avatar alt="avatar" src={avatar} />
 							</ListItemAvatar>

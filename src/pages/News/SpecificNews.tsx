@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core'
 import { BackBar, Container, PaddedPaper } from 'components'
-import { internal } from 'constants/urls'
+import * as urls from 'constants/urls'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
@@ -18,7 +18,7 @@ const SpecificNews: React.FC<Props> = observer(({ id }) => {
 
 	return (
 		<>
-			<BackBar to={internal.news()} />
+			<BackBar to={urls.internal.news()} />
 			<Container>
 				<PaddedPaper>
 					{!foundNews && <Typography>Sorry, couldnt find this news article</Typography>}

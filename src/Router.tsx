@@ -1,5 +1,5 @@
 import { BottomAppBar } from 'components'
-import { internal } from 'constants/urls'
+import * as urls from 'constants/urls'
 import Events from 'pages/Events'
 import Login from 'pages/Login'
 import Messages from 'pages/Messages'
@@ -13,27 +13,27 @@ const Router: React.FC<{ loggedIn: boolean }> = ({ loggedIn }) => (
 		{loggedIn ? (
 			<BottomAppBar>
 				<Switch>
-					<Route path={internal.settings()} exact>
+					<Route path={urls.internal.settings()} exact>
 						<Settings />
 					</Route>
-					<Route path={internal.events()} exact>
+					<Route path={urls.internal.events()} exact>
 						<Events />
 					</Route>
-					<Route path={[internal.specificNews(), internal.news()]}>
+					<Route path={[urls.internal.specificNews(), urls.internal.news()]}>
 						<News />
 					</Route>
-					<Route path={[internal.specificMessage(), internal.messages()]}>
+					<Route path={[urls.internal.specificMessage(), urls.internal.messages()]}>
 						<Messages />
 					</Route>
-					<Redirect to={internal.news()} />
+					<Redirect to={urls.internal.news()} />
 				</Switch>
 			</BottomAppBar>
 		) : (
 			<Switch>
-				<Route path={internal.login()} exact>
+				<Route path={urls.internal.login()} exact>
 					<Login />
 				</Route>
-				<Redirect to={internal.login()} />
+				<Redirect to={urls.internal.login()} />
 			</Switch>
 		)}
 	</BrowserRouter>
