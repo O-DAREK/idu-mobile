@@ -20,7 +20,7 @@ import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import MessageIcon from '@material-ui/icons/Message'
 import SettingsIcon from '@material-ui/icons/Settings'
-import { internal } from 'constants/urls'
+import * as urls from 'constants/urls'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
@@ -81,13 +81,13 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 
 	const states: { [key: string]: InternalProps } = useMemo(
 		() => ({
-			[internal.messages()]: {
+			[urls.internal.messages()]: {
 				title: MESSAGES
 			},
-			[internal.news()]: {
+			[urls.internal.news()]: {
 				title: NEWS
 			},
-			[internal.settings()]: {
+			[urls.internal.settings()]: {
 				title: SETTINGS,
 				actions: [
 					{
@@ -96,7 +96,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 					}
 				]
 			},
-			[internal.events()]: {
+			[urls.internal.events()]: {
 				title: EVENTS,
 				actions: [
 					{
@@ -112,7 +112,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 	const navigation = [
 		{
 			name: MESSAGES,
-			url: internal.messages(),
+			url: urls.internal.messages(),
 			Icon: () => (
 				<Badge color="secondary" badgeContent={user.profile?.unreadMessagesCount} max={99}>
 					<MessageIcon />
@@ -121,17 +121,17 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		},
 		{
 			name: EVENTS,
-			url: internal.events(),
+			url: urls.internal.events(),
 			Icon: CalendarTodayIcon
 		},
 		{
 			name: NEWS,
-			url: internal.news(),
+			url: urls.internal.news(),
 			Icon: InfoIcon
 		},
 		{
 			name: SETTINGS,
-			url: internal.settings(),
+			url: urls.internal.settings(),
 			Icon: SettingsIcon
 		}
 	]

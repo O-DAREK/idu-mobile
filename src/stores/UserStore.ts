@@ -1,6 +1,6 @@
 import { Roles } from 'constants/interfaces'
-import * as Responses from 'constants/responses'
-import { api } from 'constants/urls'
+import * as responses from 'constants/responses'
+import * as urls from 'constants/urls'
 import { UNAUTHORIZED } from 'http-status-codes'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
@@ -61,7 +61,7 @@ export default class {
 	login = async (login: string, password: string): Promise<NonNullable<this['token']>> => {
 		runInAction(() => (this.forcedLogout = false))
 
-		const res = await fetch(api.login(), {
+		const res = await fetch(urls.api.login(), {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ export default class {
 			throw await constructFetchErr(res)
 		}
 
-		const json = (await res.json()) as Responses.Login
+		const json = (await res.json()) as responses.Login
 		runInAction(() => (this.token = json.token))
 
 		return (this.token as this['token'])!
@@ -100,7 +100,7 @@ export default class {
 			throw new Error("Can't fetch events without a token")
 		}
 
-		const res = await fetch(api.events(), {
+		const res = await fetch(urls.api.events(), {
 			headers: {
 				'X-API-TOKEN': this.token
 			}
@@ -112,7 +112,7 @@ export default class {
 			throw await constructFetchErr(res)
 		}
 
-		const json = (await res.json()) as Responses.Events
+		const json = (await res.json()) as responses.Events
 		runInAction(() => {
 			this.events = json.events.map(e => ({
 				id: e.id,
@@ -134,7 +134,7 @@ export default class {
 			throw new Error("Can't fetch events without a token")
 		}
 
-		const res = await fetch(api.profile(), {
+		const res = await fetch(urls.api.profile(), {
 			headers: {
 				'X-API-TOKEN': this.token
 			}
@@ -146,7 +146,7 @@ export default class {
 			throw await constructFetchErr(res)
 		}
 
-		const json = (await res.json()) as Responses.Profile
+		const json = (await res.json()) as responses.Profile
 		runInAction(() => {
 			this.profile = {
 				id: json.profile.id,

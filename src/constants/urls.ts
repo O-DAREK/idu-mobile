@@ -10,8 +10,8 @@ export const internal = {
 	login: () => '/login',
 	settings: () => '/settings',
 	news: () => '/news',
-	specificNews: (id?: string) => `${internal.news()}/${id || ':id'}`,
+	specificNews: (id = ':id') => `${internal.news()}/${id}`,
 	events: () => '/events',
 	messages: () => '/messages',
-	specificMessage: (id?: string) => `${internal.messages()}/${id || ':id'}`
+	specificMessage: (id = ':id') => `${internal.messages()}/${id}`
 }
