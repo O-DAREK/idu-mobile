@@ -2,7 +2,7 @@ import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/styles'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
-import { configStore, userStore } from 'stores'
+import { configStore, metaStore, userStore } from 'stores'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { muiTheme } from 'styles/theme'
 import { setVisibleHeight } from 'visible-height-css'
@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 const App = observer(() => {
 	const user = useContext(userStore)
 	const config = useContext(configStore)
+	const meta = useContext(metaStore)
 	const theme = muiTheme(config.theme, ...config.accentColors)
 
 	document
@@ -25,7 +26,11 @@ const App = observer(() => {
 
 	useEffect(() => {
 		setVisibleHeight()
-	}, [])
+		window.addEventListener('beforeinstallprompt', e => {
+			e.preventDefault()
+			meta.setPwaInstallEvent(e as any)
+		})
+	}, [meta])
 
 	return (
 		<StylesProvider injectFirst>

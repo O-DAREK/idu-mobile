@@ -16,6 +16,7 @@ describe('meta store', () => {
 		onlineGetter.mockReturnValue(false)
 		expect(metaStore.isOnline).toBe(false)
 		expect(metaStore.availableUpdate).toBe(false)
+		expect(metaStore.pwaInstallEvent).toBe(undefined)
 	})
 
 	it('should react to onoffline', () => {
@@ -33,5 +34,10 @@ describe('meta store', () => {
 	it('should change availableUpdate status', () => {
 		metaStore.theresAnUpdate()
 		expect(metaStore.availableUpdate).toBe(true)
+	})
+
+	it('should set pwa install event', () => {
+		metaStore.setPwaInstallEvent('test' as any)
+		expect(metaStore.pwaInstallEvent).toBe('test')
 	})
 })
