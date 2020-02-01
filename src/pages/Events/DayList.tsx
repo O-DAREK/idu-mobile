@@ -4,8 +4,8 @@ import React, { useContext } from 'react'
 import { configStore } from 'stores'
 import { Event as EventType } from 'stores/UserStore'
 import styled from 'styled-components'
-import SingleEvent from './SingleEvent'
 import AllDayEvent from './AllDayEvent'
+import SingleEvent from './SingleEvent'
 
 interface Props {
 	events: EventType[]
