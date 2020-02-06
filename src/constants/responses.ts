@@ -29,3 +29,19 @@ export type Events = {
 		text_color: string
 	}[]
 }
+
+export type MessageThreads = {
+	messages: {
+		id: number
+		from: {
+			id: number
+			name: string
+		}
+		title: string
+		body: string
+		status: 1 | 2 | 3
+		created_at: string
+		last_message_at?: string
+		updated_at: string
+	}[]
+}

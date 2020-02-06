@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
 import { unixToShortDate } from 'utils'
-import { __mockMessages } from './MessageList'
+import { __mockMessages } from './MessageThreads'
 
 interface Props {
 	id: string

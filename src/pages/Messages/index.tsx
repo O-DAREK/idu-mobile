@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router'
-import MessageList from './MessageList'
+import MessageThreads from './MessageThreads'
 import SpecificMessage from './SpecificMessage'
 
 interface Params {
@@ -10,7 +10,7 @@ interface Params {
 const Messages = () => {
 	const { id } = useParams<Params>()
 
-	return id ? <SpecificMessage id={id} /> : <MessageList />
+	return id ? <SpecificMessage id={id} /> : <MessageThreads />
 }
 
 export default Messages
