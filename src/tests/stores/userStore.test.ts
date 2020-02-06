@@ -1,7 +1,7 @@
 import { Roles } from 'constants/interfaces'
 import { Events, Login, Profile } from 'constants/responses'
 import { UNAUTHORIZED } from 'http-status-codes'
-import UserStore from 'stores/UserStore'
+import { UserStore } from 'stores/UserStore'
 
 describe('user store', () => {
 	let userStore: UserStore
@@ -9,9 +9,9 @@ describe('user store', () => {
 		userStore = new UserStore()
 		fetchMock.resetMocks()
 	})
-	afterEach(() => window.localStorage.removeItem('UserStore'))
+	afterEach(() => window.localStorage.removeItem(UserStore.name))
 
-	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem('UserStore') || dflt)
+	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem(UserStore.name) || dflt)
 
 	it('should have defaults', () => {
 		expect(userStore.token).toBe(undefined)
@@ -222,7 +222,7 @@ describe('user store', () => {
 				mobilePhone: '123123123'
 			}
 		}
-		window.localStorage.setItem('UserStore', JSON.stringify(data))
+		window.localStorage.setItem(UserStore.name, JSON.stringify(data))
 
 		const userStore = new UserStore()
 

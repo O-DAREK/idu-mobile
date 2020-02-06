@@ -26,7 +26,7 @@ type Profile = {
 	unreadMessagesCount: number
 }
 
-export default class {
+export class UserStore {
 	@observable token?: string
 	@observable events?: Event[]
 	@observable profile?: Profile
@@ -39,7 +39,7 @@ export default class {
 
 	private save = (): void =>
 		window.localStorage.setItem(
-			'UserStore',
+			UserStore.name,
 			JSON.stringify({
 				token: this.token,
 				events: this.events,
@@ -49,7 +49,7 @@ export default class {
 
 	@action
 	private load = (): void => {
-		Object.assign(this, JSON.parse(window.localStorage.getItem('UserStore') || '{}'))
+		Object.assign(this, JSON.parse(window.localStorage.getItem(UserStore.name) || '{}'))
 
 		this.events = this.events?.map(e => ({
 			...e,

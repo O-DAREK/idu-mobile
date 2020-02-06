@@ -1,4 +1,4 @@
-import MetaStore from 'stores/MetaStore'
+import { MetaStore } from 'stores/MetaStore'
 
 describe('meta store', () => {
 	let onlineGetter: jest.SpyInstance<boolean, []>

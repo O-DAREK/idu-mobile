@@ -23,7 +23,7 @@ export type MessageThread = {
 	  }
 )
 
-export default class MessagesStore {
+export class MessagesStore {
 	@observable threads?: MessageThread[]
 	@observable noMoreThreads = false
 

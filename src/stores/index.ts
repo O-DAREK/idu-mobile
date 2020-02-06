@@ -1,9 +1,9 @@
 import { configure } from 'mobx'
 import { createContext } from 'react'
-import ConfigStore from './ConfigStore'
-import MessagesStore from './MessagesStore'
-import MetaStore from './MetaStore'
-import UserStore from './UserStore'
+import { ConfigStore } from './ConfigStore'
+import { MessagesStore } from './MessagesStore'
+import { MetaStore } from './MetaStore'
+import { UserStore } from './UserStore'
 
 configure({ enforceActions: 'always' })
 
