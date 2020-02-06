@@ -1,6 +1,6 @@
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import { action, autorun, observable, runInAction } from 'mobx'
+import { action, autorun, computed, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
 export type MessageThread = {
@@ -27,7 +27,8 @@ export class MessagesStore {
 	@observable threads?: MessageThread[]
 	@observable noMoreThreads = false
 
-	private get page() {
+	@computed
+	get page() {
 		return Math.floor((this.threads?.length || 0) / 10) + 1
 	}
 
