@@ -14,6 +14,7 @@ describe('messages store', () => {
 	it('should have defaults', () => {
 		expect(messagesStore.threads).toBe(undefined)
 		expect(messagesStore.page).toBe(1)
+		expect(messagesStore.noMoreThreads).toBe(false)
 	})
 
 	it('should have defaults saved to localstorage', () => {
@@ -101,7 +102,9 @@ describe('messages store', () => {
 			await expect(messagesStore.fetchNextThreads('123')).resolves.toEqual(
 				data.slice(0, data.length - 1)
 			)
+			expect(messagesStore.noMoreThreads).toBe(false)
 			expect(messagesStore.page).toEqual(2)
+
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
 					messages: [
@@ -123,6 +126,7 @@ describe('messages store', () => {
 			)
 			await expect(messagesStore.fetchNextThreads('123')).resolves.toEqual(data)
 			expect(messagesStore.threads).toEqual(data)
+			expect(messagesStore.noMoreThreads).toBe(true)
 			expect(getLS()).toEqual({
 				threads: data.map(e => ({
 					...e,
@@ -150,5 +154,6 @@ describe('messages store', () => {
 
 		expect(messagesStore.threads).toEqual(data.threads)
 		expect(messagesStore.page).toEqual(1)
+		expect(messagesStore.noMoreThreads).toEqual(false)
 	})
 })
