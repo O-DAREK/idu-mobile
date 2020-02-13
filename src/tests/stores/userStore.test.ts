@@ -159,7 +159,8 @@ describe('user store', () => {
 						last_name: 'Boomer',
 						role: 'student',
 						mobile_phone: '123123',
-						messages_count: 123,
+						messages_count: 122,
+						unread_informations_count: 124,
 						unread_messages_count: 123
 					}
 				} as Profile)
@@ -172,7 +173,7 @@ describe('user store', () => {
 				lastName: 'Boomer',
 				role: Roles.student,
 				mobilePhone: '123123',
-				messagesCount: 123,
+				unreadNewsCount: 124,
 				unreadMessagesCount: 123
 			})
 			expect(userStore.profile).toEqual({
@@ -181,7 +182,7 @@ describe('user store', () => {
 				lastName: 'Boomer',
 				role: Roles.student,
 				mobilePhone: '123123',
-				messagesCount: 123,
+				unreadNewsCount: 124,
 				unreadMessagesCount: 123
 			})
 			expect(getLS().profile).toEqual({
@@ -190,7 +191,7 @@ describe('user store', () => {
 				lastName: 'Boomer',
 				role: Roles.student,
 				mobilePhone: '123123',
-				messagesCount: 123,
+				unreadNewsCount: 124,
 				unreadMessagesCount: 123
 			})
 		})
@@ -241,7 +242,7 @@ describe('user store', () => {
 			id: 12342,
 			role: Roles.student,
 			mobilePhone: '123123123',
-			messagesCount: 123,
+			unreadNewsCount: 123,
 			unreadMessagesCount: 123
 		}
 

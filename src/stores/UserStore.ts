@@ -22,8 +22,8 @@ type Profile = {
 	lastName: string
 	mobilePhone: string
 	role: Roles
-	messagesCount: number
 	unreadMessagesCount: number
+	unreadNewsCount: number
 }
 
 export class UserStore {
@@ -154,7 +154,7 @@ export class UserStore {
 				lastName: json.profile.last_name,
 				mobilePhone: json.profile.mobile_phone,
 				role: Roles[json.profile.role],
-				messagesCount: json.profile.messages_count,
+				unreadNewsCount: json.profile.unread_informations_count,
 				unreadMessagesCount: json.profile.unread_messages_count
 			}
 		})

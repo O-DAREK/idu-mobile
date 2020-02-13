@@ -14,6 +14,7 @@ export type Profile = {
 		role: keyof typeof Roles
 		messages_count: number
 		unread_messages_count: number
+		unread_informations_count: number
 	}
 }
 

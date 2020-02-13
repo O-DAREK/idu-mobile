@@ -140,7 +140,11 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		{
 			name: NEWS,
 			url: urls.internal.news(),
-			Icon: InfoIcon
+			Icon: () => (
+				<Badge color="secondary" badgeContent={user.profile?.unreadNewsCount} max={99}>
+					<InfoIcon />
+				</Badge>
+			)
 		},
 		{
 			name: SETTINGS,
