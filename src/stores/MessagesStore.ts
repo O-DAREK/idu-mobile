@@ -25,11 +25,15 @@ export type MessageThread = {
 
 export class MessagesStore {
 	@observable threads?: MessageThread[]
-	@observable noMoreThreads = false
 
 	@computed
 	get page() {
 		return Math.floor((this.threads?.length || 0) / 10) + 1
+	}
+
+	@computed
+	get noMoreThreads() {
+		return (this.threads?.length || 0) % 10 !== 0
 	}
 
 	constructor() {
@@ -56,6 +60,8 @@ export class MessagesStore {
 	}
 
 	fetchNextThreads = async (token: string): Promise<NonNullable<this['threads']>> => {
+		if (this.noMoreThreads) return ([] as this['threads'])!
+
 		const res = await fetch(urls.api.messages(this.page), {
 			headers: {
 				'X-API-TOKEN': token
@@ -69,8 +75,6 @@ export class MessagesStore {
 		const json = (await res.json()) as responses.MessageThreads
 		runInAction(() => {
 			if (!this.threads) this.threads = []
-
-			if (json.messages.length < 10) this.noMoreThreads = true
 
 			for (const thread of json.messages) {
 				this.threads.push({

@@ -1,8 +1,9 @@
-import { Divider, List, ListItem } from '@material-ui/core'
+import { Divider, List } from '@material-ui/core'
 import { TopLoading } from 'components'
+import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { useBottomScrollListener } from 'react-bottom-scroll-listener'
-import { messagesStore, userStore } from 'stores'
+import { messagesStore, metaStore, userStore } from 'stores'
 import useAsync from 'use-async-react'
 import ThreadItem, { SkeletonThreadItem } from './ThreadItem'
 
@@ -53,17 +54,18 @@ export const __mockMessages = [
 	}
 ]
 
-const MessageList = () => {
+const MessageList = observer(() => {
 	const messages = useContext(messagesStore)
 	const user = useContext(userStore)
+	const meta = useContext(metaStore)
 	const { call: fetchNextPage, loading } = useAsync(messages.fetchNextThreads)
 	useBottomScrollListener(() => {
-		if (user.token) fetchNextPage(user.token)
-	})
+		if (user.token && meta.isOnline) fetchNextPage(user.token)
+	}, 100)
 
 	useEffect(() => {
-		if (user.token) fetchNextPage(user.token)
-	}, [fetchNextPage, user.token])
+		if (user.token && meta.isOnline) fetchNextPage(user.token)
+	}, [fetchNextPage, user.token, meta.isOnline])
 
 	return (
 		<>
@@ -72,9 +74,10 @@ const MessageList = () => {
 				{loading && !messages.threads && (
 					<>
 						{new Array(5).fill(null).map((_, i) => (
-							<ListItem key={i}>
+							<React.Fragment key={i}>
 								<SkeletonThreadItem />
-							</ListItem>
+								<Divider />
+							</React.Fragment>
 						))}
 					</>
 				)}
@@ -84,14 +87,10 @@ const MessageList = () => {
 						<Divider />
 					</React.Fragment>
 				))}
-				{!messages.noMoreThreads && (
-					<ListItem>
-						<SkeletonThreadItem />
-					</ListItem>
-				)}
+				{meta.isOnline && !messages.noMoreThreads && <SkeletonThreadItem />}
 			</List>
 		</>
 	)
-}
+})
 
 export default MessageList

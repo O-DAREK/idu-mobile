@@ -12,3 +12,9 @@ export const createTime = (hours: number, minutes: number): string =>
 	`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
 
 export const ignoreRejection = <T>(promise: Promise<T>) => promise.catch(() => {})
+
+export const stripHtml = (html: string) => {
+	const ele = document.createElement('div')
+	ele.innerHTML = html
+	return ele.textContent || ele.innerText || ''
+}
