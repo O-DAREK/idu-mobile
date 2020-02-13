@@ -41,7 +41,7 @@ export class MessagesStore {
 		window.localStorage.setItem(
 			MessagesStore.name,
 			JSON.stringify({
-				threads: this.threads
+				// threads: this.threads
 			})
 		)
 
