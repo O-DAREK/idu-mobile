@@ -81,7 +81,7 @@ export class MessagesStore {
 					id: thread.id,
 					title: thread.title,
 					body: thread.body,
-					sentAt: new Date(thread.created_at),
+					sentAt: new Date(thread.last_message_at),
 					...(thread.status === 1 ? { to: thread.from } : { from: thread.from })
 				})
 			}
