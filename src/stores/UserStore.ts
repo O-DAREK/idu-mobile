@@ -22,11 +22,11 @@ type Profile = {
 	lastName: string
 	mobilePhone: string
 	role: Roles
-	messagesCount: number
 	unreadMessagesCount: number
+	unreadNewsCount: number
 }
 
-export default class {
+export class UserStore {
 	@observable token?: string
 	@observable events?: Event[]
 	@observable profile?: Profile
@@ -39,7 +39,7 @@ export default class {
 
 	private save = (): void =>
 		window.localStorage.setItem(
-			'UserStore',
+			UserStore.name,
 			JSON.stringify({
 				token: this.token,
 				events: this.events,
@@ -49,7 +49,7 @@ export default class {
 
 	@action
 	private load = (): void => {
-		Object.assign(this, JSON.parse(window.localStorage.getItem('UserStore') || '{}'))
+		Object.assign(this, JSON.parse(window.localStorage.getItem(UserStore.name) || '{}'))
 
 		this.events = this.events?.map(e => ({
 			...e,
@@ -154,7 +154,7 @@ export default class {
 				lastName: json.profile.last_name,
 				mobilePhone: json.profile.mobile_phone,
 				role: Roles[json.profile.role],
-				messagesCount: json.profile.messages_count,
+				unreadNewsCount: json.profile.unread_informations_count,
 				unreadMessagesCount: json.profile.unread_messages_count
 			}
 		})

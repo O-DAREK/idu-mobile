@@ -79,6 +79,14 @@ const strings = {
 	SECONDARY: {
 		en: 'Secondary',
 		pl: 'Poboczny'
+	},
+	NO_SUCH_THREAD: {
+		en: 'Sorry, these messages dont exist',
+		pl: 'Przepraszamy, te wiadomości nie istnieją'
+	},
+	NO_SUCH_NEWS: {
+		en: 'Sorry, this news piece does not exist',
+		pl: 'Przepraszamy, ta aktualność nie istnieje'
 	}
 }
 

@@ -2,7 +2,7 @@ import {
 	AppBar as MuiAppBar,
 	Badge,
 	Fab,
-	Grow as GrowTransition,
+	Grow,
 	IconButton,
 	List,
 	ListItem,
@@ -29,7 +29,7 @@ import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { emit, EventNames } from './events'
 
-const Grow = styled.div`
+const FlexGrow = styled.div`
 	flex-grow: 1;
 `
 
@@ -41,6 +41,7 @@ const Content = styled.div<{ pad: boolean }>`
 const AppBarBottom = styled(MuiAppBar)`
 	top: auto;
 	bottom: 0;
+	position: fixed;
 `
 
 const Title = styled(Typography)`
@@ -70,6 +71,7 @@ interface InternalProps {
 /* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
 const BottomAppBar: React.FC = observer(({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
+	const [forceHide, setForceHide] = useState(false)
 	const history = useHistory()
 	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
 	const user = useContext(userStore)
@@ -78,6 +80,17 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 	useEffect(() => {
 		if (meta.isOnline) user.fetchProfile()
 	}, [meta.isOnline, user])
+
+	useEffect(() => {
+		window.addEventListener('resize', () =>
+			setForceHide(
+				fh =>
+					(document.activeElement?.tagName === 'INPUT' ||
+						document.activeElement?.tagName === 'TEXTAREA') &&
+					!fh
+			)
+		)
+	}, [])
 
 	const states: { [key: string]: InternalProps } = useMemo(
 		() => ({
@@ -127,7 +140,11 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		{
 			name: NEWS,
 			url: urls.internal.news(),
-			Icon: InfoIcon
+			Icon: () => (
+				<Badge color="secondary" badgeContent={user.profile?.unreadNewsCount} max={99}>
+					<InfoIcon />
+				</Badge>
+			)
 		},
 		{
 			name: SETTINGS,
@@ -136,7 +153,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		}
 	]
 
-	const show = history.location.pathname in states
+	const show = history.location.pathname in states && !forceHide
 
 	const { title, fab, actions } = states[history.location.pathname] || {}
 
@@ -144,9 +161,9 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		<>
 			<Content pad={show}>
 				{title && <Title variant="h5">{title}</Title>}
-				<GrowTransition in={true} key={title}>
+				<Grow in={true} key={title}>
 					<div>{children}</div>
-				</GrowTransition>
+				</Grow>
 			</Content>
 			<SwipeableDrawer
 				anchor="bottom"
@@ -174,7 +191,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 				</List>
 			</SwipeableDrawer>
 			<Slide direction="up" in={show}>
-				<AppBarBottom position="fixed">
+				<AppBarBottom>
 					<Toolbar>
 						<IconButton onClick={() => setOpenDrawer(true)} edge="start">
 							<MenuIcon />
@@ -184,7 +201,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 								<fab.Icon />
 							</MiddleFab>
 						)}
-						<Grow />
+						<FlexGrow />
 						{actions?.map(({ onClick, Icon }, i) => (
 							<IconButton onClick={onClick} key={i}>
 								<Icon />

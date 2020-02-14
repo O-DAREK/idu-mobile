@@ -3,23 +3,23 @@ import { TopLoading } from 'components'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { useBottomScrollListener } from 'react-bottom-scroll-listener'
-import { metaStore, newsStore, userStore } from 'stores'
+import { messagesStore, metaStore, userStore } from 'stores'
 import useAsync from 'use-async-react'
-import NewsItem, { SkeletonNewsItem } from './NewsItem'
+import ThreadItem, { SkeletonThreadItem } from './ThreadItem'
 
-const NewsList: React.FC = observer(() => {
+const MessageList = observer(() => {
+	const messages = useContext(messagesStore)
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
-	const news = useContext(newsStore)
-	const { call: fetchNextNews, loading, error } = useAsync(news.fetchNextNews)
+	const { call: fetchNextThreads, loading, error } = useAsync(messages.fetchNextThreads)
 
 	useBottomScrollListener(() => {
-		if (user.token && meta.isOnline) fetchNextNews(user.token)
+		if (user.token && meta.isOnline) fetchNextThreads(user.token)
 	}, 100)
 
 	useEffect(() => {
-		if (user.token && meta.isOnline) fetchNextNews(user.token)
-	}, [meta.isOnline, fetchNextNews, user])
+		if (user.token && meta.isOnline) fetchNextThreads(user.token)
+	}, [fetchNextThreads, user.token, meta.isOnline])
 
 	useEffect(() => {
 		if (error) user.logout(true)
@@ -27,28 +27,28 @@ const NewsList: React.FC = observer(() => {
 
 	return (
 		<>
-			{loading && news.news && <TopLoading />}
+			{loading && messages.threads && <TopLoading />}
 			<List>
-				{loading && !news.news && (
+				{loading && !messages.threads && (
 					<>
 						{[...new Array(5)].map((_, i) => (
 							<React.Fragment key={i}>
-								<SkeletonNewsItem />
+								<SkeletonThreadItem />
 								<Divider />
 							</React.Fragment>
 						))}
 					</>
 				)}
-				{news.news?.map((e, i) => (
+				{messages.threads?.map((e, i) => (
 					<React.Fragment key={i}>
-						<NewsItem {...e} />
+						<ThreadItem {...e} />
 						<Divider />
 					</React.Fragment>
 				))}
-				{meta.isOnline && !news.noMoreNews && <SkeletonNewsItem />}
+				{meta.isOnline && !messages.noMoreThreads && <SkeletonThreadItem />}
 			</List>
 		</>
 	)
 })
 
-export default NewsList
+export default MessageList

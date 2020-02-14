@@ -1,41 +1,48 @@
 import { Typography } from '@material-ui/core'
 import { BackBar, Container, PaddedPaper } from 'components'
 import * as urls from 'constants/urls'
+import { formatLong, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
-import { configStore } from 'stores'
-import { unixToShortDate } from 'utils'
-import { __mockNews } from './NewsList'
+import { configStore, newsStore } from 'stores'
+import styled from 'styled-components'
+import { stripHtml } from 'utils'
+
+const WordBreakingPaper = styled(PaddedPaper)`
+	overflow-wrap: break-word;
+`
 
 interface Props {
-	id: string
+	id: number
 }
 
 const SpecificNews: React.FC<Props> = observer(({ id }) => {
-	const foundNews = __mockNews.find(e => e.id === Number(id))
-
+	const { NO_SUCH_NEWS } = useLocale()
+	const news = useContext(newsStore)
 	const config = useContext(configStore)
+
+	const foundNews = news.news?.find(e => e.id === id) || news.stickyNews?.find(e => e.id === id)
 
 	return (
 		<>
 			<BackBar to={urls.internal.news()} />
 			<Container>
-				<PaddedPaper>
-					{!foundNews && <Typography>Sorry, couldnt find this news article</Typography>}
+				<WordBreakingPaper>
+					{!foundNews && <Typography>{NO_SUCH_NEWS}</Typography>}
 					{foundNews && (
 						<>
 							<Typography variant="h4" gutterBottom>
-								{foundNews.name}
+								{foundNews.title}
 							</Typography>
 							<Typography component="p" paragraph>
-								{foundNews.content}
+								{stripHtml(foundNews.body)}
 							</Typography>
 							<Typography variant="overline">
-								{unixToShortDate(foundNews.timestamp, config.language)}
+								{formatLong(config.language, foundNews.date)}
 							</Typography>
 						</>
 					)}
-				</PaddedPaper>
+				</WordBreakingPaper>
 			</Container>
 		</>
 	)

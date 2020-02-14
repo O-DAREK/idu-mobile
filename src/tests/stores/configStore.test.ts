@@ -1,6 +1,6 @@
 import { Language } from 'locales'
 import { runInAction } from 'mobx'
-import ConfigStore from 'stores/ConfigStore'
+import { ConfigStore } from 'stores/ConfigStore'
 
 describe('config store', () => {
 	beforeAll(() => {
@@ -13,11 +13,11 @@ describe('config store', () => {
 			dispatchEvent: jest.fn()
 		}))
 	})
-	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem('ConfigStore') || dflt)
+	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem(ConfigStore.name) || dflt)
 
 	let configStore: ConfigStore
 	beforeEach(() => (configStore = new ConfigStore()))
-	afterEach(() => window.localStorage.removeItem('ConfigStore'))
+	afterEach(() => window.localStorage.removeItem(ConfigStore.name))
 
 	it('should have defaults', () => {
 		expect(typeof configStore.language).toBe('string')
@@ -68,7 +68,7 @@ describe('config store', () => {
 			accentColors: ['#111111', '#555555']
 		}
 
-		window.localStorage.setItem('ConfigStore', JSON.stringify(settings))
+		window.localStorage.setItem(ConfigStore.name, JSON.stringify(settings))
 
 		const configStore = new ConfigStore()
 

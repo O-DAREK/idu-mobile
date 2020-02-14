@@ -1,7 +1,7 @@
 import { Roles } from 'constants/interfaces'
 import { Events, Login, Profile } from 'constants/responses'
 import { UNAUTHORIZED } from 'http-status-codes'
-import UserStore from 'stores/UserStore'
+import { UserStore } from 'stores/UserStore'
 
 describe('user store', () => {
 	let userStore: UserStore
@@ -9,9 +9,9 @@ describe('user store', () => {
 		userStore = new UserStore()
 		fetchMock.resetMocks()
 	})
-	afterEach(() => window.localStorage.removeItem('UserStore'))
+	afterEach(() => window.localStorage.removeItem(UserStore.name))
 
-	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem('UserStore') || dflt)
+	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem(UserStore.name) || dflt)
 
 	it('should have defaults', () => {
 		expect(userStore.token).toBe(undefined)
@@ -159,7 +159,8 @@ describe('user store', () => {
 						last_name: 'Boomer',
 						role: 'student',
 						mobile_phone: '123123',
-						messages_count: 123,
+						messages_count: 122,
+						unread_informations_count: 124,
 						unread_messages_count: 123
 					}
 				} as Profile)
@@ -172,7 +173,7 @@ describe('user store', () => {
 				lastName: 'Boomer',
 				role: Roles.student,
 				mobilePhone: '123123',
-				messagesCount: 123,
+				unreadNewsCount: 124,
 				unreadMessagesCount: 123
 			})
 			expect(userStore.profile).toEqual({
@@ -181,7 +182,7 @@ describe('user store', () => {
 				lastName: 'Boomer',
 				role: Roles.student,
 				mobilePhone: '123123',
-				messagesCount: 123,
+				unreadNewsCount: 124,
 				unreadMessagesCount: 123
 			})
 			expect(getLS().profile).toEqual({
@@ -190,7 +191,7 @@ describe('user store', () => {
 				lastName: 'Boomer',
 				role: Roles.student,
 				mobilePhone: '123123',
-				messagesCount: 123,
+				unreadNewsCount: 124,
 				unreadMessagesCount: 123
 			})
 		})
@@ -222,7 +223,7 @@ describe('user store', () => {
 				mobilePhone: '123123123'
 			}
 		}
-		window.localStorage.setItem('UserStore', JSON.stringify(data))
+		window.localStorage.setItem(UserStore.name, JSON.stringify(data))
 
 		const userStore = new UserStore()
 
@@ -241,7 +242,7 @@ describe('user store', () => {
 			id: 12342,
 			role: Roles.student,
 			mobilePhone: '123123123',
-			messagesCount: 123,
+			unreadNewsCount: 123,
 			unreadMessagesCount: 123
 		}
 
