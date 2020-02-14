@@ -3,7 +3,8 @@ export const api = {
 	login: () => api.base() + '/auth/login',
 	profile: () => api.base() + '/user/profile',
 	events: () => api.base() + '/user/events',
-	messages: (page = 1) => api.base() + `/user/messages?page=${page}`
+	messages: (page = 1) => api.base() + `/user/messages?page=${page}`,
+	specificMessages: (id: number) => api.base() + `/user/messages/${id}`
 }
 
 export const internal = {

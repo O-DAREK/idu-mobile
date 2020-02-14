@@ -18,3 +18,5 @@ export const stripHtml = (html: string) => {
 	ele.innerHTML = html
 	return ele.textContent || ele.innerText || ''
 }
+
+export * from './types'

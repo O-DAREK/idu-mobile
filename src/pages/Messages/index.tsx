@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router'
 import MessageThreads from './MessageThreads'
-import SpecificMessage from './SpecificMessage'
+import SpecificMessage from './SpecificMessages'
 
 interface Params {
 	id?: string

@@ -5,6 +5,7 @@ const TopLoading = styled(LinearProgress)`
 	position: absolute;
 	top: 0;
 	width: 100vw;
+	z-index: 1000000;
 	background-color: rgba(0, 0, 0, 0);
 `
 

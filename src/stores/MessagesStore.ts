@@ -1,5 +1,6 @@
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
+import jwtDecode from 'jwt-decode'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
@@ -13,17 +14,26 @@ export type MessageThread = {
 			from: {
 				id: number
 				name: string
+				avatar: string
 			}
 	  }
 	| {
 			to: {
 				id: number
 				name: string
+				avatar: string
 			}
 	  }
 )
 
+export type SpecificMessages = {
+	id: number
+	title: string
+	messages: Omit<MessageThread, 'title'>[]
+}
+
 export class MessagesStore {
+	@observable messages: { [k: number]: SpecificMessages } = {}
 	@observable threads?: MessageThread[]
 
 	@computed
@@ -57,6 +67,40 @@ export class MessagesStore {
 			...e,
 			sentAt: new Date(e.sentAt)
 		}))
+	}
+
+	fetchSpecificMessages = async (token: string, id: number): Promise<SpecificMessages> => {
+		const res = await fetch(urls.api.specificMessages(id), {
+			headers: {
+				'X-API-TOKEN': token
+			}
+		})
+
+		if (!res.ok) {
+			throw await constructFetchErr(res)
+		}
+
+		const json = (await res.json()) as responses.SpecificMessages
+		runInAction(() => {
+			this.messages[id] = {
+				id,
+				title: json.messages[0].title,
+				messages: []
+			}
+
+			const { user_id: userId } = jwtDecode(token)
+
+			for (const message of json.messages) {
+				this.messages[id].messages.push({
+					id: message.id,
+					body: message.body,
+					sentAt: new Date(message.created_at),
+					...(message.from.id === userId ? { to: message.from } : { from: message.from })
+				})
+			}
+		})
+
+		return this.messages[id]
 	}
 
 	fetchNextThreads = async (token: string): Promise<NonNullable<this['threads']>> => {

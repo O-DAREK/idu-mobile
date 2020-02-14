@@ -47,3 +47,17 @@ export type MessageThreads = {
 		updated_at: string
 	}[]
 }
+
+export type SpecificMessages = {
+	messages: {
+		id: number
+		from: {
+			id: number
+			name: string
+			avatar: string
+		}
+		title: string
+		body: string
+		created_at: string
+	}[]
+}
