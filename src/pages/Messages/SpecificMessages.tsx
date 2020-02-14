@@ -23,7 +23,7 @@ const SpecificMessage: React.FC<Props> = observer(({ id }) => {
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const meta = useContext(metaStore)
-	const { call: fetchSpecificMessages, loading } = useAsync(messages.fetchSpecificMessages)
+	const { call: fetchSpecificMessages, loading, error } = useAsync(messages.fetchSpecificMessages)
 
 	const thread = Number(id) in messages.messages ? messages.messages[Number(id)] : undefined
 
@@ -31,10 +31,14 @@ const SpecificMessage: React.FC<Props> = observer(({ id }) => {
 		if (user.token && meta.isOnline) fetchSpecificMessages(user.token, Number(id))
 	}, [meta.isOnline, user, id, fetchSpecificMessages])
 
+	useEffect(() => {
+		if (error) user.logout(true)
+	}, [error])
+
 	return (
 		<>
-			<BackBar to={urls.internal.messages()} />
 			{loading && <TopLoading />}
+			<BackBar to={urls.internal.messages()} />
 			<Container>
 				{!thread && !loading && <Typography>{NO_SUCH_THREAD}</Typography>}
 				{thread && (

@@ -11,7 +11,7 @@ const MessageList = observer(() => {
 	const messages = useContext(messagesStore)
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
-	const { call: fetchNextPage, loading } = useAsync(messages.fetchNextThreads)
+	const { call: fetchNextPage, loading, error } = useAsync(messages.fetchNextThreads)
 	useBottomScrollListener(() => {
 		if (user.token && meta.isOnline) fetchNextPage(user.token)
 	}, 100)
@@ -19,6 +19,10 @@ const MessageList = observer(() => {
 	useEffect(() => {
 		if (user.token && meta.isOnline) fetchNextPage(user.token)
 	}, [fetchNextPage, user.token, meta.isOnline])
+
+	useEffect(() => {
+		if (error) user.logout(true)
+	}, [error])
 
 	return (
 		<>
