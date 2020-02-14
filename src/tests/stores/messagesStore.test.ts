@@ -59,12 +59,7 @@ describe('messages store', () => {
 
 			await expect(messagesStore.fetchNextThreads('123')).resolves.toEqual(data)
 			expect(messagesStore.threads).toEqual(data)
-			// expect(getLS()).toEqual({
-			// 	threads: data.map(e => ({
-			// 		...e,
-			// 		sentAt: JSON.parse(JSON.stringify(data[0].sentAt))
-			// 	}))
-			// })
+			expect(getLS().threads).toEqual(undefined)
 		})
 		it('should correctly append newly fetched data', async () => {
 			const data = new Array(11)
@@ -128,12 +123,7 @@ describe('messages store', () => {
 			await expect(messagesStore.fetchNextThreads('123')).resolves.toEqual(data)
 			expect(messagesStore.threads).toEqual(data)
 			expect(messagesStore.noMoreThreads).toBe(true)
-			// expect(getLS()).toEqual({
-			// 	threads: data.map(e => ({
-			// 		...e,
-			// 		sentAt: JSON.parse(JSON.stringify(data[0].sentAt))
-			// 	}))
-			// })
+			expect(getLS().threads).toEqual(undefined)
 		})
 		it('should fail for some reason', async () => {
 			const err = new Error('')

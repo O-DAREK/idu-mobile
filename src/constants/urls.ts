@@ -4,7 +4,9 @@ export const api = {
 	profile: () => api.base() + '/user/profile',
 	events: () => api.base() + '/user/events',
 	messages: (page = 1) => api.base() + `/user/messages?page=${page}`,
-	specificMessages: (id: number) => api.base() + `/user/messages/${id}`
+	specificMessages: (id: number) => api.base() + `/user/messages/${id}`,
+	news: (page = 1) => api.base() + `/user/informations/not_sticky?page=${page}`,
+	stickyNews: () => api.base() + '/user/informations/sticky'
 }
 
 export const internal = {

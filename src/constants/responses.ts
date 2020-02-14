@@ -61,3 +61,17 @@ export type SpecificMessages = {
 		created_at: string
 	}[]
 }
+
+export type News = {
+	informations: {
+		id: number
+		title: string
+		body: string
+		priority: 1 | 2
+		edited_at: string
+		start_at: string
+		is_confirmation_required: boolean
+		read_at: null | string
+		confirmed_at: null | string
+	}[]
+}
