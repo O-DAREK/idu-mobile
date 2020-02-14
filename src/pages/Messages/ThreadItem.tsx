@@ -61,8 +61,6 @@ const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) 
 	const imSender = 'to' in rest
 	const other = 'to' in rest ? rest.to : rest.from
 
-	if (Math.random() > 0.5) return <SkeletonThreadItem />
-
 	return (
 		<ListItem onClick={() => history.push(urls.internal.specificMessage(String(id)))} button>
 			<ListItemAvatar>
