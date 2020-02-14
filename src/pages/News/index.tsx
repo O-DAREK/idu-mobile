@@ -10,7 +10,7 @@ interface Params {
 const News = () => {
 	const { id } = useParams<Params>()
 
-	return id ? <SpecificNews id={id} /> : <NewsList />
+	return id ? <SpecificNews id={Number(id)} /> : <NewsList />
 }
 
 export default News

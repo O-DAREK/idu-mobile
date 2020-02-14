@@ -1,82 +1,53 @@
-import { Divider, Grid, List, ListItem, ListItemText } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
-import * as urls from 'constants/urls'
+import { Divider, List } from '@material-ui/core'
+import { TopLoading } from 'components'
 import { observer } from 'mobx-react-lite'
-import React, { useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
-import { configStore } from 'stores'
-import { unixToShortDate } from 'utils'
-
-const SkeletonNewsPreview = () => (
-	<Grid direction="column" container>
-		<Grid spacing={2} container>
-			<Grid xs={4} item>
-				<Skeleton height={6} />
-			</Grid>
-			<Grid xs={3} item>
-				<Skeleton height={6} />
-			</Grid>
-		</Grid>
-		<Grid container>
-			<Grid xs={12} item>
-				<Skeleton height={6} />
-			</Grid>
-		</Grid>
-	</Grid>
-)
-
-export const __mockNews = [
-	{
-		id: 1,
-		name: 'Zebranie rodzicow',
-		timestamp: +new Date(),
-		content:
-			'w czwartek odbedzie sie spotkanie rodzicielskie, prosze byc bo to mega wazne i nie obecnosc skutkuje usunieciem ze szkoly'
-	},
-	{
-		id: 2,
-		name: 'Piknik',
-		timestamp: +new Date() - 100000000,
-		content: 'bedzie piknik kiedys'
-	},
-	{
-		id: 3,
-		name: 'Wolontariat',
-		timestamp: +new Date() - 500000000,
-		content: 'pieniadze prosze dawac do sekretariatu teraz szybko potrzeba jest dawac'
-	}
-]
+import React, { useContext, useEffect } from 'react'
+import { useBottomScrollListener } from 'react-bottom-scroll-listener'
+import { metaStore, newsStore, userStore } from 'stores'
+import useAsync from 'use-async-react'
+import NewsItem, { SkeletonNewsItem } from './NewsItem'
 
 const NewsList: React.FC = observer(() => {
-	const [loading, setLoading] = useState(true)
-	const history = useHistory()
-	const config = useContext(configStore)
+	const user = useContext(userStore)
+	const meta = useContext(metaStore)
+	const news = useContext(newsStore)
+	const { call: fetchNextNews, loading, error } = useAsync(news.fetchNextNews)
+
+	useBottomScrollListener(() => {
+		if (user.token && meta.isOnline) fetchNextNews(user.token)
+	}, 100)
 
 	useEffect(() => {
-		setTimeout(() => setLoading(false), 1000)
-	}, [])
+		if (user.token && meta.isOnline) fetchNextNews(user.token)
+	}, [meta.isOnline, fetchNextNews, user])
+
+	useEffect(() => {
+		if (error) user.logout(true)
+	}, [error, user])
 
 	return (
-		<List>
-			{loading
-				? [...new Array(6)].map((_, i) => (
-						<ListItem key={i}>
-							<SkeletonNewsPreview />
-						</ListItem>
-				  ))
-				: __mockNews.map(({ name, timestamp, content, id }) => (
-						<React.Fragment key={id}>
-							<ListItem onClick={() => history.push(urls.internal.specificNews(String(id)))} button>
-								<ListItemText
-									primary={`${name} • ${unixToShortDate(timestamp, config.language)}`}
-									secondary={content}
-									secondaryTypographyProps={{ noWrap: true }}
-								/>
-							</ListItem>
-							<Divider />
-						</React.Fragment>
-				  ))}
-		</List>
+		<>
+			{loading && news.news && <TopLoading />}
+			<List>
+				{loading && !news.news && (
+					<>
+						{[...new Array(5)].map((_, i) => (
+							<React.Fragment key={i}>
+								<SkeletonNewsItem />
+								<Divider />
+							</React.Fragment>
+						))}
+					</>
+				)}
+				{news.news?.map((e, i) => (
+					<React.Fragment key={i}>
+						<NewsItem {...e} />
+						<Divider />
+					</React.Fragment>
+				))}
+				{meta.isOnline && !news.noMoreNews && <SkeletonNewsItem />}
+			</List>
+		</>
 	)
 })
 

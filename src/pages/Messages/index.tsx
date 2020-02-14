@@ -10,7 +10,7 @@ interface Params {
 const Messages = () => {
 	const { id } = useParams<Params>()
 
-	return id ? <SpecificMessage id={id} /> : <MessageThreads />
+	return id ? <SpecificMessage id={Number(id)} /> : <MessageThreads />
 }
 
 export default Messages

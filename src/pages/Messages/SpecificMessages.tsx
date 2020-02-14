@@ -10,14 +10,14 @@ import useAsync from 'use-async-react'
 import { stripHtml } from 'utils'
 
 interface Props {
-	id: string
+	id: number
 }
 
 const MessageTypography = styled(Typography)`
 	overflow-wrap: break-word;
 `
 
-const SpecificMessage: React.FC<Props> = observer(({ id }) => {
+const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 	const { NO_SUCH_THREAD } = useLocale()
 	const config = useContext(configStore)
 	const user = useContext(userStore)
@@ -25,15 +25,15 @@ const SpecificMessage: React.FC<Props> = observer(({ id }) => {
 	const meta = useContext(metaStore)
 	const { call: fetchSpecificMessages, loading, error } = useAsync(messages.fetchSpecificMessages)
 
-	const thread = Number(id) in messages.messages ? messages.messages[Number(id)] : undefined
+	const thread = id in messages.messages ? messages.messages[id] : undefined
 
 	useEffect(() => {
-		if (user.token && meta.isOnline) fetchSpecificMessages(user.token, Number(id))
+		if (user.token && meta.isOnline) fetchSpecificMessages(user.token, id)
 	}, [meta.isOnline, user, id, fetchSpecificMessages])
 
 	useEffect(() => {
 		if (error) user.logout(true)
-	}, [error])
+	}, [error, user])
 
 	return (
 		<>
@@ -72,4 +72,4 @@ const SpecificMessage: React.FC<Props> = observer(({ id }) => {
 	)
 })
 
-export default SpecificMessage
+export default SpecificMessages

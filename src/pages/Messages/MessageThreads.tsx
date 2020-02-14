@@ -11,18 +11,19 @@ const MessageList = observer(() => {
 	const messages = useContext(messagesStore)
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
-	const { call: fetchNextPage, loading, error } = useAsync(messages.fetchNextThreads)
+	const { call: fetchNextThreads, loading, error } = useAsync(messages.fetchNextThreads)
+
 	useBottomScrollListener(() => {
-		if (user.token && meta.isOnline) fetchNextPage(user.token)
+		if (user.token && meta.isOnline) fetchNextThreads(user.token)
 	}, 100)
 
 	useEffect(() => {
-		if (user.token && meta.isOnline) fetchNextPage(user.token)
-	}, [fetchNextPage, user.token, meta.isOnline])
+		if (user.token && meta.isOnline) fetchNextThreads(user.token)
+	}, [fetchNextThreads, user.token, meta.isOnline])
 
 	useEffect(() => {
 		if (error) user.logout(true)
-	}, [error])
+	}, [error, user])
 
 	return (
 		<>
@@ -30,7 +31,7 @@ const MessageList = observer(() => {
 			<List>
 				{loading && !messages.threads && (
 					<>
-						{new Array(5).fill(null).map((_, i) => (
+						{[...new Array(5)].map((_, i) => (
 							<React.Fragment key={i}>
 								<SkeletonThreadItem />
 								<Divider />
