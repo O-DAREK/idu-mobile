@@ -30,6 +30,7 @@ describe('messages store', () => {
 					title: 'yes',
 					body: 'hello',
 					date: new Date(new Date().toString()),
+					read: false,
 					confirmationRequired: false
 				}
 			]
@@ -42,6 +43,7 @@ describe('messages store', () => {
 							title: 'yes',
 							body: 'hello',
 							start_at: data[0].date.toString(),
+							read_at: null,
 							is_confirmation_required: false
 						}
 					]
@@ -58,6 +60,7 @@ describe('messages store', () => {
 					id: 123,
 					title: 'yes',
 					body: 'hello',
+					read: true,
 					date: new Date(new Date().toString()),
 					confirmationRequired: false
 				})
@@ -71,6 +74,7 @@ describe('messages store', () => {
 							title: 'yes',
 							body: 'hello',
 							start_at: data[0].date.toString(),
+							read_at: new Date().toString(),
 							is_confirmation_required: false
 						})
 						.map((e, i) => ({ ...e, id: e.id + i }))
@@ -89,6 +93,7 @@ describe('messages store', () => {
 							title: 'yes',
 							body: 'hello',
 							start_at: data[0].date.toString(),
+							read_at: new Date().toString(),
 							is_confirmation_required: false
 						}
 					]
@@ -117,6 +122,7 @@ describe('messages store', () => {
 					title: 'yes',
 					body: 'hello',
 					date: new Date(new Date().toString()),
+					read: false,
 					confirmationRequired: false
 				}
 			]

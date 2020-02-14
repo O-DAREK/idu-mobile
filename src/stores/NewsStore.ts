@@ -8,6 +8,7 @@ export type PieceOfNews = {
 	title: string
 	body: string
 	date: Date
+	read: boolean
 	confirmationRequired: boolean
 }
 
@@ -66,6 +67,7 @@ export class NewsStore {
 				title: news.title,
 				body: news.body,
 				date: new Date(news.start_at),
+				read: !!news.read_at,
 				confirmationRequired: news.is_confirmation_required
 			}))
 		})
@@ -95,6 +97,7 @@ export class NewsStore {
 					id: news.id,
 					title: news.title,
 					body: news.body,
+					read: !!news.read_at,
 					date: new Date(news.start_at),
 					confirmationRequired: news.is_confirmation_required
 				})
