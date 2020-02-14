@@ -9,7 +9,7 @@ export type PieceOfNews = {
 	body: string
 	date: Date
 	read: boolean
-	confirmationRequired: boolean
+	requiresConfirmation: boolean
 }
 
 export class NewsStore {
@@ -68,7 +68,7 @@ export class NewsStore {
 				body: news.body,
 				date: new Date(news.start_at),
 				read: !!news.read_at,
-				confirmationRequired: news.is_confirmation_required
+				requiresConfirmation: !news.confirmed_at && news.is_confirmation_required
 			}))
 		})
 
@@ -99,11 +99,61 @@ export class NewsStore {
 					body: news.body,
 					read: !!news.read_at,
 					date: new Date(news.start_at),
-					confirmationRequired: news.is_confirmation_required
+					requiresConfirmation: !news.confirmed_at && news.is_confirmation_required
 				})
 			}
 		})
 
 		return (this.news as this['news'])!
+	}
+
+	markAsRead = async (token: string, id: number): Promise<PieceOfNews> => {
+		const found = this.news?.find(e => e.id === id) || this.stickyNews?.find(e => e.id === id)
+
+		if (!found) {
+			throw new Error('No such news found')
+		}
+
+		const res = await fetch(urls.api.markNewsRead(id), {
+			method: 'post',
+			headers: {
+				'X-API-TOKEN': token
+			}
+		})
+
+		if (!res.ok) {
+			throw await constructFetchErr(res)
+		}
+
+		runInAction(() => {
+			found.read = true
+		})
+
+		return found
+	}
+
+	markAsConfirmed = async (token: string, id: number): Promise<PieceOfNews> => {
+		const found = this.news?.find(e => e.id === id) || this.stickyNews?.find(e => e.id === id)
+
+		if (!found) {
+			throw new Error('No such news found')
+		}
+
+		const res = await fetch(urls.api.markNewsConfirmed(id), {
+			method: 'post',
+			headers: {
+				'X-API-TOKEN': token
+			}
+		})
+
+		if (!res.ok) {
+			throw await constructFetchErr(res)
+		}
+
+		runInAction(() => {
+			found.requiresConfirmation = false
+		})
+
+		return found
 	}
 }

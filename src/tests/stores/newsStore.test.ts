@@ -1,4 +1,5 @@
 import * as responses from 'constants/responses'
+import { runInAction } from 'mobx'
 import { NewsStore } from 'stores/NewsStore'
 
 describe('messages store', () => {
@@ -31,7 +32,7 @@ describe('messages store', () => {
 					body: 'hello',
 					date: new Date(new Date().toString()),
 					read: false,
-					confirmationRequired: false
+					requiresConfirmation: false
 				}
 			]
 
@@ -44,7 +45,8 @@ describe('messages store', () => {
 							body: 'hello',
 							start_at: data[0].date.toString(),
 							read_at: null,
-							is_confirmation_required: false
+							is_confirmation_required: true,
+							confirmed_at: 'somedate'
 						}
 					]
 				} as responses.News)
@@ -62,7 +64,7 @@ describe('messages store', () => {
 					body: 'hello',
 					read: true,
 					date: new Date(new Date().toString()),
-					confirmationRequired: false
+					requiresConfirmation: true
 				})
 				.map((e, i) => ({ ...e, id: e.id + i }))
 
@@ -75,7 +77,7 @@ describe('messages store', () => {
 							body: 'hello',
 							start_at: data[0].date.toString(),
 							read_at: new Date().toString(),
-							is_confirmation_required: false
+							is_confirmation_required: true
 						})
 						.map((e, i) => ({ ...e, id: e.id + i }))
 				} as responses.News)
@@ -94,7 +96,7 @@ describe('messages store', () => {
 							body: 'hello',
 							start_at: data[0].date.toString(),
 							read_at: new Date().toString(),
-							is_confirmation_required: false
+							is_confirmation_required: true
 						}
 					]
 				} as responses.News)
@@ -123,7 +125,7 @@ describe('messages store', () => {
 					body: 'hello',
 					date: new Date(new Date().toString()),
 					read: false,
-					confirmationRequired: false
+					requiresConfirmation: false
 				}
 			]
 
@@ -154,6 +156,146 @@ describe('messages store', () => {
 			await expect(newsStore.fetchStickyNews('123')).rejects.toBe(err)
 			expect(newsStore.stickyNews).toEqual(undefined)
 			expect(getLS().stickyNews).toEqual(undefined)
+		})
+	})
+
+	describe('mark as read', () => {
+		const genData = () => [
+			{
+				body: '123',
+				requiresConfirmation: false,
+				date: new Date(1e12),
+				id: 123,
+				read: false,
+				title: 'something'
+			}
+		]
+
+		it('mark news', async () => {
+			runInAction(() => {
+				newsStore.news = genData()
+			})
+
+			fetchMock.mockResponseOnce('')
+
+			await expect(newsStore.markAsRead('123', 123)).resolves.toEqual({
+				...genData()[0],
+				read: true
+			})
+			expect(newsStore.news).toEqual([
+				{
+					...genData()[0],
+					read: true
+				}
+			])
+		})
+		it('mark stickyNews', async () => {
+			runInAction(() => {
+				newsStore.stickyNews = genData()
+			})
+
+			fetchMock.mockResponseOnce('')
+
+			await expect(newsStore.markAsRead('123', 123)).resolves.toEqual({
+				...genData()[0],
+				read: true
+			})
+			expect(newsStore.stickyNews).toEqual([
+				{
+					...genData()[0],
+					read: true
+				}
+			])
+		})
+		it('not existing news', async () => {
+			runInAction(() => {
+				newsStore.news = genData()
+			})
+
+			fetchMock.mockResponseOnce('')
+
+			await expect(newsStore.markAsRead('123', 999)).rejects.toThrowError('No such news')
+			expect(newsStore.news).toEqual(genData())
+		})
+		it('fail to mark', async () => {
+			runInAction(() => {
+				newsStore.news = genData()
+			})
+			const err = new Error('')
+			fetchMock.mockReject(err)
+
+			await expect(newsStore.markAsRead('123', 123)).rejects.toBe(err)
+			expect(newsStore.news).toEqual(genData())
+		})
+	})
+
+	describe('mark as confirmed', () => {
+		const genData = () => [
+			{
+				body: '123',
+				requiresConfirmation: true,
+				date: new Date(1e12),
+				id: 123,
+				read: false,
+				title: 'something'
+			}
+		]
+
+		it('mark news', async () => {
+			runInAction(() => {
+				newsStore.news = genData()
+			})
+
+			fetchMock.mockResponseOnce('')
+
+			await expect(newsStore.markAsConfirmed('123', 123)).resolves.toEqual({
+				...genData()[0],
+				requiresConfirmation: false
+			})
+			expect(newsStore.news).toEqual([
+				{
+					...genData()[0],
+					requiresConfirmation: false
+				}
+			])
+		})
+		it('mark stickyNews', async () => {
+			runInAction(() => {
+				newsStore.stickyNews = genData()
+			})
+
+			fetchMock.mockResponseOnce('')
+
+			await expect(newsStore.markAsConfirmed('123', 123)).resolves.toEqual({
+				...genData()[0],
+				requiresConfirmation: false
+			})
+			expect(newsStore.stickyNews).toEqual([
+				{
+					...genData()[0],
+					requiresConfirmation: false
+				}
+			])
+		})
+		it('not existing news', async () => {
+			runInAction(() => {
+				newsStore.news = genData()
+			})
+
+			fetchMock.mockResponseOnce('')
+
+			await expect(newsStore.markAsConfirmed('123', 999)).rejects.toThrowError('No such news')
+			expect(newsStore.news).toEqual(genData())
+		})
+		it('fail to mark', async () => {
+			runInAction(() => {
+				newsStore.news = genData()
+			})
+			const err = new Error('')
+			fetchMock.mockReject(err)
+
+			await expect(newsStore.markAsConfirmed('123', 123)).rejects.toBe(err)
+			expect(newsStore.news).toEqual(genData())
 		})
 	})
 
