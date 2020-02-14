@@ -13,12 +13,13 @@ describe('messages store', () => {
 
 	it('should have defaults', () => {
 		expect(messagesStore.threads).toBe(undefined)
+		expect(messagesStore.messages).toEqual({})
 		expect(messagesStore.page).toBe(1)
 		expect(messagesStore.noMoreThreads).toBe(false)
 	})
 
 	it('should have defaults saved to localstorage', () => {
-		expect(getLS('{"not": "empty"}')).toEqual({})
+		expect(getLS('{"not": "empty"}')).toEqual({ messages: {} })
 	})
 
 	describe('fetch threads', () => {
@@ -144,16 +145,82 @@ describe('messages store', () => {
 		})
 	})
 
+	describe('fetch specific messages', () => {
+		const tokenWithUserId123 =
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjMsImlhdCI6MTUxNjIzOTAyMn0.UD1nLDYSdO3TD6XwtsQ0UWi9cmuwJT-IBgC0d3_lGio'
+
+		it('should correctly fetch', async () => {
+			const data = {
+				123: {
+					id: 123,
+					title: 'hello',
+					messages: [
+						{
+							id: 999,
+							to: {
+								id: 123,
+								name: 'aaa'
+							},
+							body: 'hello',
+							sentAt: new Date(new Date().toString())
+						}
+					]
+				}
+			}
+
+			fetchMock.mockResponseOnce(
+				JSON.stringify({
+					messages: [
+						{
+							title: 'hello',
+							id: 999,
+							from: {
+								id: 123,
+								name: 'aaa'
+							},
+							body: 'hello',
+							created_at: data[123].messages[0].sentAt.toString()
+						}
+					]
+				} as responses.SpecificMessages)
+			)
+
+			await expect(messagesStore.fetchSpecificMessages(tokenWithUserId123, 123)).resolves.toEqual(
+				data[123]
+			)
+			expect(messagesStore.messages).toEqual(data)
+			expect(getLS().messages).toEqual({
+				123: {
+					...data[123],
+					messages: data[123].messages.map(e => ({
+						...e,
+						sentAt: JSON.parse(JSON.stringify(e.sentAt))
+					}))
+				}
+			})
+		})
+		it('should fail for some reason', async () => {
+			const err = new Error('')
+			fetchMock.mockReject(err)
+
+			await expect(messagesStore.fetchSpecificMessages(tokenWithUserId123, 123)).rejects.toBe(err)
+			expect(messagesStore.messages).toEqual({})
+			expect(getLS().messages).toEqual({})
+		})
+	})
+
 	it('should load from localstorage', () => {
 		const data = {
-			threads: []
+			messages: { 123: { messages: [{ sentAt: new Date() }] } },
+			threads: [{ sentAt: new Date() }]
 		}
 		window.localStorage.setItem(MessagesStore.name, JSON.stringify(data))
 
 		const messagesStore = new MessagesStore()
 
+		expect(messagesStore.messages).toEqual(data.messages)
 		expect(messagesStore.threads).toEqual(data.threads)
 		expect(messagesStore.page).toEqual(1)
-		expect(messagesStore.noMoreThreads).toEqual(false)
+		expect(messagesStore.noMoreThreads).toEqual(true)
 	})
 })

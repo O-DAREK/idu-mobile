@@ -56,6 +56,7 @@ export class MessagesStore {
 			MessagesStore.name,
 			JSON.stringify({
 				// threads: this.threads
+				messages: this.messages
 			})
 		)
 
@@ -67,6 +68,15 @@ export class MessagesStore {
 			...e,
 			sentAt: new Date(e.sentAt)
 		}))
+
+		for (const key in this.messages) {
+			if (this.messages.hasOwnProperty(key)) {
+				this.messages[key].messages = this.messages[key].messages.map(e => ({
+					...e,
+					sentAt: new Date(e.sentAt)
+				}))
+			}
+		}
 	}
 
 	fetchSpecificMessages = async (token: string, id: number): Promise<SpecificMessages> => {
