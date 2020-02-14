@@ -13,6 +13,8 @@ export type PieceOfNews = {
 }
 
 export class NewsStore {
+	static localStorageKey = 'NewsStore'
+
 	@observable news?: PieceOfNews[]
 	@observable stickyNews?: PieceOfNews[]
 
@@ -32,11 +34,14 @@ export class NewsStore {
 	}
 
 	private save = (): void =>
-		window.localStorage.setItem(NewsStore.name, JSON.stringify({ stickyNews: this.stickyNews }))
+		window.localStorage.setItem(
+			NewsStore.localStorageKey,
+			JSON.stringify({ stickyNews: this.stickyNews })
+		)
 
 	@action
 	private load = (): void => {
-		Object.assign(this, JSON.parse(window.localStorage.getItem(NewsStore.name) || '{}'))
+		Object.assign(this, JSON.parse(window.localStorage.getItem(NewsStore.localStorageKey) || '{}'))
 
 		this.news = this.news?.map(e => ({
 			...e,

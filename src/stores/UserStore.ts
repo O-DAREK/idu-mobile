@@ -27,6 +27,8 @@ type Profile = {
 }
 
 export class UserStore {
+	static localStorageKey = 'UserStore'
+
 	@observable token?: string
 	@observable events?: Event[]
 	@observable profile?: Profile
@@ -39,7 +41,7 @@ export class UserStore {
 
 	private save = (): void =>
 		window.localStorage.setItem(
-			UserStore.name,
+			UserStore.localStorageKey,
 			JSON.stringify({
 				token: this.token,
 				events: this.events,
@@ -49,7 +51,7 @@ export class UserStore {
 
 	@action
 	private load = (): void => {
-		Object.assign(this, JSON.parse(window.localStorage.getItem(UserStore.name) || '{}'))
+		Object.assign(this, JSON.parse(window.localStorage.getItem(UserStore.localStorageKey) || '{}'))
 
 		this.events = this.events?.map(e => ({
 			...e,

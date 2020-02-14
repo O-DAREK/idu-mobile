@@ -2,6 +2,8 @@ import { action, observable } from 'mobx'
 import { BeforeInstallPromptEvent } from 'react-app-env'
 
 export class MetaStore {
+	static localStorageKey = 'MetaStore'
+
 	@observable isOnline: boolean = navigator.onLine
 	@observable availableUpdate: boolean = false
 	@observable pwaInstallEvent?: BeforeInstallPromptEvent

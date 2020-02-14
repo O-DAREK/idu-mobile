@@ -33,6 +33,8 @@ export type SpecificMessages = {
 }
 
 export class MessagesStore {
+	static localStorageKey = 'MessagesStore'
+
 	@observable messages: { [k: number]: SpecificMessages } = {}
 	@observable threads?: MessageThread[]
 
@@ -53,7 +55,7 @@ export class MessagesStore {
 
 	private save = (): void =>
 		window.localStorage.setItem(
-			MessagesStore.name,
+			MessagesStore.localStorageKey,
 			JSON.stringify({
 				messages: this.messages
 			})
@@ -61,7 +63,10 @@ export class MessagesStore {
 
 	@action
 	private load = (): void => {
-		Object.assign(this, JSON.parse(window.localStorage.getItem(MessagesStore.name) || '{}'))
+		Object.assign(
+			this,
+			JSON.parse(window.localStorage.getItem(MessagesStore.localStorageKey) || '{}')
+		)
 
 		this.threads = this.threads?.map(e => ({
 			...e,

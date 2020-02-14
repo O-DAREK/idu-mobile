@@ -3,6 +3,8 @@ import { Language } from 'locales/strings'
 import { action, autorun, observable } from 'mobx'
 
 export class ConfigStore {
+	static localStorageKey = 'ConfigStore'
+
 	@observable language!: Language
 	@observable theme!: Theme
 	@observable accentColors!: [string, string]
@@ -15,7 +17,7 @@ export class ConfigStore {
 
 	private save = (): void =>
 		window.localStorage.setItem(
-			ConfigStore.name,
+			ConfigStore.localStorageKey,
 			JSON.stringify({
 				language: this.language,
 				theme: this.theme,
@@ -25,7 +27,10 @@ export class ConfigStore {
 
 	@action
 	private load = (): void =>
-		Object.assign(this, JSON.parse(window.localStorage.getItem(ConfigStore.name) || '{}'))
+		Object.assign(
+			this,
+			JSON.parse(window.localStorage.getItem(ConfigStore.localStorageKey) || '{}')
+		)
 
 	@action
 	reset = () => {
