@@ -3,9 +3,10 @@ import { BackBar, Container, PaddedPaper, StrippedHtml } from 'components'
 import * as urls from 'constants/urls'
 import { formatLong, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
-import React, { useContext } from 'react'
-import { configStore, newsStore } from 'stores'
+import React, { useContext, useEffect } from 'react'
+import { configStore, metaStore, newsStore, userStore } from 'stores'
 import styled from 'styled-components'
+import { ignoreRejection } from 'utils'
 
 const WordBreakingPaper = styled(PaddedPaper)`
 	overflow-wrap: break-word;
@@ -18,9 +19,16 @@ interface Props {
 const SpecificNews: React.FC<Props> = observer(({ id }) => {
 	const { NO_SUCH_NEWS } = useLocale()
 	const news = useContext(newsStore)
+	const user = useContext(userStore)
+	const meta = useContext(metaStore)
 	const config = useContext(configStore)
 
 	const foundNews = news.news?.find(e => e.id === id) || news.stickyNews?.find(e => e.id === id)
+
+	useEffect(() => {
+		if (foundNews && !foundNews.read && user.token && meta.isOnline)
+			ignoreRejection(news.markAsRead(user.token, foundNews.id))
+	}, [user, meta.isOnline, foundNews, news])
 
 	return (
 		<>
