@@ -1,12 +1,11 @@
 import { Typography } from '@material-ui/core'
-import { BackBar, Container, PaddedPaper } from 'components'
+import { BackBar, Container, PaddedPaper, StrippedHtml } from 'components'
 import * as urls from 'constants/urls'
 import { formatLong, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { configStore, newsStore } from 'stores'
 import styled from 'styled-components'
-import { stripHtml } from 'utils'
 
 const WordBreakingPaper = styled(PaddedPaper)`
 	overflow-wrap: break-word;
@@ -34,9 +33,9 @@ const SpecificNews: React.FC<Props> = observer(({ id }) => {
 							<Typography variant="h4" gutterBottom>
 								{foundNews.title}
 							</Typography>
-							<Typography component="p" paragraph>
-								{stripHtml(foundNews.body)}
-							</Typography>
+							<StrippedHtml component="p" paragraph>
+								{foundNews.body}
+							</StrippedHtml>
 							<Typography variant="overline">
 								{formatLong(config.language, foundNews.date)}
 							</Typography>

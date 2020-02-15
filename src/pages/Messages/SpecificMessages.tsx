@@ -1,21 +1,16 @@
 import { Grid, Typography } from '@material-ui/core'
-import { BackBar, Container, PaddedPaper, TopLoading } from 'components'
+import { BackBar, Container, PaddedPaper, StrippedHtml, TopLoading } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { configStore, messagesStore, metaStore, userStore } from 'stores'
-import styled from 'styled-components'
 import useAsync from 'use-async-react'
-import { stripHtml } from 'utils'
+import MessageBox from './MessageBox'
 
 interface Props {
 	id: number
 }
-
-const MessageTypography = styled(Typography)`
-	overflow-wrap: break-word;
-`
 
 const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 	const { NO_SUCH_THREAD } = useLocale()
@@ -52,7 +47,7 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 							const message = (
 								<Grid xs={9} item key={2}>
 									<PaddedPaper>
-										<MessageTypography>{stripHtml(body)}</MessageTypography>
+										<StrippedHtml>{body}</StrippedHtml>
 									</PaddedPaper>
 								</Grid>
 							)
@@ -67,6 +62,7 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 						})}
 					</Grid>
 				)}
+				<MessageBox threadId={id} />
 			</Container>
 		</>
 	)
