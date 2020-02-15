@@ -1,4 +1,5 @@
 import * as responses from 'constants/responses'
+import { runInAction } from 'mobx'
 import { MessagesStore } from 'stores/MessagesStore'
 
 describe('messages store', () => {
@@ -142,7 +143,7 @@ describe('messages store', () => {
 		it('should correctly fetch', async () => {
 			const data = {
 				123: {
-					id: 123,
+					threadId: 123,
 					title: 'hello',
 					messages: [
 						{
@@ -194,6 +195,101 @@ describe('messages store', () => {
 			fetchMock.mockReject(err)
 
 			await expect(messagesStore.fetchSpecificMessages(tokenWithUserId123, 123)).rejects.toBe(err)
+			expect(messagesStore.messages).toEqual({})
+			expect(getLS().messages).toEqual({})
+		})
+	})
+
+	describe('send new message', () => {
+		const tokenWithUserId123 =
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjMsImlhdCI6MTUxNjIzOTAyMn0.UD1nLDYSdO3TD6XwtsQ0UWi9cmuwJT-IBgC0d3_lGio'
+
+		it('should correctly send', async () => {
+			const data = {
+				111: {
+					threadId: 111,
+					title: 'hello',
+					messages: [
+						{
+							id: 999,
+							to: {
+								id: 123,
+								name: 'aaa'
+							},
+							body: 'hello',
+							sentAt: new Date(new Date().toString())
+						}
+					]
+				}
+			}
+			const newMessage = {
+				id: 1000,
+				to: {
+					id: 123,
+					name: 'aaa'
+				},
+				body: 'im sending a message',
+				sentAt: new Date(new Date().toString())
+			}
+			runInAction(() => {
+				messagesStore.messages = data
+			})
+
+			fetchMock.mockResponses(
+				'',
+				JSON.stringify({
+					messages: [
+						{
+							title: 'hello',
+							id: 999,
+							from: {
+								id: 123,
+								name: 'aaa'
+							},
+							body: 'hello',
+							created_at: data[111].messages[0].sentAt.toString()
+						},
+						{
+							id: 1000,
+							title: 'RE: hello',
+							from: {
+								id: 123,
+								name: 'aaa'
+							},
+							body: 'im sending a message',
+							created_at: newMessage.sentAt.toString()
+						}
+					]
+				} as responses.SpecificMessages)
+			)
+
+			await expect(
+				messagesStore.sendMessage(tokenWithUserId123, 111, newMessage.body)
+			).resolves.toEqual(newMessage)
+			expect(messagesStore.messages).toEqual({
+				111: {
+					...data[111],
+					messages: [...data[111].messages, newMessage]
+				}
+			})
+			expect(getLS().messages).toEqual({
+				111: {
+					...data[111],
+					messages: [
+						...data[111].messages.map(e => ({
+							...e,
+							sentAt: JSON.parse(JSON.stringify(e.sentAt))
+						})),
+						...[newMessage].map(e => ({ ...e, sentAt: JSON.parse(JSON.stringify(e.sentAt)) }))
+					]
+				}
+			})
+		})
+		it('should fail for some reason', async () => {
+			const err = new Error('')
+			fetchMock.mockReject(err)
+
+			await expect(messagesStore.sendMessage(tokenWithUserId123, 111, 'text')).rejects.toBe(err)
 			expect(messagesStore.messages).toEqual({})
 			expect(getLS().messages).toEqual({})
 		})

@@ -27,7 +27,7 @@ export type MessageThread = {
 )
 
 export type SpecificMessages = {
-	id: number
+	threadId: number
 	title: string
 	messages: Omit<MessageThread, 'title'>[]
 }
@@ -83,8 +83,8 @@ export class MessagesStore {
 		}
 	}
 
-	fetchSpecificMessages = async (token: string, id: number): Promise<SpecificMessages> => {
-		const res = await fetch(urls.api.specificMessages(id), {
+	fetchSpecificMessages = async (token: string, threadId: number): Promise<SpecificMessages> => {
+		const res = await fetch(urls.api.specificMessages(threadId), {
 			headers: {
 				'X-API-TOKEN': token
 			}
@@ -96,8 +96,8 @@ export class MessagesStore {
 
 		const json = (await res.json()) as responses.SpecificMessages
 		runInAction(() => {
-			this.messages[id] = {
-				id,
+			this.messages[threadId] = {
+				threadId,
 				title: json.messages[0].title,
 				messages: []
 			}
@@ -105,7 +105,7 @@ export class MessagesStore {
 			const { user_id: userId } = jwtDecode(token)
 
 			for (const message of json.messages) {
-				this.messages[id].messages.push({
+				this.messages[threadId].messages.push({
 					id: message.id,
 					body: message.body,
 					sentAt: new Date(message.created_at),
@@ -114,7 +114,7 @@ export class MessagesStore {
 			}
 		})
 
-		return this.messages[id]
+		return this.messages[threadId]
 	}
 
 	fetchNextThreads = async (token: string): Promise<NonNullable<this['threads']>> => {
@@ -146,5 +146,31 @@ export class MessagesStore {
 		})
 
 		return (this.threads as this['threads'])!
+	}
+
+	sendMessage = async (
+		token: string,
+		threadId: number,
+		body: string
+	): Promise<Omit<MessageThread, 'title'>> => {
+		const formData = new FormData()
+		formData.append('message[thread_id]', String(threadId))
+		formData.append('message[body]', body)
+
+		const res = await fetch(urls.api.postMessage(), {
+			method: 'POST',
+			headers: {
+				'X-API-TOKEN': token
+			},
+			body: formData
+		})
+
+		if (!res.ok) {
+			throw await constructFetchErr(res)
+		}
+
+		await this.fetchSpecificMessages(token, threadId)
+
+		return this.messages[threadId].messages[this.messages[threadId].messages.length - 1]
 	}
 }

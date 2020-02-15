@@ -87,6 +87,10 @@ const strings = {
 	NO_SUCH_NEWS: {
 		en: 'Sorry, this news piece does not exist',
 		pl: 'Przepraszamy, ta aktualność nie istnieje'
+	},
+	MESSAGE_PLACEHOLDER: {
+		en: 'Message...',
+		pl: 'Wiadomość...'
 	}
 }
 
