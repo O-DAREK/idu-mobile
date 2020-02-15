@@ -1,4 +1,5 @@
 import { Grid, Typography } from '@material-ui/core'
+import { Skeleton } from '@material-ui/lab'
 import { BackBar, Container, PaddedPaper, StrippedHtml, TopLoading } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo, useLocale } from 'locales'
@@ -11,6 +12,29 @@ import MessageBox from './MessageBox'
 interface Props {
 	id: number
 }
+
+const MessagesSkeleton = () => (
+	<Grid spacing={2} alignItems="center" container>
+		<Grid xs={9} item>
+			<Skeleton height={150} />
+		</Grid>
+		<Grid xs={3} item>
+			<Skeleton height={12} />
+		</Grid>
+		<Grid xs={3} item>
+			<Skeleton height={12} />
+		</Grid>
+		<Grid xs={9} item>
+			<Skeleton height={100} />
+		</Grid>
+		<Grid xs={3} item>
+			<Skeleton height={12} />
+		</Grid>
+		<Grid xs={9} item>
+			<Skeleton height={100} />
+		</Grid>
+	</Grid>
+)
 
 const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 	const { NO_SUCH_THREAD } = useLocale()
@@ -32,9 +56,10 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 
 	return (
 		<>
-			{loading && <TopLoading />}
+			{loading && thread && <TopLoading />}
 			<BackBar to={urls.internal.messages()} />
 			<Container>
+				{loading && !thread && <MessagesSkeleton />}
 				{!thread && !loading && <Typography>{NO_SUCH_THREAD}</Typography>}
 				{thread && (
 					<Grid direction="column" spacing={3} container>
