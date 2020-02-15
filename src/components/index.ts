@@ -1,3 +1,4 @@
+export { default as AvatarWithPlaceholder } from './AvatarWithPlaceholder'
 export { default as BackBar } from './BackBar'
 export { default as BottomAppBar } from './BottomAppBar'
 export { default as CleanLink } from './CleanLink'

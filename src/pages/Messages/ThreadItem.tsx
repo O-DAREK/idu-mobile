@@ -1,5 +1,6 @@
-import { Avatar, Grid, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core'
+import { Grid, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
+import { AvatarWithPlaceholder } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo } from 'locales'
 import React, { memo, useContext } from 'react'
@@ -14,11 +15,13 @@ const MarginedGrid = styled(Grid)`
 	margin-bottom: 1.5px;
 `
 
+const CircleSkeleton = () => <Skeleton variant="circle" height={40} width={40} />
+
 export const SkeletonThreadItem = () => (
 	<ListItem>
 		<MarginedGrid spacing={3} alignItems="center" container>
 			<Grid xs="auto" item>
-				<Skeleton variant="circle" height={40} width={40} />
+				<CircleSkeleton />
 			</Grid>
 			<Grid xs item>
 				<Grid spacing={3} container>
@@ -64,9 +67,10 @@ const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) 
 	return (
 		<ListItem onClick={() => history.push(urls.internal.specificMessage(String(id)))} button>
 			<ListItemAvatar>
-				<Avatar
+				<AvatarWithPlaceholder
 					alt="avatar"
 					src={`https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50)}`}
+					placeholder={<CircleSkeleton />}
 				/>
 			</ListItemAvatar>
 			<ListItemText
