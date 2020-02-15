@@ -1,6 +1,7 @@
 import { Roles } from 'constants/interfaces'
 import { Events, Login, Profile } from 'constants/responses'
 import { UNAUTHORIZED } from 'http-status-codes'
+import { runInAction } from 'mobx'
 import { UserStore } from 'stores/UserStore'
 
 describe('user store', () => {
@@ -208,6 +209,23 @@ describe('user store', () => {
 			await expect(userStore.fetchProfile()).rejects.toThrowError('token')
 			expect(userStore.profile).toEqual(undefined)
 			expect(getLS().profile).toEqual(undefined)
+		})
+		it('should update unread news count', () => {
+			runInAction(() => {
+				userStore.profile = {
+					id: 4138,
+					firstName: 'Zack',
+					lastName: 'Boomer',
+					role: Roles.student,
+					mobilePhone: '123123',
+					unreadNewsCount: 124,
+					unreadMessagesCount: 123
+				}
+			})
+
+			userStore.decreaseUnreadNews()
+
+			expect(userStore.profile?.unreadNewsCount).toBe(123)
 		})
 	})
 
