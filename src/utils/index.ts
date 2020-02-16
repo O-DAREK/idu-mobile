@@ -6,10 +6,7 @@ export const createTime = (hours: number, minutes: number): string =>
 
 export const ignoreRejection = <T>(promise: Promise<T>) => promise.catch(() => {})
 
-export const stripHtml = (html: string) => {
-	const ele = document.createElement('div')
-	ele.innerHTML = html
-	return ele.textContent || ele.innerText || ''
-}
+export const stripHtml = (html: string) =>
+	new DOMParser().parseFromString(html, 'text/html').body.textContent || ''
 
 export * from './types'
