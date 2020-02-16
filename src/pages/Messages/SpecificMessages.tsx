@@ -1,17 +1,24 @@
 import { Grid, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
-import { BackBar, Container, PaddedPaper, StrippedHtml, TopLoading } from 'components'
+import { BackBar, Container, FlexGrow, PaddedPaper, StrippedHtml, TopLoading } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { configStore, messagesStore, metaStore, userStore } from 'stores'
+import styled from 'styled-components'
 import useAsync from 'use-async-react'
 import MessageBox from './MessageBox'
 
 interface Props {
 	id: number
 }
+
+const FlexBox = styled.div`
+	min-height: calc(var(--visible-height, 1vh) * 100 - ${p => p.theme.spacing()}px);
+	display: flex;
+	flex-direction: column;
+`
 
 const MessagesSkeleton = () => (
 	<Grid spacing={2} alignItems="center" container>
@@ -55,7 +62,7 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 	}, [error, user])
 
 	return (
-		<>
+		<FlexBox>
 			{loading && thread && <TopLoading />}
 			<BackBar to={urls.internal.messages()} />
 			<Container>
@@ -87,9 +94,10 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 						})}
 					</Grid>
 				)}
-				<MessageBox threadId={id} />
 			</Container>
-		</>
+			<FlexGrow />
+			<MessageBox threadId={id} />
+		</FlexBox>
 	)
 })
 
