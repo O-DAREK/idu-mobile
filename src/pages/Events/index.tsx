@@ -84,6 +84,7 @@ const Events: React.FC = observer(() => {
 					}}
 					open={showPicker}
 					disableToolbar
+					autoOk
 				/>
 			</MuiPickersUtilsProvider>
 		</>
