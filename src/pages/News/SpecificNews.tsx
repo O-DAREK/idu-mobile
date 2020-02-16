@@ -27,7 +27,7 @@ const SpecificNews: React.FC<Props> = observer(({ id }) => {
 
 	useEffect(() => {
 		if (foundNews && !foundNews.read && user.token && meta.isOnline)
-			ignoreRejection(news.markAsRead(user.token, foundNews.id))
+			ignoreRejection(news.markAsRead(user.token, foundNews.id).then(user.decreaseUnreadNews))
 	}, [user, meta.isOnline, foundNews, news])
 
 	return (

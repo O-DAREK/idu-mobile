@@ -1,16 +1,47 @@
 import { Grid, Typography } from '@material-ui/core'
-import { BackBar, Container, PaddedPaper, StrippedHtml, TopLoading } from 'components'
+import { Skeleton } from '@material-ui/lab'
+import { BackBar, Container, FlexGrow, PaddedPaper, StrippedHtml, TopLoading } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { configStore, messagesStore, metaStore, userStore } from 'stores'
+import styled from 'styled-components'
 import useAsync from 'use-async-react'
 import MessageBox from './MessageBox'
 
 interface Props {
 	id: number
 }
+
+const FlexBox = styled.div`
+	min-height: calc(var(--visible-height, 1vh) * 100 - ${p => p.theme.spacing()}px);
+	display: flex;
+	flex-direction: column;
+`
+
+const MessagesSkeleton = () => (
+	<Grid spacing={2} alignItems="center" container>
+		<Grid xs={9} item>
+			<Skeleton height={150} />
+		</Grid>
+		<Grid xs={3} item>
+			<Skeleton height={12} />
+		</Grid>
+		<Grid xs={3} item>
+			<Skeleton height={12} />
+		</Grid>
+		<Grid xs={9} item>
+			<Skeleton height={100} />
+		</Grid>
+		<Grid xs={3} item>
+			<Skeleton height={12} />
+		</Grid>
+		<Grid xs={9} item>
+			<Skeleton height={100} />
+		</Grid>
+	</Grid>
+)
 
 const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 	const { NO_SUCH_THREAD } = useLocale()
@@ -31,10 +62,11 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 	}, [error, user])
 
 	return (
-		<>
-			{loading && <TopLoading />}
+		<FlexBox>
+			{loading && thread && <TopLoading />}
 			<BackBar to={urls.internal.messages()} />
 			<Container>
+				{loading && !thread && <MessagesSkeleton />}
 				{!thread && !loading && <Typography>{NO_SUCH_THREAD}</Typography>}
 				{thread && (
 					<Grid direction="column" spacing={3} container>
@@ -62,9 +94,10 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 						})}
 					</Grid>
 				)}
-				<MessageBox threadId={id} />
 			</Container>
-		</>
+			<FlexGrow />
+			<MessageBox threadId={id} />
+		</FlexBox>
 	)
 })
 

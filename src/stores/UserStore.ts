@@ -163,4 +163,9 @@ export class UserStore {
 
 		return (this.profile as this['profile'])!
 	}
+
+	@action
+	decreaseUnreadNews = () => {
+		if (this.profile) this.profile.unreadNewsCount--
+	}
 }

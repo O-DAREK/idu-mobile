@@ -20,6 +20,7 @@ import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import MessageIcon from '@material-ui/icons/Message'
 import SettingsIcon from '@material-ui/icons/Settings'
+import { FlexGrow } from 'components'
 import * as urls from 'constants/urls'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
@@ -28,10 +29,6 @@ import { useHistory } from 'react-router'
 import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { emit, EventNames } from './events'
-
-const FlexGrow = styled.div`
-	flex-grow: 1;
-`
 
 const Content = styled.div<{ pad: boolean }>`
 	padding-bottom: ${p => (p.pad ? 90 : 0)}px;

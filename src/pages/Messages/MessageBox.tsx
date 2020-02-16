@@ -1,14 +1,20 @@
-import { IconButton, Input, InputAdornment } from '@material-ui/core'
+import { Container, IconButton, Input, InputAdornment } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useRef } from 'react'
 import { messagesStore, metaStore, userStore } from 'stores'
+import styled from 'styled-components'
 import useAsync from 'use-async-react'
 
 interface Props {
 	threadId: number
 }
+
+const StickyContainer = styled(Container)`
+	position: sticky;
+	bottom: 2px;
+`
 
 const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	const { MESSAGE_PLACEHOLDER } = useLocale()
@@ -34,21 +40,23 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	}, [result])
 
 	return (
-		<Input
-			inputProps={{ ref: messageRef }}
-			placeholder={MESSAGE_PLACEHOLDER}
-			disabled={disabled}
-			endAdornment={
-				<InputAdornment position="end">
-					<IconButton onClick={handleClick}>
-						<SendIcon />
-					</IconButton>
-				</InputAdornment>
-			}
-			rowsMax="5"
-			multiline
-			fullWidth
-		/>
+		<StickyContainer>
+			<Input
+				inputProps={{ ref: messageRef }}
+				placeholder={MESSAGE_PLACEHOLDER}
+				disabled={disabled}
+				endAdornment={
+					<InputAdornment position="end">
+						<IconButton onClick={handleClick}>
+							<SendIcon />
+						</IconButton>
+					</InputAdornment>
+				}
+				rowsMax="5"
+				multiline
+				fullWidth
+			/>
+		</StickyContainer>
 	)
 })
 
