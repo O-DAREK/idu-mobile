@@ -1,4 +1,5 @@
 import { Button, Grid, Paper, TextField } from '@material-ui/core'
+import iduLogo from 'assets/idu-logo.png'
 import { Snackbar, TopLoading } from 'components'
 import { useLocale } from 'locales'
 import React, { useContext, useState } from 'react'
@@ -8,6 +9,12 @@ import useAsync from 'use-async-react'
 
 const PaddedGrid = styled(Grid)`
 	padding: 20px;
+`
+
+const AbsoluteLogo = styled.img`
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `
 
 const Login: React.FC = () => {
@@ -30,7 +37,8 @@ const Login: React.FC = () => {
 				container
 			>
 				<Grid xs={11} item>
-					<Paper>
+					<Paper style={{ position: 'relative' }}>
+						<AbsoluteLogo src={iduLogo} alt="IDU logo" />
 						<PaddedGrid
 							direction="column"
 							alignItems="center"
