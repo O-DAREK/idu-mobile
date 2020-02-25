@@ -1,4 +1,4 @@
-import { Grid, ListItem, ListItemText } from '@material-ui/core'
+import { Badge, Grid, ListItem, ListItemText } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import * as urls from 'constants/urls'
 import { formatShort } from 'locales'
@@ -38,11 +38,22 @@ const NewsItem: React.FC<Props> = memo(({ body, date, title, requiresConfirmatio
 
 	return (
 		<ListItem onClick={() => history.push(urls.internal.specificNews(String(id)))} button>
-			<ListItemText
-				primary={`${title} • ${formatShort(config.language, date)}`}
-				secondary={stripHtml(body)}
-				secondaryTypographyProps={{ noWrap: true }}
-			/>
+			<Badge
+				style={{ maxWidth: '100%' }}
+				anchorOrigin={{
+					vertical: 'top',
+					horizontal: 'left'
+				}}
+				variant="dot"
+				color="secondary"
+				invisible={read}
+			>
+				<ListItemText
+					primary={`${title} • ${formatShort(config.language, date)}`}
+					secondary={stripHtml(body)}
+					secondaryTypographyProps={{ noWrap: true }}
+				/>
+			</Badge>
 		</ListItem>
 	)
 })
