@@ -1,5 +1,7 @@
 import { Divider, List } from '@material-ui/core'
-import { TopLoading } from 'components'
+import { Snackbar, TopLoading } from 'components'
+import { UNAUTHORIZED } from 'http-status-codes'
+import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { useBottomScrollListener } from 'react-bottom-scroll-listener'
@@ -8,6 +10,7 @@ import useAsync from 'use-async-react'
 import ThreadItem, { SkeletonThreadItem } from './ThreadItem'
 
 const MessageList = observer(() => {
+	const { ERROR_GENERIC } = useLocale()
 	const messages = useContext(messagesStore)
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
@@ -22,11 +25,12 @@ const MessageList = observer(() => {
 	}, [fetchNextThreads, user.token, meta.isOnline])
 
 	useEffect(() => {
-		if (error) user.logout(true)
+		if (error?.status === UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	return (
 		<>
+			{error && <Snackbar variant="error">{ERROR_GENERIC}</Snackbar>}
 			{loading && messages.threads && <TopLoading />}
 			<List>
 				{loading && !messages.threads && (

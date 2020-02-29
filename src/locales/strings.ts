@@ -91,6 +91,10 @@ const strings = {
 	MESSAGE_PLACEHOLDER: {
 		en: 'Message...',
 		pl: 'Wiadomość...'
+	},
+	ERROR_GENERIC: {
+		en: 'Something went wrong, try to refresh',
+		pl: 'Coś poszło nie tak, spróbuj odświeżyć'
 	}
 }
 
