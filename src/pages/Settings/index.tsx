@@ -7,6 +7,7 @@ import ChangeColors from './ChangeColors'
 import ChangeLanguage from './ChangeLanguage'
 import ChangeTheme from './ChangeTheme'
 import Logout from './Logout'
+import PWAInstall from './PWAInstall'
 
 const Settings: React.FC = () => {
 	const config = useContext(configStore)
@@ -35,6 +36,11 @@ const Settings: React.FC = () => {
 				</Grid>
 				<Grid item>
 					<Logout />
+				</Grid>
+				<Grid alignItems="center" justify="center" container item>
+					<Grid item>
+						<PWAInstall />
+					</Grid>
 				</Grid>
 			</Grid>
 		</Container>

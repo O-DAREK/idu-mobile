@@ -95,6 +95,10 @@ const strings = {
 	ERROR_GENERIC: {
 		en: 'Something went wrong, try to refresh',
 		pl: 'Coś poszło nie tak, spróbuj odświeżyć'
+	},
+	INSTALL_BUTTON: {
+		en: 'Install me as an app',
+		pl: 'Zainstaluj mnie jako aplikację'
 	}
 }
 
