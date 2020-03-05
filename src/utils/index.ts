@@ -11,4 +11,6 @@ export const ignoreRejection = <T>(promise: Promise<T>) => promise.catch(() => {
 export const stripHtml = (html: string) =>
 	new DOMParser().parseFromString(html, 'text/html').body.textContent || ''
 
+export const sleep = (time: number) => new Promise(res => setTimeout(res, time))
+
 export * from './types'

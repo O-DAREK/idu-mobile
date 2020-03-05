@@ -4,7 +4,7 @@ import { UNAUTHORIZED } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
-import { useBottomScrollListener } from 'react-bottom-scroll-listener'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { messagesStore, metaStore, userStore } from 'stores'
 import useAsync from 'use-async-react'
 import ThreadItem, { SkeletonThreadItem } from './ThreadItem'
@@ -15,10 +15,6 @@ const MessageList = observer(() => {
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
 	const { call: fetchNextThreads, loading, error } = useAsync(messages.fetchNextThreads)
-
-	useBottomScrollListener(() => {
-		if (user.token && meta.isOnline) fetchNextThreads(user.token)
-	}, 100)
 
 	useEffect(() => {
 		if (user.token && meta.isOnline) fetchNextThreads(user.token)
@@ -43,13 +39,19 @@ const MessageList = observer(() => {
 						))}
 					</>
 				)}
-				{messages.threads?.map((e, i) => (
-					<React.Fragment key={i}>
-						<ThreadItem {...e} />
-						<Divider />
-					</React.Fragment>
-				))}
-				{meta.isOnline && !messages.noMoreThreads && <SkeletonThreadItem />}
+				<InfiniteScroll
+					dataLength={messages.threads?.length || 0}
+					hasMore={meta.isOnline && !messages.noMoreThreads}
+					loader={<SkeletonThreadItem />}
+					next={() => user.token && fetchNextThreads(user.token)}
+				>
+					{messages.threads?.map((e, i) => (
+						<React.Fragment key={i}>
+							<ThreadItem {...e} />
+							<Divider />
+						</React.Fragment>
+					))}
+				</InfiniteScroll>
 			</List>
 		</>
 	)
