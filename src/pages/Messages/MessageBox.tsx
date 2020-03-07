@@ -15,7 +15,8 @@ interface Props {
 
 const StickyContainer = styled(Container)`
 	position: sticky;
-	bottom: 2px;
+	bottom: 1px;
+	background-color: ${p => p.theme.palette.background.default};
 `
 
 const MessageBox: React.FC<Props> = observer(({ threadId }) => {
