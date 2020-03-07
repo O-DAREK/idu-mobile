@@ -1,5 +1,7 @@
 import { Container, IconButton, Input, InputAdornment } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
+import { Snackbar } from 'components'
+import { UNAUTHORIZED } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useRef } from 'react'
@@ -13,11 +15,12 @@ interface Props {
 
 const StickyContainer = styled(Container)`
 	position: sticky;
-	bottom: 2px;
+	bottom: 1px;
+	background-color: ${p => p.theme.palette.background.default};
 `
 
 const MessageBox: React.FC<Props> = observer(({ threadId }) => {
-	const { MESSAGE_PLACEHOLDER } = useLocale()
+	const { MESSAGE_PLACEHOLDER, ERROR_GENERIC } = useLocale()
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const meta = useContext(metaStore)
@@ -32,7 +35,7 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	}
 
 	useEffect(() => {
-		if (error) user.logout(true)
+		if (error?.status === UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	useEffect(() => {
@@ -40,23 +43,26 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	}, [result])
 
 	return (
-		<StickyContainer>
-			<Input
-				inputProps={{ ref: messageRef }}
-				placeholder={MESSAGE_PLACEHOLDER}
-				disabled={disabled}
-				endAdornment={
-					<InputAdornment position="end">
-						<IconButton onClick={handleClick}>
-							<SendIcon />
-						</IconButton>
-					</InputAdornment>
-				}
-				rowsMax="5"
-				multiline
-				fullWidth
-			/>
-		</StickyContainer>
+		<>
+			{error && <Snackbar variant="error">{ERROR_GENERIC}</Snackbar>}
+			<StickyContainer>
+				<Input
+					inputProps={{ ref: messageRef }}
+					placeholder={MESSAGE_PLACEHOLDER}
+					disabled={disabled}
+					endAdornment={
+						<InputAdornment position="end">
+							<IconButton onClick={handleClick}>
+								<SendIcon />
+							</IconButton>
+						</InputAdornment>
+					}
+					rowsMax="5"
+					multiline
+					fullWidth
+				/>
+			</StickyContainer>
+		</>
 	)
 })
 

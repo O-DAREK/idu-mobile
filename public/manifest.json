@@ -1,11 +1,18 @@
 {
 	"short_name": "IDU",
 	"name": "IDU mobile",
+	"description": "Mobile friendly IDU",
 	"icons": [
 		{
 			"src": "favicon.ico",
 			"sizes": "64x64 32x32 24x24 16x16",
 			"type": "image/x-icon"
+		},
+		{
+			"src": "logo512.png",
+			"sizes": "512x512 192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
 		},
 		{
 			"src": "logo192.png",

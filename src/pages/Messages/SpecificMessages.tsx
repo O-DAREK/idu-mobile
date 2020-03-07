@@ -1,7 +1,16 @@
 import { Grid, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
-import { BackBar, Container, FlexGrow, PaddedPaper, StrippedHtml, TopLoading } from 'components'
+import {
+	BackBar,
+	Container,
+	FlexGrow,
+	PaddedPaper,
+	Snackbar,
+	StrippedHtml,
+	TopLoading
+} from 'components'
 import * as urls from 'constants/urls'
+import { UNAUTHORIZED } from 'http-status-codes'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
@@ -44,7 +53,7 @@ const MessagesSkeleton = () => (
 )
 
 const SpecificMessages: React.FC<Props> = observer(({ id }) => {
-	const { NO_SUCH_THREAD } = useLocale()
+	const { NO_SUCH_THREAD, ERROR_GENERIC } = useLocale()
 	const config = useContext(configStore)
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
@@ -58,11 +67,12 @@ const SpecificMessages: React.FC<Props> = observer(({ id }) => {
 	}, [meta.isOnline, user, id, fetchSpecificMessages])
 
 	useEffect(() => {
-		if (error) user.logout(true)
+		if (error?.status === UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	return (
 		<FlexBox>
+			{error && <Snackbar variant="error">{ERROR_GENERIC}</Snackbar>}
 			{loading && thread && <TopLoading />}
 			<BackBar to={urls.internal.messages()} />
 			<Container>
