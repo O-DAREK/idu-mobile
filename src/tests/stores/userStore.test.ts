@@ -80,7 +80,7 @@ describe('user store', () => {
 
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
-					events: [
+					data: [
 						{
 							id: 4138,
 							name: 'Zebranie z rodzicami klas I, II, III',
@@ -154,7 +154,7 @@ describe('user store', () => {
 		it('should correctly fetch profile', async () => {
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
-					profile: {
+					data: {
 						id: 4138,
 						first_name: 'Zack',
 						last_name: 'Boomer',
