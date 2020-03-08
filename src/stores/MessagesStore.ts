@@ -98,13 +98,13 @@ export class MessagesStore {
 		runInAction(() => {
 			this.messages[threadId] = {
 				threadId,
-				title: json.messages[0].title,
+				title: json.data[0].title,
 				messages: []
 			}
 
 			const { user_id: userId } = jwtDecode(token)
 
-			for (const message of json.messages) {
+			for (const message of json.data) {
 				this.messages[threadId].messages.push({
 					id: message.id,
 					body: message.body,
@@ -134,7 +134,7 @@ export class MessagesStore {
 		runInAction(() => {
 			if (!this.threads) this.threads = []
 
-			for (const thread of json.messages) {
+			for (const thread of json.data) {
 				this.threads.push({
 					id: thread.id,
 					title: thread.title,

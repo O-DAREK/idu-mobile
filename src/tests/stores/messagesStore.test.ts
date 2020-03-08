@@ -40,7 +40,7 @@ describe('messages store', () => {
 
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
-					messages: [
+					data: [
 						{
 							id: 123,
 							from: {
@@ -78,7 +78,7 @@ describe('messages store', () => {
 
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
-					messages: new Array(10)
+					data: new Array(10)
 						.fill({
 							id: 123,
 							from: {
@@ -104,7 +104,7 @@ describe('messages store', () => {
 
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
-					messages: [
+					data: [
 						{
 							id: 133,
 							from: {
@@ -161,7 +161,7 @@ describe('messages store', () => {
 
 			fetchMock.mockResponseOnce(
 				JSON.stringify({
-					messages: [
+					data: [
 						{
 							title: 'hello',
 							id: 999,
@@ -238,7 +238,7 @@ describe('messages store', () => {
 			fetchMock.mockResponses(
 				'',
 				JSON.stringify({
-					messages: [
+					data: [
 						{
 							title: 'hello',
 							id: 999,

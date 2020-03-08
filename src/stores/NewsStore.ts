@@ -67,7 +67,7 @@ export class NewsStore {
 
 		const json = (await res.json()) as responses.News
 		runInAction(() => {
-			this.stickyNews = json.informations.map(news => ({
+			this.stickyNews = json.data.map(news => ({
 				id: news.id,
 				title: news.title,
 				body: news.body,
@@ -97,7 +97,7 @@ export class NewsStore {
 		runInAction(() => {
 			if (!this.news) this.news = []
 
-			for (const news of json.informations) {
+			for (const news of json.data) {
 				this.news.push({
 					id: news.id,
 					title: news.title,

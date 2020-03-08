@@ -6,7 +6,7 @@ export type Login = {
 }
 
 export type Profile = {
-	profile: {
+	data: {
 		id: number
 		first_name: string
 		last_name: string
@@ -19,7 +19,7 @@ export type Profile = {
 }
 
 export type Events = {
-	events: {
+	data: {
 		id: number
 		name: string
 		start_at: string
@@ -32,7 +32,7 @@ export type Events = {
 }
 
 export type MessageThreads = {
-	messages: {
+	data: {
 		id: number
 		from: {
 			id: number
@@ -49,7 +49,7 @@ export type MessageThreads = {
 }
 
 export type SpecificMessages = {
-	messages: {
+	data: {
 		id: number
 		from: {
 			id: number
@@ -63,7 +63,7 @@ export type SpecificMessages = {
 }
 
 export type News = {
-	informations: {
+	data: {
 		id: number
 		title: string
 		body: string

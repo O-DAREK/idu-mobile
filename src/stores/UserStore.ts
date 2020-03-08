@@ -116,7 +116,7 @@ export class UserStore {
 
 		const json = (await res.json()) as responses.Events
 		runInAction(() => {
-			this.events = json.events.map(e => ({
+			this.events = json.data.map(e => ({
 				id: e.id,
 				name: e.name,
 				startAt: new Date(e.start_at),
@@ -151,13 +151,13 @@ export class UserStore {
 		const json = (await res.json()) as responses.Profile
 		runInAction(() => {
 			this.profile = {
-				id: json.profile.id,
-				firstName: json.profile.first_name,
-				lastName: json.profile.last_name,
-				mobilePhone: json.profile.mobile_phone,
-				role: Roles[json.profile.role],
-				unreadNewsCount: json.profile.unread_informations_count,
-				unreadMessagesCount: json.profile.unread_messages_count
+				id: json.data.id,
+				firstName: json.data.first_name,
+				lastName: json.data.last_name,
+				mobilePhone: json.data.mobile_phone,
+				role: Roles[json.data.role],
+				unreadNewsCount: json.data.unread_informations_count,
+				unreadMessagesCount: json.data.unread_messages_count
 			}
 		})
 
