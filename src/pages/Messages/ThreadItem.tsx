@@ -61,7 +61,7 @@ type Props = MessageThread
 const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) => {
 	const config = useContext(configStore)
 	const history = useHistory()
-	const imSender = 'to' in rest
+	// const imSender = 'to' in rest
 	const other = 'to' in rest ? rest.to : rest.from
 
 	return (
@@ -69,7 +69,7 @@ const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) 
 			<ListItemAvatar>
 				<AvatarWithPlaceholder
 					alt="avatar"
-					src={`https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50)}`}
+					src={`https://s35.idu.edu.pl${other.avatar}`}
 					placeholder={<CircleSkeleton />}
 				/>
 			</ListItemAvatar>
@@ -81,7 +81,6 @@ const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) 
 						<DateSpan> • {timeAgo(config.language, sentAt)}</DateSpan>
 					</>
 				}
-				// secondaryTypographyProps={texts[texts.length - 1].read ? {} : { color: 'textPrimary' }}
 			/>
 		</ListItem>
 	)
