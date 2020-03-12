@@ -1,5 +1,5 @@
 export const api = {
-	base: () => 'https://idutest.dag.pl/api/v2',
+	base: () => process.env.REACT_APP_API_ROOT,
 	login: () => api.base() + '/auth/login',
 	profile: () => api.base() + '/user/profile',
 	events: () => api.base() + '/user/events',
