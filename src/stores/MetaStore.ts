@@ -1,5 +1,4 @@
 import { action, observable } from 'mobx'
-import { BeforeInstallPromptEvent } from 'react-app-env'
 
 export class MetaStore {
 	static localStorageKey = 'MetaStore'
