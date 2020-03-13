@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { metaStore, newsStore, userStore } from 'stores'
 import useAsync from 'use-async-react'
 import NewsItem, { SkeletonNewsItem } from './NewsItem'
+import StickyNews from './StickyNews'
 
 const NewsList: React.FC = observer(() => {
 	const { ERROR_GENERIC } = useLocale()
@@ -28,6 +29,7 @@ const NewsList: React.FC = observer(() => {
 		<>
 			{error && <Snackbar variant="error">{ERROR_GENERIC}</Snackbar>}
 			{loading && news.news && <TopLoading />}
+			<StickyNews />
 			<List>
 				{loading && !news.news && (
 					<>

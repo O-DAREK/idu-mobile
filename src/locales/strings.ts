@@ -99,6 +99,10 @@ const strings = {
 	INSTALL_BUTTON: {
 		en: 'Install me as an app',
 		pl: 'Zainstaluj mnie jako aplikację'
+	},
+	STICKY_NEWS: {
+		en: 'Sticky news',
+		pl: 'Przypięte aktualności'
 	}
 }
 
