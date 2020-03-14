@@ -103,6 +103,18 @@ const strings = {
 	STICKY_NEWS: {
 		en: 'Sticky news',
 		pl: 'Przypięte aktualności'
+	},
+	CONFIRM_TO_CONTINUE: {
+		en: 'Confirm to continue',
+		pl: 'Potwierdź by kontynuować'
+	},
+	CONFIRM: {
+		en: 'Confirm',
+		pl: 'Potwierdź'
+	},
+	FAILED_TO_CONFIRM: {
+		en: 'Something went wrong, failed to confirm',
+		pl: 'Coś poszło nie tak, nie udało sie potwierdzić'
 	}
 }
 
