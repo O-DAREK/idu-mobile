@@ -27,23 +27,6 @@ describe('user store', () => {
 	})
 
 	describe('forcedLogout', () => {
-		describe('set forcedLogout if unauthorized', () => {
-			it('fetchEvents', async () => {
-				fetchMock.mockResponseOnce(':)', { status: UNAUTHORIZED })
-				userStore.token = '123'
-
-				await expect(userStore.fetchEvents()).rejects.toBeTruthy()
-				expect(userStore.forcedLogout).toEqual(true)
-			})
-			it('fetchProfile', async () => {
-				fetchMock.mockResponseOnce(':)', { status: UNAUTHORIZED })
-				userStore.token = '123'
-
-				await expect(userStore.fetchProfile()).rejects.toBeTruthy()
-				expect(userStore.forcedLogout).toEqual(true)
-			})
-		})
-
 		it('reset forcedLogout on login', async () => {
 			fetchMock.mockResponseOnce(':)', { status: UNAUTHORIZED })
 			userStore.token = '123'

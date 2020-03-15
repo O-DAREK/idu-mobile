@@ -22,6 +22,7 @@ import MessageIcon from '@material-ui/icons/Message'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { FlexGrow } from 'components'
 import * as urls from 'constants/urls'
+import { UNAUTHORIZED } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
@@ -75,7 +76,10 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 	const meta = useContext(metaStore)
 
 	useEffect(() => {
-		if (meta.isOnline) user.fetchProfile()
+		if (meta.isOnline)
+			user.fetchProfile().catch(err => {
+				if (err.status === UNAUTHORIZED) user.logout(true)
+			})
 	}, [meta.isOnline, user])
 
 	useEffect(() => {
