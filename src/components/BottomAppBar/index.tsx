@@ -60,7 +60,7 @@ const MainFab = styled(Fab)<FabPlacement>`
 	right: 0;
 	`
 			: `
-	right: 50px;
+	right: 30px;
 	`}
 	margin: 0 auto;
 `
@@ -244,9 +244,9 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 							<MenuIcon />
 						</IconButton>
 						{fab && (
-							<Zoom in key={+new Date()}>
+							<Zoom in key={fab.placement}>
 								<MainFab onClick={fab.onClick} placement={fab.placement} color="secondary">
-									<fab.Icon />
+									<fab.Icon color="action" />
 								</MainFab>
 							</Zoom>
 						)}
