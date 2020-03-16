@@ -11,7 +11,8 @@ import {
 	Slide,
 	SwipeableDrawer,
 	Toolbar,
-	Typography
+	Typography,
+	Zoom
 } from '@material-ui/core'
 import { Restore as RestoreIcon, SvgIconComponent } from '@material-ui/icons'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
@@ -228,9 +229,11 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 							<MenuIcon />
 						</IconButton>
 						{fab && (
-							<MainFab onClick={fab.onClick} placement={fab.placement} color="secondary">
-								<fab.Icon />
-							</MainFab>
+							<Zoom in key={+new Date()}>
+								<MainFab onClick={fab.onClick} placement={fab.placement} color="secondary">
+									<fab.Icon />
+								</MainFab>
+							</Zoom>
 						)}
 						{fab?.placement !== 'right' && <FlexGrow />}
 						{actions?.map(({ onClick, Icon }, i) => (
