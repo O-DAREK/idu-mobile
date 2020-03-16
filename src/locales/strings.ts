@@ -115,6 +115,18 @@ const strings = {
 	FAILED_TO_CONFIRM: {
 		en: 'Something went wrong, failed to confirm',
 		pl: 'Coś poszło nie tak, nie udało sie potwierdzić'
+	},
+	RECIPIENT: {
+		en: 'Recipient',
+		pl: 'Odbiorca'
+	},
+	TITLE: {
+		en: 'Title',
+		pl: 'Tytuł'
+	},
+	COPY_ON_MAIL: {
+		en: 'Send copy to mail',
+		pl: 'Wyślij kopię na maila'
 	}
 }
 

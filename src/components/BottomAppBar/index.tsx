@@ -15,11 +15,13 @@ import {
 	Zoom
 } from '@material-ui/core'
 import { Restore as RestoreIcon, SvgIconComponent } from '@material-ui/icons'
+import AddIcon from '@material-ui/icons/Add'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 import EventIcon from '@material-ui/icons/Event'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import MessageIcon from '@material-ui/icons/Message'
+import SendIcon from '@material-ui/icons/Send'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { FlexGrow } from 'components'
 import * as urls from 'constants/urls'
@@ -120,7 +122,20 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		() => [
 			{
 				test: new RegExp(String.raw`${urls.internal.messages()}$`),
-				title: MESSAGES
+				title: MESSAGES,
+				fab: {
+					Icon: AddIcon,
+					onClick: () => history.push(urls.internal.newMessage()),
+					placement: 'center'
+				}
+			},
+			{
+				test: new RegExp(String.raw`${urls.internal.newMessage()}$`),
+				fab: {
+					Icon: SendIcon,
+					onClick: () => emit(EventNames.MESSAGES_SEND_NEW),
+					placement: 'right'
+				}
 			},
 			{
 				test: new RegExp(String.raw`${urls.internal.news()}$`),
@@ -147,7 +162,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 				]
 			}
 		],
-		[MESSAGES, NEWS, SETTINGS, EVENTS]
+		[MESSAGES, NEWS, SETTINGS, EVENTS, history]
 	)
 
 	// navigation drawer options

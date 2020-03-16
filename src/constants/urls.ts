@@ -20,5 +20,6 @@ export const internal = {
 	specificNews: (id = ':id') => `${internal.news()}/${id}`,
 	events: () => '/events',
 	messages: () => '/messages',
-	specificMessage: (id = ':id') => `${internal.messages()}/${id}`
+	specificMessage: (id = ':id') => `${internal.messages()}/${id}`,
+	newMessage: () => '/messages/new'
 }

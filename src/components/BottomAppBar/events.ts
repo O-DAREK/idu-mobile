@@ -4,12 +4,14 @@ const eev = new Eev()
 
 export enum EventNames {
 	EVENTS_CALENDAR = 'EVENTS_CALENDAR',
-	SETTINGS_RESTORE = 'SETTINGS_RESTORE'
+	SETTINGS_RESTORE = 'SETTINGS_RESTORE',
+	MESSAGES_SEND_NEW = 'MESSAGES_SEND_NEW'
 }
 
 export type EventTypes = {
 	EVENTS_CALENDAR: never
 	SETTINGS_RESTORE: never
+	MESSAGES_SEND_NEW: never
 }
 
 type WithNever = {

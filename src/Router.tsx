@@ -24,7 +24,13 @@ const Router: React.FC<{ loggedIn: boolean }> = ({ loggedIn }) => (
 						<Route path={[urls.internal.specificNews(), urls.internal.news()]}>
 							<News />
 						</Route>
-						<Route path={[urls.internal.specificMessage(), urls.internal.messages()]}>
+						<Route
+							path={[
+								urls.internal.specificMessage(),
+								urls.internal.messages(),
+								urls.internal.newMessage()
+							]}
+						>
 							<Messages />
 						</Route>
 						<Redirect to={urls.internal.news()} />

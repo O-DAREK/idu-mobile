@@ -2,7 +2,7 @@ import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
 import jwtDecode from 'jwt-decode'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
-import { constructFetchErr } from 'utils'
+import { constructFetchErr, sleep } from 'utils'
 
 export type MessageThread = {
 	id: number
@@ -172,5 +172,37 @@ export class MessagesStore {
 		await this.fetchSpecificMessages(token, threadId)
 
 		return this.messages[threadId].messages[this.messages[threadId].messages.length - 1]
+	}
+
+	createThread = async (
+		token: string,
+		recipient: string,
+		title: string,
+		body: string,
+		sendCopyToMail: boolean
+	): Promise<Omit<MessageThread, 'title'>> => {
+		await sleep(5000)
+
+		throw 'not empty'
+		// const formData = new FormData()
+		// formData.append('message[thread_id]', String(threadId))
+		// formData.append('message[body]', body)
+
+		// const res = await fetch(urls.api.postMessage(), {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'X-API-TOKEN': token
+		// 	},
+		// 	body: formData
+		// })
+
+		// if (!res.ok) {
+		// 	throw await constructFetchErr(res)
+		// }
+
+		// await this.fetchSpecificMessages(token, threadId)
+
+		// return this.messages[threadId].messages[this.messages[threadId].messages.length - 1]
+		return 0 as any
 	}
 }
