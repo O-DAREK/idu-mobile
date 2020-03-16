@@ -1,16 +1,18 @@
+import * as urls from 'constants/urls'
 import React from 'react'
-import { useParams } from 'react-router'
+import { Route, Switch } from 'react-router-dom'
 import MessageThreads from './MessageThreads'
 import SpecificMessage from './SpecificMessages'
 
-interface Params {
-	id?: string
-}
-
-const Messages = () => {
-	const { id } = useParams<Params>()
-
-	return id ? <SpecificMessage id={Number(id)} /> : <MessageThreads />
-}
+const Messages = () => (
+	<Switch>
+		<Route path={urls.internal.specificMessage()}>
+			<SpecificMessage />
+		</Route>
+		<Route path={urls.internal.messages()}>
+			<MessageThreads />
+		</Route>
+	</Switch>
+)
 
 export default Messages

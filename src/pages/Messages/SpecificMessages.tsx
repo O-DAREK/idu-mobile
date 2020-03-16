@@ -14,14 +14,11 @@ import { UNAUTHORIZED } from 'http-status-codes'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router'
 import { configStore, messagesStore, metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import useAsync from 'use-async-react'
 import MessageBox from './MessageBox'
-
-interface Props {
-	id: number
-}
 
 const FlexBox = styled.div`
 	min-height: calc(var(--visible-height, 1vh) * 100 - ${p => p.theme.spacing()}px);
@@ -52,12 +49,17 @@ const MessagesSkeleton = () => (
 	</Grid>
 )
 
-const SpecificMessages: React.FC<Props> = observer(({ id }) => {
+interface Params {
+	id: string
+}
+
+const SpecificMessages: React.FC = observer(() => {
 	const { NO_SUCH_THREAD, ERROR_GENERIC } = useLocale()
 	const config = useContext(configStore)
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const meta = useContext(metaStore)
+	const id = Number(useParams<Params>().id)
 	const { call: fetchSpecificMessages, loading, error } = useAsync(messages.fetchSpecificMessages)
 
 	const thread = id in messages.messages ? messages.messages[id] : undefined
