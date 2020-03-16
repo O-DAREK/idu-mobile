@@ -25,7 +25,7 @@ import * as urls from 'constants/urls'
 import { UNAUTHORIZED } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router'
 import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
@@ -46,12 +46,19 @@ const Title = styled(Typography)`
 	padding: 20px;
 `
 
-const MiddleFab = styled(Fab)`
+const MainFab = styled(Fab)<FabPlacement>`
 	position: absolute;
 	z-index: 1;
 	top: -30px;
+	${p =>
+		p.placement === 'center'
+			? `
 	left: 0;
 	right: 0;
+	`
+			: `
+	right: 50px;
+	`}
 	margin: 0 auto;
 `
 
@@ -60,16 +67,29 @@ type ClickableSvg = {
 	onClick: () => void
 }
 
-interface InternalProps {
+type FabPlacement = {
+	placement: 'center' | 'right'
+}
+
+interface InternalState {
+	// test decides whether this state should be used
+	test: RegExp
 	title?: string
-	fab?: ClickableSvg
+	fab?: ClickableSvg & FabPlacement
 	actions?: ClickableSvg[]
+}
+
+interface NavigationElement {
+	name: string
+	url: string
+	Icon: React.ElementType
 }
 
 /* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
 const BottomAppBar: React.FC = observer(({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const [forceHide, setForceHide] = useState(false)
+	const enterAnimationKey = useRef(0)
 	const history = useHistory()
 	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
 	const user = useContext(userStore)
@@ -82,6 +102,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 			})
 	}, [meta.isOnline, user])
 
+	// force hiding if user is focused on an input
 	useEffect(() => {
 		window.addEventListener('resize', () =>
 			setForceHide(
@@ -93,15 +114,19 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		)
 	}, [])
 
-	const states: { [key: string]: InternalProps } = useMemo(
-		() => ({
-			[urls.internal.messages()]: {
+	// states of the BAB depending on the screen (= url)
+	const states: InternalState[] = useMemo(
+		() => [
+			{
+				test: new RegExp(String.raw`${urls.internal.messages()}$`),
 				title: MESSAGES
 			},
-			[urls.internal.news()]: {
+			{
+				test: new RegExp(String.raw`${urls.internal.news()}$`),
 				title: NEWS
 			},
-			[urls.internal.settings()]: {
+			{
+				test: new RegExp(urls.internal.settings()),
 				title: SETTINGS,
 				actions: [
 					{
@@ -110,7 +135,8 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 					}
 				]
 			},
-			[urls.internal.events()]: {
+			{
+				test: new RegExp(urls.internal.events()),
 				title: EVENTS,
 				actions: [
 					{
@@ -119,11 +145,12 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 					}
 				]
 			}
-		}),
+		],
 		[MESSAGES, NEWS, SETTINGS, EVENTS]
 	)
 
-	const navigation = [
+	// navigation drawer options
+	const navigation: NavigationElement[] = [
 		{
 			name: MESSAGES,
 			url: urls.internal.messages(),
@@ -154,15 +181,17 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		}
 	]
 
-	const show = history.location.pathname in states && !forceHide
+	const state = states.find(s => s.test.test(history.location.pathname))
 
-	const { title, fab, actions } = states[history.location.pathname] || {}
+	const show = !!state && !forceHide
+
+	const { title, fab, actions } = state || {}
 
 	return (
 		<>
 			<Content pad={show}>
 				{title && <Title variant="h5">{title}</Title>}
-				<Grow in={true} key={title}>
+				<Grow key={enterAnimationKey.current} in>
 					<div>{children}</div>
 				</Grow>
 			</Content>
@@ -175,13 +204,14 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 				<List component="nav">
 					{navigation.map(({ name, url, Icon }) => (
 						<ListItem
-							button
 							selected={history.location.pathname === url}
 							onClick={() => {
+								enterAnimationKey.current = +new Date()
 								history.push(url)
 								setOpenDrawer(false)
 							}}
 							key={url}
+							button
 						>
 							<ListItemIcon>
 								<Icon />
@@ -198,11 +228,11 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 							<MenuIcon />
 						</IconButton>
 						{fab && (
-							<MiddleFab onClick={fab.onClick} color="secondary">
+							<MainFab onClick={fab.onClick} placement={fab.placement} color="secondary">
 								<fab.Icon />
-							</MiddleFab>
+							</MainFab>
 						)}
-						<FlexGrow />
+						{fab?.placement !== 'right' && <FlexGrow />}
 						{actions?.map(({ onClick, Icon }, i) => (
 							<IconButton onClick={onClick} key={i}>
 								<Icon />
