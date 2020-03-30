@@ -127,6 +127,26 @@ const strings = {
 	COPY_ON_MAIL: {
 		en: 'Send copy to mail',
 		pl: 'Wyślij kopię na maila'
+	},
+	STUDENT: {
+		en: 'Student',
+		pl: 'Uczeń'
+	},
+	TEACHER: {
+		en: 'Teacher',
+		pl: 'Nauczyciel'
+	},
+	PARENT: {
+		en: 'Parent',
+		pl: 'Rodzic'
+	},
+	NO_OPTIONS: {
+		en: 'No options',
+		pl: 'Brak opcji'
+	},
+	LOADING: {
+		en: 'Loading',
+		pl: 'Ładowanie'
 	}
 }
 

@@ -30,6 +30,7 @@
 		"react-swipeable-views": "^0.13.9",
 		"styled-components": "^5.0.1",
 		"use-async-react": "^1.0.0",
+		"use-debounce": "^3.4.0",
 		"visible-height-css": "^1.0.0"
 	},
 	"scripts": {

@@ -6,12 +6,14 @@ import { useLocale } from 'locales'
 import React, { useContext, useEffect, useState } from 'react'
 import { messagesStore, userStore } from 'stores'
 import useAsync from 'use-async-react'
+import AutocompleteRecipients from './AutocompleteRecipients'
 
 const NewMessage: React.FC = () => {
-	const { RECIPIENT, TITLE, COPY_ON_MAIL, ERROR_GENERIC } = useLocale()
+	const { TITLE, COPY_ON_MAIL, ERROR_GENERIC } = useLocale()
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const [formData, setFormData] = useState({
+		recipient: 0,
 		title: '',
 		body: '',
 		sendCopyToMail: false
@@ -20,6 +22,7 @@ const NewMessage: React.FC = () => {
 	const { call: createThread, loading, error } = useAsync(messages.createThread)
 
 	const bads: { [key in keyof typeof formData]: boolean } = {
+		recipient: formData.recipient === 0,
 		title: formData.title.length === 0,
 		body: formData.body.length === 0,
 		sendCopyToMail: false
@@ -31,11 +34,17 @@ const NewMessage: React.FC = () => {
 		if (!loading)
 			return buildListen(EventNames.MESSAGES_SEND_NEW, () => {
 				if (valid && user.token) {
-					createThread(user.token, '', formData.title, formData.body, formData.sendCopyToMail)
+					createThread(
+						user.token,
+						formData.recipient,
+						formData.title,
+						formData.body,
+						formData.sendCopyToMail
+					)
 				}
 				setShowValidity(true)
 			})
-	}, [loading, valid, formData, user])
+	}, [loading, valid, formData, user, createThread])
 
 	return (
 		<>
@@ -44,6 +53,12 @@ const NewMessage: React.FC = () => {
 			<BackBar to={urls.internal.messages()} />
 			<Container>
 				<Grid spacing={2} container>
+					<Grid xs={12} item>
+						<AutocompleteRecipients
+							onSelect={id => setFormData(prevState => ({ ...prevState, recipient: id }))}
+							error={showValidity && bads.recipient}
+						/>
+					</Grid>
 					<Grid xs={6} item>
 						<TextField
 							label={TITLE}

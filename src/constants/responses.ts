@@ -75,3 +75,12 @@ export type News = {
 		confirmed_at: null | string
 	}[]
 }
+
+export type UsersSearch = {
+	data: {
+		id: number
+		first_name: string
+		last_name: string
+		type: 0 | 1 | 2
+	}[]
+}

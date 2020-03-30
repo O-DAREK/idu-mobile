@@ -2,6 +2,7 @@ export const api = {
 	base: () => process.env.REACT_APP_API_ROOT,
 	login: () => api.base() + '/auth/login',
 	profile: () => api.base() + '/user/profile',
+	search: (query: string) => api.base() + `/users/search?q=${window.encodeURIComponent(query)}`,
 	events: () => api.base() + '/user/events',
 	messages: (page = 1) => api.base() + `/user/messages?page=${page}`,
 	specificMessages: (id: number) => api.base() + `/user/messages/${id}`,
