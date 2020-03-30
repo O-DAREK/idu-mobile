@@ -39,7 +39,7 @@ const buildOptions = (
 	})
 
 interface Props {
-	onSelect: (id: number) => void
+	onSelect: (ids: number[]) => void
 	error?: boolean
 }
 
@@ -75,17 +75,24 @@ const AutocompleteRecipients: React.FC<Props> = ({ onSelect, error }) => {
 	return (
 		<Autocomplete
 			openOnFocus
+			multiple
+			filterSelectedOptions
 			open={open}
 			onOpen={() => setOpen(true)}
 			onClose={() => setOpen(false)}
-			getOptionSelected={(option, value) => option.name === value.name}
+			// this generates warnings because when new options are
+			// loaded old ones disappear meaning it cant find a match
+			getOptionSelected={(option, value) => option.id === value.id}
 			getOptionLabel={option => option.name}
 			options={options}
 			loading={searching}
 			loadingText={`${LOADING}...`}
 			noOptionsText={NO_OPTIONS}
-			onChange={(_: React.ChangeEvent<{}>, selected: ListOption | null) =>
-				onSelect(selected?.id || 0)
+			// @ts-ignore
+			onChange={(_: React.ChangeEvent<{}>, selected: ListOption) =>
+				// this casting has to be done because the typescript definitions are not yet finished
+				// on MUI's side and changing the type in the function signature breaks everything
+				onSelect(((selected as any) as ListOption[]).map(e => e.id))
 			}
 			renderOption={option => option.display}
 			renderInput={params => (

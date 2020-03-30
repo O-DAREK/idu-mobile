@@ -13,7 +13,7 @@ const NewMessage: React.FC = () => {
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const [formData, setFormData] = useState({
-		recipient: 0,
+		recipients: [] as number[],
 		title: '',
 		body: '',
 		sendCopyToMail: false
@@ -22,7 +22,7 @@ const NewMessage: React.FC = () => {
 	const { call: createThread, loading, error } = useAsync(messages.createThread)
 
 	const bads: { [key in keyof typeof formData]: boolean } = {
-		recipient: formData.recipient === 0,
+		recipients: formData.recipients.length === 0,
 		title: formData.title.length === 0,
 		body: formData.body.length === 0,
 		sendCopyToMail: false
@@ -36,7 +36,7 @@ const NewMessage: React.FC = () => {
 				if (valid && user.token) {
 					createThread(
 						user.token,
-						formData.recipient,
+						formData.recipients,
 						formData.title,
 						formData.body,
 						formData.sendCopyToMail
@@ -55,8 +55,8 @@ const NewMessage: React.FC = () => {
 				<Grid spacing={2} container>
 					<Grid xs={12} item>
 						<AutocompleteRecipients
-							onSelect={id => setFormData(prevState => ({ ...prevState, recipient: id }))}
-							error={showValidity && bads.recipient}
+							onSelect={ids => setFormData(prevState => ({ ...prevState, recipients: ids }))}
+							error={showValidity && bads.recipients}
 						/>
 					</Grid>
 					<Grid xs={6} item>

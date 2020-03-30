@@ -176,7 +176,7 @@ export class MessagesStore {
 
 	createThread = async (
 		token: string,
-		recipient: number,
+		recipients: number[],
 		title: string,
 		body: string,
 		sendCopyToMail: boolean
