@@ -2,7 +2,7 @@ import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
 import jwtDecode from 'jwt-decode'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
-import { constructFetchErr } from 'utils'
+import { constructFetchErr, ignoreRejection } from 'utils'
 
 export type MessageThread = {
 	id: number
@@ -203,7 +203,7 @@ export class MessagesStore {
 		runInAction(() => {
 			this.threads = undefined
 		})
-		await this.fetchNextThreads(token)
+		await ignoreRejection(this.fetchNextThreads(token))
 
 		return (
 			this.threads?.[0] || {
