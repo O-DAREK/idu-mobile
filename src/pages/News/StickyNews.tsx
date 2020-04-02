@@ -10,7 +10,7 @@ import NewsItem, { SkeletonNewsItem } from './NewsItem'
 import PromptConfirmations from './PromptConfirmations'
 
 const StickyNews: React.FC = observer(() => {
-	const { ERROR_GENERIC, STICKY_NEWS } = useLocale()
+	const { ERROR_GENERIC, STICKY_NEWS, NO_STICKY_NEWS } = useLocale()
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
 	const news = useContext(newsStore)
@@ -33,6 +33,9 @@ const StickyNews: React.FC = observer(() => {
 				<Typography variant="h6">{STICKY_NEWS}</Typography>
 				<List>
 					{loading && !news.stickyNews && <SkeletonNewsItem />}
+					{news.stickyNews?.length === 0 && (
+						<Typography color="textSecondary">{NO_STICKY_NEWS}</Typography>
+					)}
 					{news.stickyNews?.map((e, i) => (
 						<React.Fragment key={i}>
 							<NewsItem {...e} />

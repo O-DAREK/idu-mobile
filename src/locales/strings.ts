@@ -104,6 +104,10 @@ const strings = {
 		en: 'Sticky news',
 		pl: 'Przypięte aktualności'
 	},
+	NO_STICKY_NEWS: {
+		en: 'No sticky news',
+		pl: 'Brak przypiętych aktualności'
+	},
 	CONFIRM_TO_CONTINUE: {
 		en: 'Confirm to continue',
 		pl: 'Potwierdź by kontynuować'
