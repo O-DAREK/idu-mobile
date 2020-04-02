@@ -4,6 +4,7 @@ import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import * as urls from 'constants/urls'
 import { useLocale } from 'locales'
 import React, { useContext, useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import { messagesStore, userStore } from 'stores'
 import useAsync from 'use-async-react'
 import AutocompleteRecipients from './AutocompleteRecipients'
@@ -19,7 +20,8 @@ const NewMessage: React.FC = () => {
 		sendCopyToMail: false
 	})
 	const [showValidity, setShowValidity] = useState(false)
-	const { call: createThread, loading, error } = useAsync(messages.createThread)
+	const { call: createThread, loading, error, result } = useAsync(messages.createThread)
+	const history = useHistory()
 
 	const bads: { [key in keyof typeof formData]: boolean } = {
 		recipients: formData.recipients.length === 0,
@@ -45,6 +47,12 @@ const NewMessage: React.FC = () => {
 				setShowValidity(true)
 			})
 	}, [loading, valid, formData, user, createThread])
+
+	useEffect(() => {
+		if (result) {
+			history.push(urls.internal.messages())
+		}
+	}, [result, history])
 
 	return (
 		<>
