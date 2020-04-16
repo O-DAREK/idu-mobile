@@ -43,7 +43,7 @@ export type MessageThreads = {
 		body: string
 		status: 1 | 2 | 3
 		created_at: string
-		last_message_at: string
+		last_message_at: string | null
 		updated_at: string
 	}[]
 }

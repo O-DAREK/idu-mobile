@@ -19,8 +19,9 @@ const NewsList: React.FC = observer(() => {
 	const { call: fetchNextNews, loading, error } = useAsync(news.fetchNextNews)
 
 	useEffect(() => {
-		if (user.token && meta.isOnline) fetchNextNews(user.token)
-	}, [meta.isOnline, fetchNextNews, user])
+		if (user.token && meta.isOnline && (news.news === undefined || news.news.length === 0))
+			fetchNextNews(user.token)
+	}, [meta.isOnline, fetchNextNews, user, news])
 
 	useEffect(() => {
 		if (error?.status === UNAUTHORIZED) user.logout(true)
