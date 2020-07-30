@@ -99,6 +99,58 @@ const strings = {
 	INSTALL_BUTTON: {
 		en: 'Install me as an app',
 		pl: 'Zainstaluj mnie jako aplikację'
+	},
+	STICKY_NEWS: {
+		en: 'Sticky news',
+		pl: 'Przypięte aktualności'
+	},
+	NO_STICKY_NEWS: {
+		en: 'No sticky news',
+		pl: 'Brak przypiętych aktualności'
+	},
+	CONFIRM_TO_CONTINUE: {
+		en: 'Confirm to continue',
+		pl: 'Potwierdź by kontynuować'
+	},
+	CONFIRM: {
+		en: 'Confirm',
+		pl: 'Potwierdź'
+	},
+	FAILED_TO_CONFIRM: {
+		en: 'Something went wrong, failed to confirm',
+		pl: 'Coś poszło nie tak, nie udało sie potwierdzić'
+	},
+	RECIPIENT: {
+		en: 'Recipient',
+		pl: 'Odbiorca'
+	},
+	TITLE: {
+		en: 'Title',
+		pl: 'Tytuł'
+	},
+	COPY_ON_MAIL: {
+		en: 'Send copy to mail',
+		pl: 'Wyślij kopię na maila'
+	},
+	STUDENT: {
+		en: 'Student',
+		pl: 'Uczeń'
+	},
+	TEACHER: {
+		en: 'Teacher',
+		pl: 'Nauczyciel'
+	},
+	PARENT: {
+		en: 'Parent',
+		pl: 'Rodzic'
+	},
+	NO_OPTIONS: {
+		en: 'No options',
+		pl: 'Brak opcji'
+	},
+	LOADING: {
+		en: 'Loading',
+		pl: 'Ładowanie'
 	}
 }
 

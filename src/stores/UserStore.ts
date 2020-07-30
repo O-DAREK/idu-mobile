@@ -1,7 +1,6 @@
 import { Roles } from 'constants/interfaces'
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import { UNAUTHORIZED } from 'http-status-codes'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
@@ -109,8 +108,6 @@ export class UserStore {
 		})
 
 		if (!res.ok) {
-			if (res.status === UNAUTHORIZED) this.logout(true)
-
 			throw await constructFetchErr(res)
 		}
 
@@ -143,8 +140,6 @@ export class UserStore {
 		})
 
 		if (!res.ok) {
-			if (res.status === UNAUTHORIZED) this.logout(true)
-
 			throw await constructFetchErr(res)
 		}
 

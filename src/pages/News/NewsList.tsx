@@ -8,6 +8,8 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { metaStore, newsStore, userStore } from 'stores'
 import useAsync from 'use-async-react'
 import NewsItem, { SkeletonNewsItem } from './NewsItem'
+import PromptConfirmations from './PromptConfirmations'
+import StickyNews from './StickyNews'
 
 const NewsList: React.FC = observer(() => {
 	const { ERROR_GENERIC } = useLocale()
@@ -17,8 +19,9 @@ const NewsList: React.FC = observer(() => {
 	const { call: fetchNextNews, loading, error } = useAsync(news.fetchNextNews)
 
 	useEffect(() => {
-		if (user.token && meta.isOnline) fetchNextNews(user.token)
-	}, [meta.isOnline, fetchNextNews, user])
+		if (user.token && meta.isOnline && (news.news === undefined || news.news.length === 0))
+			fetchNextNews(user.token)
+	}, [meta.isOnline, fetchNextNews, user, news])
 
 	useEffect(() => {
 		if (error?.status === UNAUTHORIZED) user.logout(true)
@@ -28,6 +31,8 @@ const NewsList: React.FC = observer(() => {
 		<>
 			{error && <Snackbar variant="error">{ERROR_GENERIC}</Snackbar>}
 			{loading && news.news && <TopLoading />}
+			<StickyNews />
+			<PromptConfirmations news={news.news || []} />
 			<List>
 				{loading && !news.news && (
 					<>

@@ -4,6 +4,7 @@ import * as urls from 'constants/urls'
 import { formatLong, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router'
 import { configStore, metaStore, newsStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { ignoreRejection } from 'utils'
@@ -12,16 +13,17 @@ const WordBreakingPaper = styled(PaddedPaper)`
 	overflow-wrap: break-word;
 `
 
-interface Props {
-	id: number
+interface Params {
+	id: string
 }
 
-const SpecificNews: React.FC<Props> = observer(({ id }) => {
+const SpecificNews: React.FC = observer(() => {
 	const { NO_SUCH_NEWS } = useLocale()
 	const news = useContext(newsStore)
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
 	const config = useContext(configStore)
+	const id = Number(useParams<Params>().id)
 
 	const foundNews = news.news?.find(e => e.id === id) || news.stickyNews?.find(e => e.id === id)
 

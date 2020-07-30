@@ -17,8 +17,13 @@ const MessageList = observer(() => {
 	const { call: fetchNextThreads, loading, error } = useAsync(messages.fetchNextThreads)
 
 	useEffect(() => {
-		if (user.token && meta.isOnline) fetchNextThreads(user.token)
-	}, [fetchNextThreads, user.token, meta.isOnline])
+		if (
+			user.token &&
+			meta.isOnline &&
+			(messages.threads === undefined || messages.threads.length === 0)
+		)
+			fetchNextThreads(user.token)
+	}, [fetchNextThreads, user.token, meta.isOnline, messages])
 
 	useEffect(() => {
 		if (error?.status === UNAUTHORIZED) user.logout(true)

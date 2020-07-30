@@ -2,7 +2,7 @@ import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
 import jwtDecode from 'jwt-decode'
 import { action, autorun, computed, observable, runInAction } from 'mobx'
-import { constructFetchErr } from 'utils'
+import { constructFetchErr, ignoreRejection } from 'utils'
 
 export type MessageThread = {
 	id: number
@@ -139,7 +139,7 @@ export class MessagesStore {
 					id: thread.id,
 					title: thread.title,
 					body: thread.body,
-					sentAt: new Date(thread.last_message_at),
+					sentAt: new Date(thread.updated_at),
 					...(thread.status === 1 ? { to: thread.from } : { from: thread.from })
 				})
 			}
@@ -172,5 +172,51 @@ export class MessagesStore {
 		await this.fetchSpecificMessages(token, threadId)
 
 		return this.messages[threadId].messages[this.messages[threadId].messages.length - 1]
+	}
+
+	createThread = async (
+		token: string,
+		recipients: number[],
+		title: string,
+		body: string,
+		sendCopyToMail: boolean
+	): Promise<MessageThread> => {
+		const formData = new FormData()
+		formData.append('message[body]', body)
+		formData.append('message[title]', title)
+		formData.append('message[send_copy_to_email]', String(sendCopyToMail))
+		formData.append('message[receiver_ids]', recipients.join(','))
+
+		const res = await fetch(urls.api.createMessage(), {
+			method: 'POST',
+			headers: {
+				'X-API-TOKEN': token
+			},
+			body: formData
+		})
+
+		if (!res.ok) {
+			throw await constructFetchErr(res)
+		}
+
+		// removing all messages and loading the first page in with the newly sent message
+		runInAction(() => {
+			this.threads = undefined
+		})
+		await ignoreRejection(this.fetchNextThreads(token))
+
+		return (
+			this.threads?.[0] || {
+				id: -1,
+				title,
+				body,
+				sentAt: new Date(),
+				to: {
+					id: recipients[0],
+					name: 'John',
+					avatar: '/noop'
+				}
+			}
+		)
 	}
 }

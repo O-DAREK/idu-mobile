@@ -11,20 +11,24 @@ import {
 	Slide,
 	SwipeableDrawer,
 	Toolbar,
-	Typography
+	Typography,
+	Zoom
 } from '@material-ui/core'
 import { Restore as RestoreIcon, SvgIconComponent } from '@material-ui/icons'
+import AddIcon from '@material-ui/icons/Add'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 import EventIcon from '@material-ui/icons/Event'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import MessageIcon from '@material-ui/icons/Message'
+import SendIcon from '@material-ui/icons/Send'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { FlexGrow } from 'components'
 import * as urls from 'constants/urls'
+import { UNAUTHORIZED } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router'
 import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
@@ -45,12 +49,19 @@ const Title = styled(Typography)`
 	padding: 20px;
 `
 
-const MiddleFab = styled(Fab)`
+const MainFab = styled(Fab)<FabPlacement>`
 	position: absolute;
 	z-index: 1;
 	top: -30px;
+	${p =>
+		p.placement === 'center'
+			? `
 	left: 0;
 	right: 0;
+	`
+			: `
+	right: 30px;
+	`}
 	margin: 0 auto;
 `
 
@@ -59,25 +70,42 @@ type ClickableSvg = {
 	onClick: () => void
 }
 
-interface InternalProps {
+type FabPlacement = {
+	placement: 'center' | 'right'
+}
+
+interface InternalState {
+	// test decides whether this state should be used
+	test: RegExp
 	title?: string
-	fab?: ClickableSvg
+	fab?: ClickableSvg & FabPlacement
 	actions?: ClickableSvg[]
+}
+
+interface NavigationElement {
+	name: string
+	url: string
+	Icon: React.ElementType
 }
 
 /* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
 const BottomAppBar: React.FC = observer(({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const [forceHide, setForceHide] = useState(false)
+	const enterAnimationKey = useRef(0)
 	const history = useHistory()
 	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
 
 	useEffect(() => {
-		if (meta.isOnline) user.fetchProfile()
+		if (meta.isOnline)
+			user.fetchProfile().catch(err => {
+				if (err.status === UNAUTHORIZED) user.logout(true)
+			})
 	}, [meta.isOnline, user])
 
+	// force hiding if user is focused on an input
 	useEffect(() => {
 		window.addEventListener('resize', () =>
 			setForceHide(
@@ -89,15 +117,32 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		)
 	}, [])
 
-	const states: { [key: string]: InternalProps } = useMemo(
-		() => ({
-			[urls.internal.messages()]: {
-				title: MESSAGES
+	// states of the BAB depending on the screen (= url)
+	const states: InternalState[] = useMemo(
+		() => [
+			{
+				test: new RegExp(String.raw`${urls.internal.messages()}$`),
+				title: MESSAGES,
+				fab: {
+					Icon: AddIcon,
+					onClick: () => history.push(urls.internal.newMessage()),
+					placement: 'center'
+				}
 			},
-			[urls.internal.news()]: {
+			{
+				test: new RegExp(String.raw`${urls.internal.newMessage()}$`),
+				fab: {
+					Icon: SendIcon,
+					onClick: () => emit(EventNames.MESSAGES_SEND_NEW),
+					placement: 'right'
+				}
+			},
+			{
+				test: new RegExp(String.raw`${urls.internal.news()}$`),
 				title: NEWS
 			},
-			[urls.internal.settings()]: {
+			{
+				test: new RegExp(urls.internal.settings()),
 				title: SETTINGS,
 				actions: [
 					{
@@ -106,7 +151,8 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 					}
 				]
 			},
-			[urls.internal.events()]: {
+			{
+				test: new RegExp(urls.internal.events()),
 				title: EVENTS,
 				actions: [
 					{
@@ -115,11 +161,12 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 					}
 				]
 			}
-		}),
-		[MESSAGES, NEWS, SETTINGS, EVENTS]
+		],
+		[MESSAGES, NEWS, SETTINGS, EVENTS, history]
 	)
 
-	const navigation = [
+	// navigation drawer options
+	const navigation: NavigationElement[] = [
 		{
 			name: MESSAGES,
 			url: urls.internal.messages(),
@@ -150,15 +197,17 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		}
 	]
 
-	const show = history.location.pathname in states && !forceHide
+	const state = states.find(s => s.test.test(history.location.pathname))
 
-	const { title, fab, actions } = states[history.location.pathname] || {}
+	const show = !!state && !forceHide
+
+	const { title, fab, actions } = state || {}
 
 	return (
 		<>
 			<Content pad={show}>
 				{title && <Title variant="h5">{title}</Title>}
-				<Grow in={true} key={title}>
+				<Grow key={enterAnimationKey.current} in>
 					<div>{children}</div>
 				</Grow>
 			</Content>
@@ -171,13 +220,14 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 				<List component="nav">
 					{navigation.map(({ name, url, Icon }) => (
 						<ListItem
-							button
 							selected={history.location.pathname === url}
 							onClick={() => {
+								enterAnimationKey.current = +new Date()
 								history.push(url)
 								setOpenDrawer(false)
 							}}
 							key={url}
+							button
 						>
 							<ListItemIcon>
 								<Icon />
@@ -194,11 +244,13 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 							<MenuIcon />
 						</IconButton>
 						{fab && (
-							<MiddleFab onClick={fab.onClick} color="secondary">
-								<fab.Icon />
-							</MiddleFab>
+							<Zoom in key={fab.placement}>
+								<MainFab onClick={fab.onClick} placement={fab.placement} color="secondary">
+									<fab.Icon color="action" />
+								</MainFab>
+							</Zoom>
 						)}
-						<FlexGrow />
+						{fab?.placement !== 'right' && <FlexGrow />}
 						{actions?.map(({ onClick, Icon }, i) => (
 							<IconButton onClick={onClick} key={i}>
 								<Icon />

@@ -12,10 +12,6 @@ interface Props {
 	day: Date
 }
 
-const FaintText = styled(Typography)`
-	opacity: 0.7;
-`
-
 const StickyDate = styled(Typography)`
 	position: sticky;
 	text-align: center;
@@ -41,7 +37,7 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 		<>
 			<StickyDate variant="h6">{formatLong(config.language, day)}</StickyDate>
 			<Container>
-				{events.length === 0 && <FaintText>{NO_EVENTS}</FaintText>}
+				{events.length === 0 && <Typography color="textSecondary">{NO_EVENTS}</Typography>}
 				<HorizontalView>
 					{allDay.map(e => (
 						<AllDayEvent
