@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
+import ReactGA from 'react-ga'
 import { metaStore } from 'stores'
 import * as serviceWorker from './serviceWorker'
 
@@ -76,3 +77,5 @@ serviceWorker.register({
 		registration.waiting?.postMessage({ type: 'SKIP_WAITING' })
 	}
 })
+
+ReactGA.initialize('UA-2140149-14')

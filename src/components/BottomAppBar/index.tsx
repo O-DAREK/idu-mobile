@@ -29,6 +29,7 @@ import { UNAUTHORIZED } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import ReactGA from 'react-ga'
 import { useHistory } from 'react-router'
 import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
@@ -224,6 +225,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 							onClick={() => {
 								enterAnimationKey.current = +new Date()
 								history.push(url)
+								ReactGA.pageview(url)
 								setOpenDrawer(false)
 							}}
 							key={url}
