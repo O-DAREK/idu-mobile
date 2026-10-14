@@ -6,7 +6,7 @@ Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest, React 16, TypeScript 4
 
 Menedżer pakietów: **yarn** (jest `yarn.lock`; README wspomina npm, ale używamy yarn).
 
-Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniższe komendy (`CI=true ...`, `env -u ...`) mają składnię basha i nie działają w PowerShell 5.1.
+Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniższe komendy (`CI=true ...`) mają składnię basha i nie działają w PowerShell 5.1.
 
 - `yarn start` – dev server (wymaga `.env` z `VITE_API_ROOT`, wzór w `.env.example`)
 - `CI=true yarn test` – wszystkie testy jednorazowo (bez `CI=true` jest tryb watch, który się nie kończy)

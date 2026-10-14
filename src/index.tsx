@@ -66,6 +66,9 @@ ReactDOM.render(
 
 if (import.meta.env.PROD) {
 	registerSW({
+		// the plugin reloads the page once the new worker takes control; the update should instead
+		// be applied silently on the next visit, so do nothing here
+		onNeedReload() {},
 		onNeedRefresh() {
 			// hacky way to access the context
 			// Nothing will be actually rendered

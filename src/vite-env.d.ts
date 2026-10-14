@@ -38,6 +38,7 @@ declare interface BeforeInstallPromptEvent extends Event {
 declare module 'virtual:pwa-register' {
 	export function registerSW(options?: {
 		onNeedRefresh?: () => void
+		onNeedReload?: () => void
 		onOfflineReady?: () => void
 	}): (reloadPage?: boolean) => Promise<void>
 }
