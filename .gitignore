@@ -23,3 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .idea/
+
+# claude code (personal)
+.claude/settings.local.json
+CLAUDE.local.md
