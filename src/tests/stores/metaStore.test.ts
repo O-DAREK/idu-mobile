@@ -1,13 +1,14 @@
+import { MockInstance, vi } from 'vitest'
 import { MetaStore } from 'stores/MetaStore'
 
 describe('meta store', () => {
-	let onlineGetter: jest.SpyInstance<boolean, []>
+	let onlineGetter: MockInstance<() => boolean>
 	let metaStore: MetaStore
 	const eventMap = {} as { [key: string]: any }
 	beforeEach(() => {
-		onlineGetter = jest.spyOn(window.navigator, 'onLine', 'get')
+		onlineGetter = vi.spyOn(window.navigator, 'onLine', 'get')
 		metaStore = new MetaStore()
-		window.addEventListener = jest.fn((event, cb) => {
+		window.addEventListener = vi.fn((event, cb) => {
 			eventMap[event] = cb
 		})
 	})

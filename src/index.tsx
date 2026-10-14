@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { metaStore } from 'stores'
-import * as serviceWorker from './serviceWorker'
+import { registerSW } from 'virtual:pwa-register'
 
 const App = lazy(() => import('App'))
 
@@ -64,15 +64,19 @@ ReactDOM.render(
 	document.getElementById('root')
 )
 
-serviceWorker.register({
-	onUpdate(registration) {
-		// hacky way to access the context
-		// Nothing will be actually rendered
-		ReactDOM.render(
-			<metaStore.Consumer>{s => <>{s.theresAnUpdate()}</>}</metaStore.Consumer>,
-			document.createElement('noop')
-		)
-		// inform workbox to skip waiting, update will be applied after a refresh
-		registration.waiting?.postMessage({ type: 'SKIP_WAITING' })
-	}
-})
+if (import.meta.env.PROD) {
+	registerSW({
+		onNeedRefresh() {
+			// hacky way to access the context
+			// Nothing will be actually rendered
+			ReactDOM.render(
+				<metaStore.Consumer>{s => <>{s.theresAnUpdate()}</>}</metaStore.Consumer>,
+				document.createElement('noop')
+			)
+			// inform workbox to skip waiting, update will be applied after a refresh
+			navigator.serviceWorker.getRegistration().then(registration => {
+				registration?.waiting?.postMessage({ type: 'SKIP_WAITING' })
+			})
+		}
+	})
+}

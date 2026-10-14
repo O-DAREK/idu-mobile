@@ -1,6 +1,6 @@
 # idu-mobile
 
-Mobilny klient webowy (PWA) systemu IDU. Create React App 5, React 16, TypeScript 4.9 (strict), MobX 5 + mobx-react-lite, Material-UI v4, styled-components, react-router 5.
+Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest, React 16, TypeScript 4.9 (strict), MobX 5 + mobx-react-lite, Material-UI v4, styled-components, react-router 5.
 
 ## Komendy
 
@@ -8,11 +8,10 @@ Menedżer pakietów: **yarn** (jest `yarn.lock`; README wspomina npm, ale używa
 
 Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniższe komendy (`CI=true ...`, `env -u ...`) mają składnię basha i nie działają w PowerShell 5.1.
 
-- `yarn start` – dev server (wymaga `.env` z `REACT_APP_API_ROOT`, wzór w `.env.example`)
+- `yarn start` – dev server (wymaga `.env` z `VITE_API_ROOT`, wzór w `.env.example`)
 - `CI=true yarn test` – wszystkie testy jednorazowo (bez `CI=true` jest tryb watch, który się nie kończy)
 - `npx tsc --noEmit` – sprawdzenie typów
-- `yarn build` – build produkcyjny do `build/`
-- Jeśli build/start się wywala przez `NODE_OPTIONS` (Node 24 + CRA 5), uruchom z `env -u NODE_OPTIONS`.
+- `yarn build` – build produkcyjny do `build/`; `yarn preview` – serwuje build (service worker działa tylko w buildzie, PWA testuj tu)
 
 ## Struktura
 
@@ -21,7 +20,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 - `src/components/` – współdzielone komponenty, eksportowane przez `components/index.ts`.
 - `src/locales/` – teksty UI (`strings.ts`) i hooki do tłumaczeń. Nie hardkoduj tekstów w komponentach.
 - `src/constants/`, `src/utils/`, `src/typings/` – stałe, helpery, deklaracje typów.
-- `src/tests/` – testy Jest (głównie store'ów), `fetch` mockowany przez `jest-fetch-mock`.
+- `src/tests/` – testy Vitest (głównie store'ów), `fetch` mockowany przez `vitest-fetch-mock`.
 - Importy absolutne względem `src` (`baseUrl: src`), np. `import { NewsStore } from 'stores/NewsStore'`.
 
 ## Styl kodu

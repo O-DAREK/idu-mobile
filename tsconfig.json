@@ -15,6 +15,7 @@
 		"noEmit": true,
 		"jsx": "react",
 		"experimentalDecorators": true,
+		"useDefineForClassFields": false,
 		"baseUrl": "src",
 		"downlevelIteration": true
 	},
