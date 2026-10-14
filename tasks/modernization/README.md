@@ -35,9 +35,9 @@ husky 4, Jest przez react-scripts. 66 plików w `src/`, 5 testów (wyłącznie s
 | 00  | [Baseline i smoke test](00-baseline.md)                                    | –         | niskie  | [x]    |
 | 01  | [Bezpieczne patch/minor + usunięcie nieużywanych](01-safe-bumps.md)        | 00        | niskie  | [x]    |
 | 02  | [Husky 9 i Prettier 3](02-husky-prettier.md)                               | 01        | niskie  | [x]    |
-| 03  | [Migracja CRA → Vite + Vitest + PWA](03-vite-vitest.md)                    | 02        | wysokie | [ ]    |
+| 03  | [Migracja CRA → Vite + Vitest + PWA](03-vite-vitest.md)                    | 02        | wysokie | [x]    |
 | 04  | [React 18 (`createRoot`)](04-react-18.md)                                  | 03        | średnie | [x]    |
-| 05  | [MobX 6](05-mobx-6.md)                                                     | 04        | średnie | [ ]    |
+| 05  | [MobX 6](05-mobx-6.md)                                                     | 04        | średnie | [x]    |
 | 06  | [MobX 7 i mobx-react-lite aktualne](06-mobx-latest.md)                     | 05, 12    | niskie  | [ ]    |
 | 07  | [react-router 6](07-react-router-6.md)                                     | 04        | wysokie | [ ]    |
 | 08  | [MUI v4 → v5](08-mui-v5.md)                                                | 04        | wysokie | [ ]    |
