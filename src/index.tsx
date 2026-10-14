@@ -57,12 +57,23 @@ const Loading = () => {
 	)
 }
 
-ReactDOM.render(
-	<Suspense fallback={<Loading />}>
-		<App />
-	</Suspense>,
-	document.getElementById('root')
-)
+const render = () =>
+	ReactDOM.render(
+		<Suspense fallback={<Loading />}>
+			<App />
+		</Suspense>,
+		document.getElementById('root')
+	)
+
+// the mock module is only bundled when VITE_MOCK_API=true at build time
+if (import.meta.env.VITE_MOCK_API === 'true') {
+	import('mocks').then(({ installMockApi }) => {
+		installMockApi()
+		render()
+	})
+} else {
+	render()
+}
 
 if (import.meta.env.PROD) {
 	registerSW({
