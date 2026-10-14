@@ -102,7 +102,7 @@ export class MessagesStore {
 				messages: []
 			}
 
-			const { user_id: userId } = jwtDecode(token)
+			const { user_id: userId } = jwtDecode<{ user_id: number }>(token)
 
 			for (const message of json.data) {
 				this.messages[threadId].messages.push({
