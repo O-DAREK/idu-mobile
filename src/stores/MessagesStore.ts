@@ -136,6 +136,9 @@ export class MessagesStore {
 			if (!this.threads) this.threads = []
 
 			for (const thread of json.data) {
+				// concurrent fetches of the same page (e.g. StrictMode double effects) must not duplicate threads
+				if (this.threads.some(e => e.id === thread.id)) continue
+
 				this.threads.push({
 					id: thread.id,
 					title: thread.title,

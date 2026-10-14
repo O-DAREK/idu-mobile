@@ -99,6 +99,9 @@ export class NewsStore {
 			if (!this.news) this.news = []
 
 			for (const news of json.data) {
+				// concurrent fetches of the same page (e.g. StrictMode double effects) must not duplicate items
+				if (this.news.some(e => e.id === news.id)) continue
+
 				this.news.push({
 					id: news.id,
 					title: news.title,
