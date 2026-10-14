@@ -37,7 +37,8 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"analyze": "npm run build && source-map-explorer 'build/static/js/*.js'"
+		"analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
+		"prepare": "husky"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -54,11 +55,6 @@
 			"last 1 safari version"
 		]
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "cross-env CI=true npm test"
-		}
-	},
 	"devDependencies": {
 		"@types/javascript-time-ago": "^2.5.0",
 		"@types/jest": "^26.0.24",
@@ -70,9 +66,9 @@
 		"@types/react-router-dom": "^5.3.3",
 		"@types/styled-components": "^5.1.36",
 		"cross-env": "^7.0.3",
-		"husky": "^4.2.5",
+		"husky": "^9.1.7",
 		"jest-fetch-mock": "^3.2.0",
-		"prettier": "^2.8.8",
+		"prettier": "^3.9.10",
 		"react-scripts": "^5.0.1",
 		"source-map-explorer": "^2.5.3",
 		"typescript": "^4.9.5"
