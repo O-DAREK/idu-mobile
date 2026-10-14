@@ -92,7 +92,7 @@ const AutocompleteRecipients: React.FC<Props> = ({ onSelect, error }) => {
 			onChange={(_: React.ChangeEvent<{}>, selected: ListOption) =>
 				// this casting has to be done because the typescript definitions are not yet finished
 				// on MUI's side and changing the type in the function signature breaks everything
-				onSelect(((selected as any) as ListOption[]).map(e => e.id))
+				onSelect((selected as any as ListOption[]).map(e => e.id))
 			}
 			renderOption={option => option.display}
 			renderInput={params => (

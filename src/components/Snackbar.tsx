@@ -42,9 +42,7 @@ const Snackbar: React.FC<Props> = ({
 				action={
 					action ? (
 						<Button color="inherit" size="small" onClick={action.onClick} children={action.text} />
-					) : (
-						undefined
-					)
+					) : undefined
 				}
 				onClose={dismissible ? () => setOpen(false) : undefined}
 			>
