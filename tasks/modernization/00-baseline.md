@@ -19,4 +19,10 @@
 
 ## Wyniki
 
-_do uzupełnienia_
+Data: 2026-10-14, Node 24.21.0, branch `chore/modernize-stack`.
+
+- `npx tsc --noEmit`: bez błędów (~28 s).
+- `CI=true yarn test`: 5 suite'ów, 53 testy, wszystkie zielone (~5 s).
+- `env -u NODE_OPTIONS yarn build`: "Compiled successfully", ~51 s; jedyne ostrzeżenie to DEP0176 (`fs.F_OK`, Node 24).
+- Rozmiary gzip: `5.*.chunk.js` 140.52 kB, `main.*.js` 60.83 kB, `106.*.chunk.js` 18.14 kB.
+- Smoke test ręczny (`yarn start`) i `yarn analyze`: do wykonania przez właściciela, jeszcze nie wykonane.
