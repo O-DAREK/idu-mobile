@@ -89,7 +89,7 @@ interface NavigationElement {
 }
 
 /* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
-const BottomAppBar: React.FC = observer(({ children }) => {
+const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const [forceHide, setForceHide] = useState(false)
 	const enterAnimationKey = useRef(0)

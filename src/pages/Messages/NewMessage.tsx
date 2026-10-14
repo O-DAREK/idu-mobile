@@ -6,7 +6,7 @@ import { useLocale } from 'locales'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { messagesStore, userStore } from 'stores'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import AutocompleteRecipients from './AutocompleteRecipients'
 
 const NewMessage: React.FC = () => {

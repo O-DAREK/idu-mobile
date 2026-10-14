@@ -17,7 +17,7 @@ import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { configStore, messagesStore, metaStore, userStore } from 'stores'
 import styled from 'styled-components'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import MessageBox from './MessageBox'
 
 const FlexBox = styled.div`

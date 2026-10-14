@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useRef } from 'react'
 import { messagesStore, metaStore, userStore } from 'stores'
 import styled from 'styled-components'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 
 interface Props {
 	threadId: number

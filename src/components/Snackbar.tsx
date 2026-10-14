@@ -3,7 +3,7 @@ import MuiSnackbar, { SnackbarProps } from '@material-ui/core/Snackbar'
 import { Alert, AlertProps, AlertTitle, Color } from '@material-ui/lab'
 import React, { useState } from 'react'
 
-interface Props extends Omit<Partial<SnackbarProps>, 'children'> {
+interface Props extends Omit<Partial<SnackbarProps>, 'children' | 'action'> {
 	variant: Color
 	lifespan?: number
 	position?: 'bottom' | 'BAB' | 'top'

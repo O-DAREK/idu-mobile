@@ -13,7 +13,7 @@ import IntervalTree from 'node-interval-tree'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { configStore, metaStore, userStore } from 'stores'
 import { Event } from 'stores/UserStore'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import DayList from './DayList'
 
 const dayInMillis = 1000 * 60 * 60 * 24

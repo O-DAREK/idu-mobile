@@ -22,3 +22,15 @@
 ## Commit
 
 `feat: upgrade to react 18 and createRoot`
+
+## Wyniki (wykonane)
+
+- `react`/`react-dom` 18.3.1, `@types/react(-dom)` 18.x (także w `resolutions`). tsc, testy (53) i build zielone.
+- `index.tsx`: `createRoot` + `StrictMode`; hack z `Consumer` zastąpiony `metaStoreInstance.theresAnUpdate()`
+  (nowy eksport w `stores/index.ts`, bo store był dostępny tylko przez kontekst).
+- Typy: `PropsWithChildren` w `BottomAppBar`, `ConfirmationDialog`; `Snackbar` – `action` wyłączone z `Omit<SnackbarProps>`.
+- `use-async-react` (peer `react@^16`) **nie działa pod StrictMode**: flaga `cancelled` ustawiana przy
+  unmount nigdy nie jest zerowana, więc po symulowanym unmount wyniki są gubione. Zastąpiony lokalnym
+  `utils/useAsync.ts`; paczka nadal w `package.json` – do usunięcia po uzgodnieniu (task 11/13).
+- `react-infinite-scroll-component`, MUI v4, `mobx-react-lite` 2.x: bez zmian, ostrzeżenia peer tylko informacyjne.
+- Smoke test ręczny w przeglądarce: do wykonania przez właściciela.

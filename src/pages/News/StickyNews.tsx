@@ -5,7 +5,7 @@ import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { metaStore, newsStore, userStore } from 'stores'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import NewsItem, { SkeletonNewsItem } from './NewsItem'
 import PromptConfirmations from './PromptConfirmations'
 

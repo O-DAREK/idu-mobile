@@ -5,7 +5,7 @@ import { useLocale } from 'locales'
 import React, { useContext, useState } from 'react'
 import { userStore } from 'stores'
 import styled from 'styled-components'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 
 const PaddedGrid = styled(Grid)`
 	padding: 20px;

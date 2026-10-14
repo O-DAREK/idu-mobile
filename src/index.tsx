@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react'
-import ReactDOM from 'react-dom'
-import { metaStore } from 'stores'
+import { createRoot } from 'react-dom/client'
+import { metaStoreInstance } from 'stores'
 import { registerSW } from 'virtual:pwa-register'
 
 const App = lazy(() => import('App'))
@@ -58,11 +58,12 @@ const Loading = () => {
 }
 
 const render = () =>
-	ReactDOM.render(
-		<Suspense fallback={<Loading />}>
-			<App />
-		</Suspense>,
-		document.getElementById('root')
+	createRoot(document.getElementById('root')!).render(
+		<React.StrictMode>
+			<Suspense fallback={<Loading />}>
+				<App />
+			</Suspense>
+		</React.StrictMode>
 	)
 
 // the mock module is only bundled when VITE_MOCK_API=true at build time
@@ -81,12 +82,7 @@ if (import.meta.env.PROD) {
 		// be applied silently on the next visit, so do nothing here
 		onNeedReload() {},
 		onNeedRefresh() {
-			// hacky way to access the context
-			// Nothing will be actually rendered
-			ReactDOM.render(
-				<metaStore.Consumer>{s => <>{s.theresAnUpdate()}</>}</metaStore.Consumer>,
-				document.createElement('noop')
-			)
+			metaStoreInstance.theresAnUpdate()
 			// inform workbox to skip waiting, update will be applied after a refresh
 			navigator.serviceWorker.getRegistration().then(registration => {
 				registration?.waiting?.postMessage({ type: 'SKIP_WAITING' })

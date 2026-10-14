@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { messagesStore, metaStore, userStore } from 'stores'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import ThreadItem, { SkeletonThreadItem } from './ThreadItem'
 
 const MessageList = observer(() => {
