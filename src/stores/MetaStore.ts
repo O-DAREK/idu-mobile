@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx'
+import { action, makeObservable, observable } from 'mobx'
 
 export class MetaStore {
 	static localStorageKey = 'MetaStore'
@@ -8,6 +8,7 @@ export class MetaStore {
 	@observable pwaInstallEvent?: BeforeInstallPromptEvent
 
 	constructor() {
+		makeObservable(this)
 		window.addEventListener('online', this.updateIsOnline)
 		window.addEventListener('offline', this.updateIsOnline)
 	}

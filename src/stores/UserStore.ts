@@ -1,7 +1,7 @@
 import { Roles } from 'constants/interfaces'
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import { action, autorun, computed, observable, runInAction } from 'mobx'
+import { action, autorun, computed, makeObservable, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
 export type Event = {
@@ -34,6 +34,7 @@ export class UserStore {
 	@observable forcedLogout = false
 
 	constructor() {
+		makeObservable(this)
 		this.load()
 		autorun(this.save)
 	}

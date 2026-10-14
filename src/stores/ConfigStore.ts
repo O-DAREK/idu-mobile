@@ -1,6 +1,6 @@
 import { Theme } from 'constants/interfaces'
 import { Language } from 'locales/strings'
-import { action, autorun, observable } from 'mobx'
+import { action, autorun, makeObservable, observable } from 'mobx'
 
 export class ConfigStore {
 	static localStorageKey = 'ConfigStore'
@@ -10,6 +10,7 @@ export class ConfigStore {
 	@observable accentColors!: [string, string]
 
 	constructor() {
+		makeObservable(this)
 		this.reset()
 		this.load()
 		autorun(this.save)

@@ -14,7 +14,9 @@ describe('meta store', () => {
 	})
 
 	it('should have defaults', () => {
+		// MobX 6 reads navigator.onLine eagerly in the constructor, so mock it before constructing
 		onlineGetter.mockReturnValue(false)
+		metaStore = new MetaStore()
 		expect(metaStore.isOnline).toBe(false)
 		expect(metaStore.availableUpdate).toBe(false)
 		expect(metaStore.pwaInstallEvent).toBe(undefined)

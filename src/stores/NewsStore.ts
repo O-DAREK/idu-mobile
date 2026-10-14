@@ -1,6 +1,6 @@
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import { action, autorun, computed, observable, runInAction } from 'mobx'
+import { action, autorun, computed, makeObservable, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
 export type PieceOfNews = {
@@ -29,6 +29,7 @@ export class NewsStore {
 	}
 
 	constructor() {
+		makeObservable(this)
 		this.load()
 		autorun(this.save)
 	}
