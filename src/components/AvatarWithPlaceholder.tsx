@@ -1,4 +1,4 @@
-import { Avatar, AvatarProps } from '@material-ui/core'
+import { Avatar, AvatarProps } from '@mui/material'
 import React, { useState } from 'react'
 
 interface Props extends Omit<AvatarProps, 'placeholder'> {

@@ -1,8 +1,8 @@
-import AppBar from '@material-ui/core/AppBar'
-import IconButton from '@material-ui/core/IconButton'
-import Toolbar from '@material-ui/core/Toolbar'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import AppBar from '@mui/material/AppBar'
+import IconButton from '@mui/material/IconButton'
+import Toolbar from '@mui/material/Toolbar'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLastLocation } from 'utils/LastLocation'
@@ -37,7 +37,7 @@ const BackBar: React.FC<Props> = ({ to, disableSmartBack = false }) => {
 	return (
 		<StickyBar elevation={trigger ? 4 : 0}>
 			<Toolbar>
-				<IconButton onClick={handleClick} edge="start" color="default">
+				<IconButton onClick={handleClick} edge="start" color="default" size="large">
 					<ArrowBackIcon />
 				</IconButton>
 			</Toolbar>

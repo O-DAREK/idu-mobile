@@ -1,5 +1,5 @@
 import DateFnsUtils from '@date-io/date-fns'
-import { Badge } from '@material-ui/core'
+import { Badge } from '@mui/material'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { TopLoading } from 'components'
@@ -80,7 +80,7 @@ const Events: React.FC = observer(() => {
 					renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
 						if (day && intervalTree.search(+day, +day + dayInMillis).some(e => e.allDay)) {
 							return (
-								<Badge color="secondary" variant="dot" overlap="circle">
+								<Badge color="secondary" variant="dot" overlap="circular">
 									{dayComponent}
 								</Badge>
 							)

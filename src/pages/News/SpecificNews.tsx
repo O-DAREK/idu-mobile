@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { BackBar, Container, PaddedPaper, StrippedHtml } from 'components'
 import * as urls from 'constants/urls'
 import { formatLong, useLocale } from 'locales'

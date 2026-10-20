@@ -1,5 +1,5 @@
-import { Grid, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Grid, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import { AvatarWithPlaceholder } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo } from 'locales'
@@ -15,7 +15,7 @@ const MarginedGrid = styled(Grid)`
 	margin-bottom: 1.5px;
 `
 
-const CircleSkeleton = () => <Skeleton variant="circle" height={40} width={40} />
+const CircleSkeleton = () => <Skeleton variant="circular" height={40} width={40} />
 
 export const SkeletonThreadItem = () => (
 	<ListItem>
@@ -43,7 +43,9 @@ export const SkeletonThreadItem = () => (
 	</ListItem>
 )
 
-const EllipsisText = styled(Typography).attrs<{ component?: React.ElementType }>({ component: 'span' })`
+const EllipsisText = styled(Typography).attrs<{ component?: React.ElementType }>({
+	component: 'span'
+})`
 	text-overflow: ellipsis;
 	max-width: 65%;
 	display: inline-block;

@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core'
+import { Checkbox, FormControlLabel, Grid, TextField } from '@mui/material'
 import { BackBar, Container, Snackbar, TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import * as urls from 'constants/urls'
@@ -52,7 +52,7 @@ const NewMessage: React.FC = () => {
 		if (result) {
 			navigate(urls.internal.messages())
 		}
-	}, [result, history])
+	}, [result, navigate])
 
 	return (
 		<>

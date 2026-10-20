@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import React, { ComponentProps } from 'react'
 import styled from 'styled-components'
 import { stripHtml } from 'utils'

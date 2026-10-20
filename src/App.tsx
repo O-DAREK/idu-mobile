@@ -1,5 +1,4 @@
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
-import { StylesProvider } from '@material-ui/styles'
+import { CssBaseline, StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { configStore, metaStore, userStore } from 'stores'
@@ -33,7 +32,7 @@ const App = observer(() => {
 	}, [meta])
 
 	return (
-		<StylesProvider injectFirst>
+		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
 				<MuiThemeProvider theme={theme}>
 					<>
@@ -43,7 +42,7 @@ const App = observer(() => {
 					</>
 				</MuiThemeProvider>
 			</ThemeProvider>
-		</StylesProvider>
+		</StyledEngineProvider>
 	)
 })
 

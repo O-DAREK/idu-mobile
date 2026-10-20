@@ -1,5 +1,5 @@
-import { Container, IconButton, Input, InputAdornment } from '@material-ui/core'
-import SendIcon from '@material-ui/icons/Send'
+import { Container, IconButton, Input, InputAdornment } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send'
 import { Snackbar } from 'components'
 import { StatusCodes } from 'http-status-codes'
 import { useLocale } from 'locales'
@@ -52,12 +52,12 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 					disabled={disabled}
 					endAdornment={
 						<InputAdornment position="end">
-							<IconButton onClick={handleClick}>
+							<IconButton onClick={handleClick} size="large">
 								<SendIcon />
 							</IconButton>
 						</InputAdornment>
 					}
-					rowsMax="5"
+					maxRows="5"
 					multiline
 					fullWidth
 				/>

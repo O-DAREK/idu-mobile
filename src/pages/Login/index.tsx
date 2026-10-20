@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, TextField } from '@material-ui/core'
+import { Button, Grid, Paper, TextField } from '@mui/material'
 import iduLogo from 'assets/idu-logo.png'
 import { Snackbar, TopLoading } from 'components'
 import { useLocale } from 'locales'
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
 			<Grid
 				direction="column"
 				alignItems="center"
-				justify="center"
+				justifyContent="center"
 				style={{ minHeight: '100%' }}
 				container
 			>
@@ -42,7 +42,7 @@ const Login: React.FC = () => {
 						<PaddedGrid
 							direction="column"
 							alignItems="center"
-							justify="center"
+							justifyContent="center"
 							spacing={1}
 							container
 						>

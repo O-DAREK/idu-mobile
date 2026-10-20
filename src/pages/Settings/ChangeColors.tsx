@@ -1,4 +1,4 @@
-import { Grid, InputAdornment, TextField, Typography } from '@material-ui/core'
+import { Grid, InputAdornment, TextField, Typography } from '@mui/material'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useState } from 'react'
@@ -55,7 +55,7 @@ const ChangeColors: React.FC = observer(() => {
 	return (
 		<>
 			<Typography gutterBottom>{ACCENT_COLORS}</Typography>
-			<Grid justify="space-around" container>
+			<Grid justifyContent="space-around" container>
 				<Grid xs={4} item>
 					<ColorInput
 						color="primary"

@@ -1,5 +1,5 @@
-import { Grid, Typography } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Grid, Typography } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import {
 	BackBar,
 	Container,
@@ -21,7 +21,7 @@ import useAsync from 'utils/useAsync'
 import MessageBox from './MessageBox'
 
 const FlexBox = styled.div`
-	min-height: calc(var(--visible-height, 1vh) * 100 - ${p => p.theme.spacing()}px);
+	min-height: calc(var(--visible-height, 1vh) * 100 - ${p => p.theme.spacing()});
 	display: flex;
 	flex-direction: column;
 `
@@ -99,7 +99,7 @@ const SpecificMessages: React.FC = observer(() => {
 							const imSender = 'to' in rest
 
 							return (
-								<Grid key={i} alignItems="center" justify="space-between" item container>
+								<Grid key={i} alignItems="center" justifyContent="space-between" item container>
 									{imSender ? [date, message] : [message, date]}
 								</Grid>
 							)

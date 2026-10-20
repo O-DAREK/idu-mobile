@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import { Snackbar, TopLoading } from 'components'
 import { useLocale } from 'locales'
 import React, { useState } from 'react'
@@ -9,7 +9,11 @@ interface Props {
 	waitFor?: () => Promise<unknown>
 }
 
-const ConfirmationDialog: React.FC<React.PropsWithChildren<Props>> = ({ waitFor, onConfirm, children }) => {
+const ConfirmationDialog: React.FC<React.PropsWithChildren<Props>> = ({
+	waitFor,
+	onConfirm,
+	children
+}) => {
 	const { CONFIRM, CONFIRM_TO_CONTINUE, FAILED_TO_CONFIRM } = useLocale()
 	const [open, setOpen] = useState(true)
 	const [failed, setFailed] = useState(false)

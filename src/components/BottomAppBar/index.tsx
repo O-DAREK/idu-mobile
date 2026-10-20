@@ -13,16 +13,17 @@ import {
 	Toolbar,
 	Typography,
 	Zoom
-} from '@material-ui/core'
-import { Restore as RestoreIcon, SvgIconComponent } from '@material-ui/icons'
-import AddIcon from '@material-ui/icons/Add'
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
-import EventIcon from '@material-ui/icons/Event'
-import InfoIcon from '@material-ui/icons/Info'
-import MenuIcon from '@material-ui/icons/Menu'
-import MessageIcon from '@material-ui/icons/Message'
-import SendIcon from '@material-ui/icons/Send'
-import SettingsIcon from '@material-ui/icons/Settings'
+} from '@mui/material'
+import type { SvgIconComponent } from '@mui/icons-material'
+import RestoreIcon from '@mui/icons-material/Restore'
+import AddIcon from '@mui/icons-material/Add'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import EventIcon from '@mui/icons-material/Event'
+import InfoIcon from '@mui/icons-material/Info'
+import MenuIcon from '@mui/icons-material/Menu'
+import MessageIcon from '@mui/icons-material/Message'
+import SendIcon from '@mui/icons-material/Send'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { FlexGrow } from 'components'
 import * as urls from 'constants/urls'
 import { StatusCodes } from 'http-status-codes'
@@ -163,7 +164,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 				]
 			}
 		],
-		[MESSAGES, NEWS, SETTINGS, EVENTS, history]
+		[MESSAGES, NEWS, SETTINGS, EVENTS, navigate]
 	)
 
 	// navigation drawer options
@@ -241,7 +242,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 			<Slide direction="up" in={show}>
 				<AppBarBottom>
 					<Toolbar>
-						<IconButton onClick={() => setOpenDrawer(true)} edge="start">
+						<IconButton onClick={() => setOpenDrawer(true)} edge="start" size="large">
 							<MenuIcon />
 						</IconButton>
 						{fab && (
@@ -253,7 +254,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 						)}
 						{fab?.placement !== 'right' && <FlexGrow />}
 						{actions?.map(({ onClick, Icon }, i) => (
-							<IconButton onClick={onClick} key={i}>
+							<IconButton onClick={onClick} key={i} size="large">
 								<Icon />
 							</IconButton>
 						))}

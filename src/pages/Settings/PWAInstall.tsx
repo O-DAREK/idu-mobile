@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'

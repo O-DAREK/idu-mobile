@@ -1,10 +1,9 @@
-import { Button } from '@material-ui/core'
-import MuiSnackbar, { SnackbarProps } from '@material-ui/core/Snackbar'
-import { Alert, AlertProps, AlertTitle, Color } from '@material-ui/lab'
+import MuiSnackbar, { SnackbarProps } from '@mui/material/Snackbar'
+import { Alert, AlertColor, AlertProps, AlertTitle, Button } from '@mui/material'
 import React, { useState } from 'react'
 
 interface Props extends Omit<Partial<SnackbarProps>, 'children' | 'action'> {
-	variant: Color
+	variant: AlertColor
 	lifespan?: number
 	position?: 'bottom' | 'BAB' | 'top'
 	dismissible?: boolean

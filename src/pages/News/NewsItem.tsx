@@ -1,5 +1,5 @@
-import { Badge, Grid, ListItem, ListItemText } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Badge, Grid, ListItem, ListItemText } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import * as urls from 'constants/urls'
 import { formatShort } from 'locales'
 import React, { memo, useContext } from 'react'

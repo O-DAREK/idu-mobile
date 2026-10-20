@@ -1,4 +1,4 @@
-import { Divider, List } from '@material-ui/core'
+import { Divider, List } from '@mui/material'
 import { Snackbar, TopLoading } from 'components'
 import { StatusCodes } from 'http-status-codes'
 import { useLocale } from 'locales'

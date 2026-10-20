@@ -1,4 +1,4 @@
-import { Divider, Grid } from '@material-ui/core'
+import { Divider, Grid } from '@mui/material'
 import { Container } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import React, { useContext, useEffect } from 'react'
@@ -37,7 +37,7 @@ const Settings: React.FC = () => {
 				<Grid item>
 					<Logout />
 				</Grid>
-				<Grid alignItems="center" justify="center" container item>
+				<Grid alignItems="center" justifyContent="center" container item>
 					<Grid item>
 						<PWAInstall />
 					</Grid>

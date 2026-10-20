@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from '@material-ui/core'
+import { Container, Grid, Typography } from '@mui/material'
 import { formatLong, useLocale } from 'locales'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
