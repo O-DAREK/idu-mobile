@@ -45,7 +45,7 @@ husky 4, Jest przez react-scripts. 66 plików w `src/`, 5 testów (wyłącznie s
 | 10  | [styled-components 6](10-styled-components-6.md)                           | 04        | średnie | [x]    |
 | 11  | [Pozostałe biblioteki](11-misc-libs.md)                                    | 03        | niskie  | [x]    |
 | 12  | [TypeScript 5.x i tsconfig](12-typescript.md)                              | 03        | niskie  | [x]    |
-| 13  | [Sprzątanie i dokumentacja](13-cleanup-docs.md)                            | 01–12     | niskie  | [ ]    |
+| 13  | [Sprzątanie i dokumentacja](13-cleanup-docs.md)                            | 01–12     | niskie  | [x]    |
 | 14  | [Opcjonalnie: React 19, MUI najnowszy](14-optional-react-19-mui-latest.md) | 13        | średnie | [ ]    |
 
 Po tasku 04 taski 05, 07, 08 (z 09) i 10 są wzajemnie niezależne i mogą iść w dowolnej kolejności.
