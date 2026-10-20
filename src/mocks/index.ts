@@ -112,7 +112,7 @@ const events = (): responses.Events['data'] => {
 	}
 	const subjects = ['Matematyka', 'Język polski', 'Fizyka', 'Historia', 'Angielski', 'Biologia']
 	const colors = ['#1976d2', '#388e3c', '#f57c00', '#7b1fa2', '#d32f2f', '#0097a7']
-	return Array.from({ length: 14 }, (_, i) => {
+	const lessons = Array.from({ length: 14 }, (_, i) => {
 		const day = Math.floor(i / 2) - 2
 		const hour = 8 + (i % 2) * 2
 		return {
@@ -126,6 +126,17 @@ const events = (): responses.Events['data'] => {
 			text_color: '#ffffff'
 		}
 	})
+	const trip = {
+		id: 100,
+		name: 'Wycieczka klasowa',
+		start_at: at(3, 0),
+		stop_at: at(3, 23, 59),
+		all_day: true,
+		all_klasses: true,
+		background_color: '#388e3c',
+		text_color: '#ffffff'
+	}
+	return [...lessons, trip]
 }
 
 const page = <T>(items: T[], url: URL) => {
