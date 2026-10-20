@@ -1,5 +1,4 @@
 /// <reference types="vitest/config" />
-import babel from '@rolldown/plugin-babel'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -7,16 +6,6 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
 	plugins: [
 		react(),
-		// MobX 5 decorators need Babel's legacy semantics (lazy property initializers); TS-style
-		// field assignment breaks enforceActions. Drop together with decorators in the MobX 6 task.
-		babel({
-			include: /[\\/]stores[\\/][A-Za-z]+\.ts$/,
-			presets: ['@babel/preset-typescript'],
-			plugins: [
-				['@babel/plugin-proposal-decorators', { legacy: true }],
-				['@babel/plugin-transform-class-properties', { loose: true }]
-			]
-		}),
 		VitePWA({
 			registerType: 'prompt',
 			// keep the URL of the CRA service worker so already installed clients can update

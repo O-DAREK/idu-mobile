@@ -15,21 +15,25 @@ export type PieceOfNews = {
 export class NewsStore {
 	static localStorageKey = 'NewsStore'
 
-	@observable news?: PieceOfNews[]
-	@observable stickyNews?: PieceOfNews[]
+	news?: PieceOfNews[]
+	stickyNews?: PieceOfNews[]
 
-	@computed
 	get page() {
 		return Math.floor((this.news?.length || 0) / 10) + 1
 	}
 
-	@computed
 	get noMoreNews() {
 		return (this.news?.length || 0) % 10 !== 0
 	}
 
 	constructor() {
-		makeObservable(this)
+		makeObservable<NewsStore, 'load'>(this, {
+			news: observable,
+			stickyNews: observable,
+			page: computed,
+			noMoreNews: computed,
+			load: action
+		})
 		this.load()
 		autorun(this.save)
 	}
@@ -40,7 +44,6 @@ export class NewsStore {
 			JSON.stringify({ stickyNews: this.stickyNews })
 		)
 
-	@action
 	private load = (): void => {
 		Object.assign(this, JSON.parse(window.localStorage.getItem(NewsStore.localStorageKey) || '{}'))
 

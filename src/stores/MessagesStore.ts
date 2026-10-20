@@ -35,21 +35,25 @@ export type SpecificMessages = {
 export class MessagesStore {
 	static localStorageKey = 'MessagesStore'
 
-	@observable messages: { [k: number]: SpecificMessages } = {}
-	@observable threads?: MessageThread[]
+	messages: { [k: number]: SpecificMessages } = {}
+	threads?: MessageThread[]
 
-	@computed
 	get page() {
 		return Math.floor((this.threads?.length || 0) / 10) + 1
 	}
 
-	@computed
 	get noMoreThreads() {
 		return (this.threads?.length || 0) % 10 !== 0
 	}
 
 	constructor() {
-		makeObservable(this)
+		makeObservable<MessagesStore, 'load'>(this, {
+			messages: observable,
+			threads: observable,
+			page: computed,
+			noMoreThreads: computed,
+			load: action
+		})
 		this.load()
 		autorun(this.save)
 	}
@@ -62,7 +66,6 @@ export class MessagesStore {
 			})
 		)
 
-	@action
 	private load = (): void => {
 		Object.assign(
 			this,

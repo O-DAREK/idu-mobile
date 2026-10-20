@@ -5,12 +5,22 @@ import { action, autorun, makeObservable, observable } from 'mobx'
 export class ConfigStore {
 	static localStorageKey = 'ConfigStore'
 
-	@observable language!: Language
-	@observable theme!: Theme
-	@observable accentColors!: [string, string]
+	language!: Language
+	theme!: Theme
+	accentColors!: [string, string]
 
 	constructor() {
-		makeObservable(this)
+		makeObservable<ConfigStore, 'load'>(this, {
+			language: observable,
+			theme: observable,
+			accentColors: observable,
+			load: action,
+			reset: action,
+			changeLanguage: action,
+			changeTheme: action,
+			changePrimaryColor: action,
+			changeSecondaryColor: action
+		})
 		this.reset()
 		this.load()
 		autorun(this.save)
@@ -26,14 +36,12 @@ export class ConfigStore {
 			})
 		)
 
-	@action
 	private load = (): void =>
 		Object.assign(
 			this,
 			JSON.parse(window.localStorage.getItem(ConfigStore.localStorageKey) || '{}')
 		)
 
-	@action
 	reset = () => {
 		this.language = /en/i.test(window.navigator.language) ? Language.english : Language.polish
 		this.theme =
@@ -43,22 +51,18 @@ export class ConfigStore {
 		this.accentColors = ['#2196f3', '#ff80ab']
 	}
 
-	@action
 	changeLanguage = (to: Language): void => {
 		this.language = to
 	}
 
-	@action
 	changeTheme = (to: Theme): void => {
 		this.theme = to
 	}
 
-	@action
 	changePrimaryColor = (to: string): void => {
 		this.accentColors[0] = to
 	}
 
-	@action
 	changeSecondaryColor = (to: string): void => {
 		this.accentColors[1] = to
 	}

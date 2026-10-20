@@ -3,22 +3,26 @@ import { action, makeObservable, observable } from 'mobx'
 export class MetaStore {
 	static localStorageKey = 'MetaStore'
 
-	@observable isOnline: boolean = navigator.onLine
-	@observable availableUpdate: boolean = false
-	@observable pwaInstallEvent?: BeforeInstallPromptEvent
+	isOnline: boolean = navigator.onLine
+	availableUpdate: boolean = false
+	pwaInstallEvent?: BeforeInstallPromptEvent
 
 	constructor() {
-		makeObservable(this)
+		makeObservable<MetaStore, 'updateIsOnline'>(this, {
+			isOnline: observable,
+			availableUpdate: observable,
+			pwaInstallEvent: observable,
+			updateIsOnline: action,
+			theresAnUpdate: action,
+			setPwaInstallEvent: action
+		})
 		window.addEventListener('online', this.updateIsOnline)
 		window.addEventListener('offline', this.updateIsOnline)
 	}
 
-	@action
 	private updateIsOnline = () => (this.isOnline = navigator.onLine)
 
-	@action
 	theresAnUpdate = () => (this.availableUpdate = true)
 
-	@action
 	setPwaInstallEvent = (e: BeforeInstallPromptEvent) => (this.pwaInstallEvent = e)
 }

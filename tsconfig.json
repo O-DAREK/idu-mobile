@@ -13,8 +13,7 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"experimentalDecorators": true,
-		"useDefineForClassFields": false,
+		"useDefineForClassFields": true,
 		"baseUrl": "src"
 	},
 	"include": ["src"],
