@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useLastLocation } from 'utils/LastLocation'
 import styled from 'styled-components'
 

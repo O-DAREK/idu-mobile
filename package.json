@@ -25,7 +25,7 @@
 		"react": "^18",
 		"react-dom": "^18",
 		"react-infinite-scroll-component": "^7",
-		"react-router-dom": "^6",
+		"react-router": "^7",
 		"styled-components": "^6",
 		"use-debounce": "^10"
 	},

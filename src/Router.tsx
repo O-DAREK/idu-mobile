@@ -6,11 +6,11 @@ import Messages from 'pages/Messages'
 import News from 'pages/News'
 import Settings from 'pages/Settings'
 import React from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { LastLocationProvider } from 'utils/LastLocation'
 
 const Router: React.FC<{ loggedIn: boolean }> = ({ loggedIn }) => (
-	<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+	<BrowserRouter>
 		<LastLocationProvider>
 			{loggedIn ? (
 				<BottomAppBar>

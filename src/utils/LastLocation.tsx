@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react'
-import { Location, useLocation } from 'react-router-dom'
+import { Location, useLocation } from 'react-router'
 
 const LastLocationContext = createContext<Location | null>(null)
 
