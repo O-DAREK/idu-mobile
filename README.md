@@ -2,7 +2,7 @@
 
 Mobile web client (PWA) for the IDU system.
 
-Stack: Vite 8, React 19, TypeScript 7, MobX 7, MUI v5, styled-components 6, react-router 7, Vitest.
+Stack: Vite 8, React 19, TypeScript 7, MobX 7, MUI v5, styled-components 6, react-router 8, Vitest.
 
 ### run locally
 

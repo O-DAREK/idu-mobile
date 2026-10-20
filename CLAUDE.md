@@ -1,6 +1,6 @@
 # idu-mobile
 
-Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest 5, React 19, TypeScript 7 (strict, natywny kompilator; tylko typecheck, Vite transpiluje sam), MobX 7 + mobx-react-lite 5, MUI v5 (`@mui/material`, `@mui/x-date-pickers`, emotion), styled-components 6, react-router 7, date-fns 4. Node: `.nvmrc` (24), `engines` jak Vite 8.
+Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest 5, React 19, TypeScript 7 (strict, natywny kompilator; tylko typecheck, Vite transpiluje sam), MobX 7 + mobx-react-lite 5, MUI v5 (`@mui/material`, `@mui/x-date-pickers`, emotion), styled-components 6, react-router 8, date-fns 4. Node: `.nvmrc` (24), `engines` jak Vite 8.
 
 ## Komendy
 
@@ -17,7 +17,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 ## Struktura
 
 - `src/stores/` – stany MobX (`UserStore`, `ConfigStore`, `MetaStore`, `MessagesStore`, `NewsStore`), udostępniane przez React context w `stores/index.ts`. Bez dekoratorów (MobX 7 ich nie wspiera): pola i akcje deklarowane jawnie w `makeObservable(this, { ... })` w konstruktorze; pole prywatne wymaga generyka, np. `makeObservable<NewsStore, 'load'>`. Nowe pole lub akcja bez wpisu w mapie = brak reaktywności bez błędu. Obowiązuje `enforceActions: 'always'`: każda zmiana stanu w akcji / `runInAction`, także po `await`.
-- `src/pages/` – ekrany (Events, Login, Messages, News, Settings), routing w `Router.tsx` (react-router 7 w trybie deklaratywnym, importy z `react-router`; `News` i `Messages` mają zagnieżdżone trasy względne pod `/news/*` i `/messages/*`). Poprzednia lokalizacja dla `BackBar`: `utils/LastLocation.tsx`.
+- `src/pages/` – ekrany (Events, Login, Messages, News, Settings), routing w `Router.tsx` (react-router 8 w trybie deklaratywnym, importy z `react-router`; `News` i `Messages` mają zagnieżdżone trasy względne pod `/news/*` i `/messages/*`). Poprzednia lokalizacja dla `BackBar`: `utils/LastLocation.tsx`.
 - `src/components/` – współdzielone komponenty, eksportowane przez `components/index.ts`.
 - `src/locales/` – teksty UI (`strings.ts`) i hooki do tłumaczeń. Nie hardkoduj tekstów w komponentach.
 - `src/styles/theme.ts` – motyw MUI z `ConfigStore` (tryb, kolory akcentu); nadpisuje kilka domyślnych wartości v5, żeby zachować wygląd z v4. Ten sam motyw trafia do styled-components (`p.theme`).

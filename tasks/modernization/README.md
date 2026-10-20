@@ -67,7 +67,7 @@ prettier, react-infinite-scroll-component.
 | 03  | [TypeScript 6/7](03-typescript-7.md)                                       | 02        | niskie  | [x]    |
 | 04  | [react-router 7](04-react-router-7.md)                                     | –         | niskie  | [x]    |
 | 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [x]    |
-| 05b | [react-router 8](05b-react-router-8.md)                                    | 04, 05    | niskie  | [ ]    |
+| 05b | [react-router 8](05b-react-router-8.md)                                    | 04, 05    | niskie  | [x]    |
 | 06  | [MUI v5 → najnowsze](06-mui-latest.md)                                     | 05        | wysokie | [ ]    |
 | 07  | [Pickery 9](07-pickers-9.md)                                               | 06        | średnie | [ ]    |
 | 08  | [Opcjonalnie: narzędzia i drobne paczki](08-optional-tooling.md)           | –         | niskie  | [ ]    |
