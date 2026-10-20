@@ -1,5 +1,5 @@
 import {
-	Grid,
+	GridLegacy as Grid,
 	ListItem,
 	ListItemAvatar,
 	ListItemButton,

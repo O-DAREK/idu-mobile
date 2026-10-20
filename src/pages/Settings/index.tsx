@@ -1,4 +1,4 @@
-import { Divider, Grid } from '@mui/material'
+import { Divider, GridLegacy as Grid } from '@mui/material'
 import { Container } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import React, { useContext, useEffect } from 'react'

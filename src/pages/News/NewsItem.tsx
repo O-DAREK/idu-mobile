@@ -1,4 +1,4 @@
-import { Badge, Grid, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import { Badge, GridLegacy as Grid, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import { Skeleton } from '@mui/material'
 import * as urls from 'constants/urls'
 import { formatShort } from 'locales'

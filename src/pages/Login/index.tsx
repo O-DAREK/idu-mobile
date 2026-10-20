@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, TextField } from '@mui/material'
+import { Button, GridLegacy as Grid, Paper, TextField } from '@mui/material'
 import iduLogo from 'assets/idu-logo.png'
 import { Snackbar, TopLoading } from 'components'
 import { useLocale } from 'locales'

@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from '@mui/material'
+import { Container, GridLegacy as Grid, Typography } from '@mui/material'
 import { formatLong, useLocale } from 'locales'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'

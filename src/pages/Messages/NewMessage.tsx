@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Grid, TextField } from '@mui/material'
+import { Checkbox, FormControlLabel, GridLegacy as Grid, TextField } from '@mui/material'
 import { BackBar, Container, Snackbar, TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import * as urls from 'constants/urls'

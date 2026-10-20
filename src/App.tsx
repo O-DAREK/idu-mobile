@@ -1,4 +1,5 @@
-import { CssBaseline, StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material'
+import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material'
+import { StyledEngineProvider } from '@mui/material/styles'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { configStore, metaStore, userStore } from 'stores'

@@ -1,4 +1,4 @@
-import { Grid, InputAdornment, TextField, Typography } from '@mui/material'
+import { GridLegacy as Grid, InputAdornment, TextField, Typography } from '@mui/material'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useState } from 'react'

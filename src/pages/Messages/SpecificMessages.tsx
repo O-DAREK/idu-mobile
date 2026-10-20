@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material'
+import { GridLegacy as Grid, Typography } from '@mui/material'
 import { Skeleton } from '@mui/material'
 import {
 	BackBar,

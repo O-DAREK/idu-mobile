@@ -1,4 +1,4 @@
-import { Grid, IconButton, Typography } from '@mui/material'
+import { GridLegacy as Grid, IconButton, Typography } from '@mui/material'
 import ExitToApp from '@mui/icons-material/ExitToApp'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
