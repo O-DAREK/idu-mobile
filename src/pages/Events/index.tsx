@@ -6,7 +6,7 @@ import { TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import enLocale from 'date-fns/locale/en-US'
 import plLocale from 'date-fns/locale/pl'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { Language } from 'locales'
 import { observer } from 'mobx-react-lite'
 import IntervalTree from 'node-interval-tree'
@@ -42,7 +42,7 @@ const Events: React.FC = observer(() => {
 	}, [meta.isOnline, fetchEvents])
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	useEffect(

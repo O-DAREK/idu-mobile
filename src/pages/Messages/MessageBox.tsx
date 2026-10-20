@@ -1,7 +1,7 @@
 import { Container, IconButton, Input, InputAdornment } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
 import { Snackbar } from 'components'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useRef } from 'react'
@@ -35,7 +35,7 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	}
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	useEffect(() => {

@@ -1,6 +1,6 @@
 import { Divider, List } from '@material-ui/core'
 import { Snackbar, TopLoading } from 'components'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
@@ -26,7 +26,7 @@ const MessageList = observer(() => {
 	}, [fetchNextThreads, user.token, meta.isOnline, messages])
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	return (

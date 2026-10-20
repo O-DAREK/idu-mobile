@@ -10,7 +10,7 @@ import {
 	TopLoading
 } from 'components'
 import * as urls from 'constants/urls'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
@@ -69,7 +69,7 @@ const SpecificMessages: React.FC = observer(() => {
 	}, [meta.isOnline, user, id, fetchSpecificMessages])
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	return (

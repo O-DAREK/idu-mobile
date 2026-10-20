@@ -1,6 +1,6 @@
 import { Divider, List } from '@material-ui/core'
 import { Snackbar, TopLoading } from 'components'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
@@ -24,7 +24,7 @@ const NewsList: React.FC = observer(() => {
 	}, [meta.isOnline, fetchNextNews, user, news])
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	return (

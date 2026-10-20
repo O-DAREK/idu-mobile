@@ -25,7 +25,7 @@ import SendIcon from '@material-ui/icons/Send'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { FlexGrow } from 'components'
 import * as urls from 'constants/urls'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -101,7 +101,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 	useEffect(() => {
 		if (meta.isOnline)
 			user.fetchProfile().catch(err => {
-				if (err.status === UNAUTHORIZED) user.logout(true)
+				if (err.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 			})
 	}, [meta.isOnline, user])
 
