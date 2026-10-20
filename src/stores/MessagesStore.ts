@@ -1,6 +1,6 @@
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import jwtDecode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import { action, autorun, computed, makeObservable, observable, runInAction } from 'mobx'
 import { constructFetchErr, ignoreRejection } from 'utils'
 
