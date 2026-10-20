@@ -121,7 +121,17 @@ export class MessagesStore {
 		return this.messages[threadId]
 	}
 
-	fetchNextThreads = async (token: string): Promise<NonNullable<this['threads']>> => {
+	// concurrent calls (e.g. StrictMode double effects) would load the same page twice and duplicate items
+	fetchNextThreads = (token: string): Promise<NonNullable<this['threads']>> => {
+		this.pendingNextThreads ??= this.loadNextThreads(token).finally(() => {
+			this.pendingNextThreads = undefined
+		})
+		return this.pendingNextThreads
+	}
+
+	private pendingNextThreads?: Promise<NonNullable<this['threads']>>
+
+	private loadNextThreads = async (token: string): Promise<NonNullable<this['threads']>> => {
 		if (this.noMoreThreads) return ([] as this['threads'])!
 
 		const res = await fetch(urls.api.messages(this.page), {
@@ -139,9 +149,6 @@ export class MessagesStore {
 			if (!this.threads) this.threads = []
 
 			for (const thread of json.data) {
-				// concurrent fetches of the same page (e.g. StrictMode double effects) must not duplicate threads
-				if (this.threads.some(e => e.id === thread.id)) continue
-
 				this.threads.push({
 					id: thread.id,
 					title: thread.title,

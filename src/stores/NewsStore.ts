@@ -84,7 +84,17 @@ export class NewsStore {
 		return (this.stickyNews as this['stickyNews'])!
 	}
 
-	fetchNextNews = async (token: string): Promise<NonNullable<this['news']>> => {
+	// concurrent calls (e.g. StrictMode double effects) would load the same page twice and duplicate items
+	fetchNextNews = (token: string): Promise<NonNullable<this['news']>> => {
+		this.pendingNextNews ??= this.loadNextNews(token).finally(() => {
+			this.pendingNextNews = undefined
+		})
+		return this.pendingNextNews
+	}
+
+	private pendingNextNews?: Promise<NonNullable<this['news']>>
+
+	private loadNextNews = async (token: string): Promise<NonNullable<this['news']>> => {
 		if (this.noMoreNews) return ([] as this['news'])!
 
 		const res = await fetch(urls.api.news(this.page), {
@@ -102,9 +112,6 @@ export class NewsStore {
 			if (!this.news) this.news = []
 
 			for (const news of json.data) {
-				// concurrent fetches of the same page (e.g. StrictMode double effects) must not duplicate items
-				if (this.news.some(e => e.id === news.id)) continue
-
 				this.news.push({
 					id: news.id,
 					title: news.title,
