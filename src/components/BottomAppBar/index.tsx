@@ -5,7 +5,7 @@ import {
 	Grow,
 	IconButton,
 	List,
-	ListItem,
+	ListItemButton,
 	ListItemIcon,
 	ListItemText,
 	Slide,
@@ -222,7 +222,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 			>
 				<List component="nav">
 					{navigation.map(({ name, url, Icon }) => (
-						<ListItem
+						<ListItemButton
 							selected={pathname === url}
 							onClick={() => {
 								enterAnimationKey.current = +new Date()
@@ -230,13 +230,12 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 								setOpenDrawer(false)
 							}}
 							key={url}
-							button
 						>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
 							<ListItemText primary={name} />
-						</ListItem>
+						</ListItemButton>
 					))}
 				</List>
 			</SwipeableDrawer>

@@ -1,4 +1,4 @@
-import { Badge, Grid, ListItem, ListItemText } from '@mui/material'
+import { Badge, Grid, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import { Skeleton } from '@mui/material'
 import * as urls from 'constants/urls'
 import { formatShort } from 'locales'
@@ -37,7 +37,7 @@ const NewsItem: React.FC<Props> = memo(({ body, date, title, requiresConfirmatio
 	const config = useContext(configStore)
 
 	return (
-		<ListItem onClick={() => navigate(urls.internal.specificNews(String(id)))} button>
+		<ListItemButton onClick={() => navigate(urls.internal.specificNews(String(id)))}>
 			<Badge
 				style={{ maxWidth: '100%' }}
 				anchorOrigin={{
@@ -54,7 +54,7 @@ const NewsItem: React.FC<Props> = memo(({ body, date, title, requiresConfirmatio
 					secondaryTypographyProps={{ noWrap: true }}
 				/>
 			</Badge>
-		</ListItem>
+		</ListItemButton>
 	)
 })
 

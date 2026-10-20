@@ -1,4 +1,11 @@
-import { Grid, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import {
+	Grid,
+	ListItem,
+	ListItemAvatar,
+	ListItemButton,
+	ListItemText,
+	Typography
+} from '@mui/material'
 import { Skeleton } from '@mui/material'
 import { AvatarWithPlaceholder } from 'components'
 import * as urls from 'constants/urls'
@@ -67,7 +74,7 @@ const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) 
 	const other = 'to' in rest ? rest.to : rest.from
 
 	return (
-		<ListItem onClick={() => navigate(urls.internal.specificMessage(String(id)))} button>
+		<ListItemButton onClick={() => navigate(urls.internal.specificMessage(String(id)))}>
 			<ListItemAvatar>
 				<AvatarWithPlaceholder
 					alt="avatar"
@@ -84,7 +91,7 @@ const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) 
 					</>
 				}
 			/>
-		</ListItem>
+		</ListItemButton>
 	)
 })
 
