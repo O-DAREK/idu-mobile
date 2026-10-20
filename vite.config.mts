@@ -21,7 +21,8 @@ export default defineConfig({
 	],
 	resolve: { tsconfigPaths: true },
 	server: { port: 3000 },
-	preview: { port: 3000 },
+	// a different port than dev, so the production service worker never controls the dev origin
+	preview: { port: 4173 },
 	build: { outDir: 'build', sourcemap: true },
 	test: {
 		environment: 'jsdom',
