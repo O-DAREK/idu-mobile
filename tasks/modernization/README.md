@@ -64,7 +64,7 @@ prettier, react-infinite-scroll-component.
 | --- | ------------------------------------------------------------------------- | --------- | ------- | ------ |
 | 01  | [Porządki w zależnościach (eev, visible-height-css, stub typów)](01-deps-cleanup.md) | –         | niskie  | [x]    |
 | 02  | [tsconfig: `paths` zamiast `baseUrl`, osobne typy testów](02-tsconfig.md)  | –         | niskie  | [x]    |
-| 03  | [TypeScript 6/7](03-typescript-7.md)                                       | 02        | niskie  | [ ]    |
+| 03  | [TypeScript 6/7](03-typescript-7.md)                                       | 02        | niskie  | [x]    |
 | 04  | [react-router 7](04-react-router-7.md)                                     | –         | niskie  | [ ]    |
 | 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [ ]    |
 | 06  | [MUI v5 → najnowsze](06-mui-latest.md)                                     | 05        | wysokie | [ ]    |

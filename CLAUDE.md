@@ -1,6 +1,6 @@
 # idu-mobile
 
-Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest 5, React 18, TypeScript 5.9 (strict), MobX 7 + mobx-react-lite 5, MUI v5 (`@mui/material`, `@mui/x-date-pickers`, emotion), styled-components 6, react-router 6, date-fns 4. Node: `.nvmrc` (24), `engines` jak Vite 8.
+Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest 5, React 18, TypeScript 7 (strict, natywny kompilator; tylko typecheck, Vite transpiluje sam), MobX 7 + mobx-react-lite 5, MUI v5 (`@mui/material`, `@mui/x-date-pickers`, emotion), styled-components 6, react-router 6, date-fns 4. Node: `.nvmrc` (24), `engines` jak Vite 8.
 
 ## Komendy
 
