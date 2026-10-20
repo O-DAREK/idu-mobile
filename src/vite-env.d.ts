@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 /// <reference types="vitest/globals" />
+/// <reference types="vite-plugin-pwa/client" />
 
 interface ImportMetaEnv {
 	readonly VITE_API_ROOT: string
@@ -32,14 +33,4 @@ declare interface BeforeInstallPromptEvent extends Event {
 	 * This method returns a Promise.
 	 */
 	prompt(): Promise<void>
-}
-
-// TS 4.9 (moduleResolution node) can't resolve vite-plugin-pwa/client via package exports;
-// replace with `/// <reference types="vite-plugin-pwa/client" />` after moving to TS 5 + bundler resolution
-declare module 'virtual:pwa-register' {
-	export function registerSW(options?: {
-		onNeedRefresh?: () => void
-		onNeedReload?: () => void
-		onOfflineReady?: () => void
-	}): (reloadPage?: boolean) => Promise<void>
 }
