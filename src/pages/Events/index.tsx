@@ -5,6 +5,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay'
 import { TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
+import { endOfDay, startOfDay } from 'date-fns'
 import { enUS, Locale, pl } from 'date-fns/locale'
 import { StatusCodes } from 'http-status-codes'
 import { Language } from 'locales'
@@ -16,9 +17,11 @@ import { Event } from 'stores/UserStore'
 import useAsync from 'utils/useAsync'
 import DayList from './DayList'
 
-const dayInMillis = 1000 * 60 * 60 * 24
-// interval search is inclusive, so stop just before the next midnight
-const dayEnd = (day: Date) => +day + dayInMillis - 1
+// interval search is inclusive at both ends, so events that end exactly at midnight are dropped
+const eventsOn = (tree: IntervalTree<Event>, day: Date) => {
+	const start = startOfDay(day)
+	return tree.search(+start, +endOfDay(day)).filter(e => +e.stopAt > +start)
+}
 
 const locales: { [key in Language]: Locale } = {
 	pl,
@@ -81,12 +84,7 @@ const Events: React.FC = observer(() => {
 	return (
 		<>
 			{loading && <TopLoading />}
-			{selectedDate && (
-				<DayList
-					events={intervalTree.search(+selectedDate, dayEnd(selectedDate))}
-					day={selectedDate}
-				/>
-			)}
+			{selectedDate && <DayList events={eventsOn(intervalTree, selectedDate)} day={selectedDate} />}
 			<LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locales[config.language]}>
 				<MobileDatePicker
 					value={selectedDate}
@@ -101,8 +99,7 @@ const Events: React.FC = observer(() => {
 						textField: { sx: { display: 'none' } },
 						toolbar: { hidden: true },
 						day: {
-							hasAllDayEvent: (day: Date) =>
-								intervalTree.search(+day, dayEnd(day)).some(e => e.allDay)
+							hasAllDayEvent: (day: Date) => eventsOn(intervalTree, day).some(e => e.allDay)
 						} as Partial<EventDayProps>
 					}}
 				/>
