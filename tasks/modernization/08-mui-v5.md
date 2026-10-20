@@ -25,3 +25,10 @@
 ## Commit(y)
 
 `feat: migrate components to mui v5` (+ ewentualnie `refactor: replace makeStyles with styled`)
+
+## Realizacja
+
+- `makeStyles` nie był używany; jedyne użycie `@material-ui/styles` to `StylesProvider injectFirst` w `App.tsx` → `StyledEngineProvider injectFirst`.
+- Domyślne wartości v5 przywrócone do wyglądu v4 w `styles/theme.ts` (wariant pól `standard`, kolor `secondary` dla Radio/Checkbox, neutralny przycisk, tła v4, kolor AppBar w trybie ciemnym, brak nakładki elevation w trybie ciemnym).
+- `@mui/lab` niepotrzebny: `Alert`, `Skeleton`, `Autocomplete` są w `@mui/material`.
+- **Odstępstwo:** `@material-ui/core` v4 zostaje do taska 09, bo wymaga go `@material-ui/pickers`. Do tego czasu otwarty picker na Events ma motyw v4 i jego CSS nadpisuje komponenty v5 pod spodem – nie wydawać aplikacji między 08 a 09.
