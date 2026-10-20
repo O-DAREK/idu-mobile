@@ -4233,10 +4233,10 @@ use-async-react@^1.0.0:
   resolved "https://registry.yarnpkg.com/use-async-react/-/use-async-react-1.0.0.tgz#f8858abd4b978d412a7d85be437d1c3644982b4a"
   integrity sha512-WRQYBu8+vgcCbHwLfZuJo8KQ4eEvKL5LjkIPOGt37sDeRf3wcBqQwc1rCNFQzaaeB/DCKkgEQrpSTTwyJncjLw==
 
-use-debounce@^3.4.3:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-3.4.3.tgz#5df9322322b3f1b1c263d46413f9facf6d8b56ab"
-  integrity sha512-nxy+opOxDccWfhMl36J5BSCTpvcj89iaQk2OZWLAtBJQj7ISCtx1gh+rFbdjGfMl6vtCZf6gke/kYvrkVfHMoA==
+use-debounce@^10:
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-10.1.1.tgz#b08b596b60a55fd4c18b44b37fdc02f058baf30a"
+  integrity sha512-kvds8BHR2k28cFsxW8k3nc/tRga2rs1RHYCqmmGqb90MEeE++oALwzh2COiuBLO1/QXiOuShXoSN2ZpWnMmvuQ==
 
 value-equal@^1.0.1:
   version "1.0.1"

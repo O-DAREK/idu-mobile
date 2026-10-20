@@ -29,7 +29,7 @@
 		"react-router-last-location": "^2.0.1",
 		"styled-components": "^5.3.11",
 		"use-async-react": "^1.0.0",
-		"use-debounce": "^3.4.3",
+		"use-debounce": "^10",
 		"visible-height-css": "^1.0.0"
 	},
 	"scripts": {
