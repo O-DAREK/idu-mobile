@@ -43,7 +43,7 @@ husky 4, Jest przez react-scripts. 66 plików w `src/`, 5 testów (wyłącznie s
 | 08  | [MUI v4 → v5](08-mui-v5.md)                                                | 04        | wysokie | [ ]    |
 | 09  | [Pickery, date-fns 4](09-pickers-date-fns.md)                              | 08        | średnie | [ ]    |
 | 10  | [styled-components 6](10-styled-components-6.md)                           | 04        | średnie | [ ]    |
-| 11  | [Pozostałe biblioteki](11-misc-libs.md)                                    | 03        | niskie  | [ ]    |
+| 11  | [Pozostałe biblioteki](11-misc-libs.md)                                    | 03        | niskie  | [x]    |
 | 12  | [TypeScript 5.x i tsconfig](12-typescript.md)                              | 03        | niskie  | [x]    |
 | 13  | [Sprzątanie i dokumentacja](13-cleanup-docs.md)                            | 01–12     | niskie  | [ ]    |
 | 14  | [Opcjonalnie: React 19, MUI najnowszy](14-optional-react-19-mui-latest.md) | 13        | średnie | [ ]    |
