@@ -23,7 +23,7 @@
 		"node-interval-tree": "^2",
 		"react": "^18",
 		"react-dom": "^18",
-		"react-infinite-scroll-component": "^5.1.0",
+		"react-infinite-scroll-component": "^7",
 		"react-router": "^5.3.4",
 		"react-router-dom": "^5.3.4",
 		"react-router-last-location": "^2.0.1",
