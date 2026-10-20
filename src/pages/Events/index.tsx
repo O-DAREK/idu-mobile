@@ -17,6 +17,8 @@ import useAsync from 'utils/useAsync'
 import DayList from './DayList'
 
 const dayInMillis = 1000 * 60 * 60 * 24
+// interval search is inclusive, so stop just before the next midnight
+const dayEnd = (day: Date) => +day + dayInMillis - 1
 
 const locales: { [key in Language]: Locale } = {
 	pl,
@@ -81,7 +83,7 @@ const Events: React.FC = observer(() => {
 			{loading && <TopLoading />}
 			{selectedDate && (
 				<DayList
-					events={intervalTree.search(+selectedDate, +selectedDate + dayInMillis)}
+					events={intervalTree.search(+selectedDate, dayEnd(selectedDate))}
 					day={selectedDate}
 				/>
 			)}
@@ -100,7 +102,7 @@ const Events: React.FC = observer(() => {
 						toolbar: { hidden: true },
 						day: {
 							hasAllDayEvent: (day: Date) =>
-								intervalTree.search(+day, +day + dayInMillis).some(e => e.allDay)
+								intervalTree.search(+day, dayEnd(day)).some(e => e.allDay)
 						} as Partial<EventDayProps>
 					}}
 				/>
