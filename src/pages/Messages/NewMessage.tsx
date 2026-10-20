@@ -4,7 +4,7 @@ import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import * as urls from 'constants/urls'
 import { useLocale } from 'locales'
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { messagesStore, userStore } from 'stores'
 import useAsync from 'utils/useAsync'
 import AutocompleteRecipients from './AutocompleteRecipients'
@@ -21,7 +21,7 @@ const NewMessage: React.FC = () => {
 	})
 	const [showValidity, setShowValidity] = useState(false)
 	const { call: createThread, loading, error, result } = useAsync(messages.createThread)
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const bads: { [key in keyof typeof formData]: boolean } = {
 		recipients: formData.recipients.length === 0,
@@ -50,7 +50,7 @@ const NewMessage: React.FC = () => {
 
 	useEffect(() => {
 		if (result) {
-			history.push(urls.internal.messages())
+			navigate(urls.internal.messages())
 		}
 	}, [result, history])
 

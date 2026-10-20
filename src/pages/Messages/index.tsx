@@ -1,22 +1,16 @@
-import * as urls from 'constants/urls'
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import MessageThreads from './MessageThreads'
 import NewMessage from './NewMessage'
 import SpecificMessage from './SpecificMessages'
 
+// paths are relative to the `/messages/*` route in Router.tsx (see urls.internal.newMessage)
 const Messages = () => (
-	<Switch>
-		<Route path={urls.internal.newMessage()}>
-			<NewMessage />
-		</Route>
-		<Route path={urls.internal.specificMessage()}>
-			<SpecificMessage />
-		</Route>
-		<Route path={urls.internal.messages()}>
-			<MessageThreads />
-		</Route>
-	</Switch>
+	<Routes>
+		<Route path="new" element={<NewMessage />} />
+		<Route path=":id" element={<SpecificMessage />} />
+		<Route path="*" element={<MessageThreads />} />
+	</Routes>
 )
 
 export default Messages

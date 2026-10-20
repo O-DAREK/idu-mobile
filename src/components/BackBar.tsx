@@ -4,8 +4,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import React from 'react'
-import { useHistory } from 'react-router'
-import { useLastLocation } from 'react-router-last-location'
+import { useNavigate } from 'react-router-dom'
+import { useLastLocation } from 'utils/LastLocation'
 import styled from 'styled-components'
 
 interface Props {
@@ -24,13 +24,13 @@ const BackBar: React.FC<Props> = ({ to, disableSmartBack = false }) => {
 		disableHysteresis: true,
 		threshold: 0
 	})
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const handleClick = () => {
 		if (!disableSmartBack && lastLocation?.pathname === to) {
-			history.goBack()
+			navigate(-1)
 		} else {
-			history.push(to)
+			navigate(to)
 		}
 	}
 

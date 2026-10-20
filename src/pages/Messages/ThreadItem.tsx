@@ -4,7 +4,7 @@ import { AvatarWithPlaceholder } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo } from 'locales'
 import React, { memo, useContext } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { configStore } from 'stores'
 import { MessageThread } from 'stores/MessagesStore'
 import styled from 'styled-components'
@@ -60,12 +60,12 @@ type Props = MessageThread
 
 const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) => {
 	const config = useContext(configStore)
-	const history = useHistory()
+	const navigate = useNavigate()
 	// const imSender = 'to' in rest
 	const other = 'to' in rest ? rest.to : rest.from
 
 	return (
-		<ListItem onClick={() => history.push(urls.internal.specificMessage(String(id)))} button>
+		<ListItem onClick={() => navigate(urls.internal.specificMessage(String(id)))} button>
 			<ListItemAvatar>
 				<AvatarWithPlaceholder
 					alt="avatar"

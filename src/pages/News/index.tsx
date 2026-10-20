@@ -1,18 +1,14 @@
-import * as urls from 'constants/urls'
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import NewsList from './NewsList'
 import SpecificNews from './SpecificNews'
 
+// paths are relative to the `/news/*` route in Router.tsx (see urls.internal.specificNews)
 const News = () => (
-	<Switch>
-		<Route path={urls.internal.specificNews()}>
-			<SpecificNews />
-		</Route>
-		<Route path={urls.internal.news()}>
-			<NewsList />
-		</Route>
-	</Switch>
+	<Routes>
+		<Route path=":id" element={<SpecificNews />} />
+		<Route path="*" element={<NewsList />} />
+	</Routes>
 )
 
 export default News

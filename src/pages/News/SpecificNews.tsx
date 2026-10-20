@@ -4,7 +4,7 @@ import * as urls from 'constants/urls'
 import { formatLong, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { configStore, metaStore, newsStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { ignoreRejection } from 'utils'
@@ -23,7 +23,7 @@ const SpecificNews: React.FC = observer(() => {
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
 	const config = useContext(configStore)
-	const id = Number(useParams<Params>().id)
+	const id = Number(useParams<keyof Params>().id)
 
 	const foundNews = news.news?.find(e => e.id === id) || news.stickyNews?.find(e => e.id === id)
 

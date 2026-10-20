@@ -14,7 +14,7 @@ import { StatusCodes } from 'http-status-codes'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { configStore, messagesStore, metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import useAsync from 'utils/useAsync'
@@ -59,7 +59,7 @@ const SpecificMessages: React.FC = observer(() => {
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const meta = useContext(metaStore)
-	const id = Number(useParams<Params>().id)
+	const id = Number(useParams<keyof Params>().id)
 	const { call: fetchSpecificMessages, loading, error } = useAsync(messages.fetchSpecificMessages)
 
 	const thread = id in messages.messages ? messages.messages[id] : undefined

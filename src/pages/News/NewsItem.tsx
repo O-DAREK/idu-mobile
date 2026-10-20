@@ -3,7 +3,7 @@ import { Skeleton } from '@material-ui/lab'
 import * as urls from 'constants/urls'
 import { formatShort } from 'locales'
 import React, { memo, useContext } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { configStore } from 'stores'
 import { PieceOfNews } from 'stores/NewsStore'
 import styled from 'styled-components'
@@ -33,11 +33,11 @@ export const SkeletonNewsItem = () => (
 type Props = PieceOfNews
 
 const NewsItem: React.FC<Props> = memo(({ body, date, title, requiresConfirmation, read, id }) => {
-	const history = useHistory()
+	const navigate = useNavigate()
 	const config = useContext(configStore)
 
 	return (
-		<ListItem onClick={() => history.push(urls.internal.specificNews(String(id)))} button>
+		<ListItem onClick={() => navigate(urls.internal.specificNews(String(id)))} button>
 			<Badge
 				style={{ maxWidth: '100%' }}
 				anchorOrigin={{

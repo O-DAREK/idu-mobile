@@ -29,7 +29,7 @@ import { StatusCodes } from 'http-status-codes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { useHistory } from 'react-router'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { emit, EventNames } from './events'
@@ -93,7 +93,8 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const [forceHide, setForceHide] = useState(false)
 	const enterAnimationKey = useRef(0)
-	const history = useHistory()
+	const navigate = useNavigate()
+	const { pathname } = useLocation()
 	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
@@ -125,7 +126,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 				title: MESSAGES,
 				fab: {
 					Icon: AddIcon,
-					onClick: () => history.push(urls.internal.newMessage()),
+					onClick: () => navigate(urls.internal.newMessage()),
 					placement: 'center'
 				}
 			},
@@ -197,7 +198,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 		}
 	]
 
-	const state = states.find(s => s.test.test(history.location.pathname))
+	const state = states.find(s => s.test.test(pathname))
 
 	const show = !!state && !forceHide
 
@@ -220,10 +221,10 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 				<List component="nav">
 					{navigation.map(({ name, url, Icon }) => (
 						<ListItem
-							selected={history.location.pathname === url}
+							selected={pathname === url}
 							onClick={() => {
 								enterAnimationKey.current = +new Date()
-								history.push(url)
+								navigate(url)
 								setOpenDrawer(false)
 							}}
 							key={url}
