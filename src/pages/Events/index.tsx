@@ -1,11 +1,11 @@
-import DateFnsUtils from '@date-io/date-fns'
 import { Badge } from '@mui/material'
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
+import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay'
 import { TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
-import enLocale from 'date-fns/locale/en-US'
-import plLocale from 'date-fns/locale/pl'
+import { enUS, Locale, pl } from 'date-fns/locale'
 import { StatusCodes } from 'http-status-codes'
 import { Language } from 'locales'
 import { observer } from 'mobx-react-lite'
@@ -18,14 +18,29 @@ import DayList from './DayList'
 
 const dayInMillis = 1000 * 60 * 60 * 24
 
-const locales: { [key in Language]: any } = {
-	pl: plLocale,
-	en: enLocale
+const locales: { [key in Language]: Locale } = {
+	pl,
+	en: enUS
+}
+
+type EventDayProps = PickersDayProps & { hasAllDayEvent?: (day: Date) => boolean }
+
+// marks days with all-day events in the calendar
+const EventDay: React.FC<EventDayProps> = ({ hasAllDayEvent, ...props }) => {
+	const day = <PickersDay {...props} />
+
+	return hasAllDayEvent?.(props.day) ? (
+		<Badge color="secondary" variant="dot" overlap="circular">
+			{day}
+		</Badge>
+	) : (
+		day
+	)
 }
 
 const Events: React.FC = observer(() => {
 	const [showPicker, setShowPicker] = useState(false)
-	const [selectedDate, setSelectedDate] = useState<MaterialUiPickersDate>(
+	const [selectedDate, setSelectedDate] = useState<Date | null>(
 		(() => {
 			const d = new Date()
 			d.setHours(0, 0, 0, 0)
@@ -70,28 +85,26 @@ const Events: React.FC = observer(() => {
 					day={selectedDate}
 				/>
 			)}
-			<MuiPickersUtilsProvider utils={DateFnsUtils} locale={locales[config.language]}>
-				<DatePicker
+			<LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locales[config.language]}>
+				<MobileDatePicker
 					value={selectedDate}
-					style={{ display: 'none' }}
+					open={showPicker}
 					onOpen={() => setShowPicker(true)}
 					onClose={() => setShowPicker(false)}
-					onChange={date => setSelectedDate(date)}
-					renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
-						if (day && intervalTree.search(+day, +day + dayInMillis).some(e => e.allDay)) {
-							return (
-								<Badge color="secondary" variant="dot" overlap="circular">
-									{dayComponent}
-								</Badge>
-							)
-						}
-						return dayComponent
+					onAccept={date => setSelectedDate(date)}
+					closeOnSelect
+					slots={{ day: EventDay }}
+					slotProps={{
+						// the picker is opened from the bottom app bar, its own field stays hidden
+						textField: { sx: { display: 'none' } },
+						toolbar: { hidden: true },
+						day: {
+							hasAllDayEvent: (day: Date) =>
+								intervalTree.search(+day, +day + dayInMillis).some(e => e.allDay)
+						} as Partial<EventDayProps>
 					}}
-					open={showPicker}
-					disableToolbar
-					autoOk
 				/>
-			</MuiPickersUtilsProvider>
+			</LocalizationProvider>
 		</>
 	)
 })
