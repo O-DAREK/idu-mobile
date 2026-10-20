@@ -20,7 +20,7 @@
 		"jwt-decode": "^4",
 		"mobx": "^7",
 		"mobx-react-lite": "^5",
-		"node-interval-tree": "^1.3.3",
+		"node-interval-tree": "^2",
 		"react": "^18",
 		"react-dom": "^18",
 		"react-infinite-scroll-component": "^5.1.0",
