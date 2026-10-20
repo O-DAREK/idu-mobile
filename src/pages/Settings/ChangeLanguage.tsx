@@ -1,4 +1,4 @@
-import { FormControl, GridLegacy as Grid, MenuItem, Select, Typography } from '@mui/material'
+import { FormControl, Grid, MenuItem, Select, Typography } from '@mui/material'
 import { Language, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
@@ -10,10 +10,10 @@ const ChangeSettings: React.FC = observer(() => {
 
 	return (
 		<Grid alignItems="center" justifyContent="space-between" container>
-			<Grid item>
+			<Grid>
 				<Typography>{CHANGE_LANGUAGE}</Typography>
 			</Grid>
-			<Grid item>
+			<Grid>
 				<FormControl variant="outlined">
 					<Select
 						value={config.language}

@@ -1,4 +1,4 @@
-import { GridLegacy as Grid, IconButton, Typography } from '@mui/material'
+import { Grid, IconButton, Typography } from '@mui/material'
 import ExitToApp from '@mui/icons-material/ExitToApp'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
@@ -11,10 +11,10 @@ const Logout: React.FC = observer(() => {
 
 	return (
 		<Grid alignItems="center" justifyContent="space-between" container>
-			<Grid item>
+			<Grid>
 				<Typography>{LOG_OUT}</Typography>
 			</Grid>
-			<Grid item>
+			<Grid>
 				<IconButton onClick={() => user.logout()} size="large">
 					<ExitToApp />
 				</IconButton>

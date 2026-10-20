@@ -1,5 +1,5 @@
 import {
-	GridLegacy as Grid,
+	Grid,
 	ListItem,
 	ListItemAvatar,
 	ListItemButton,
@@ -17,8 +17,10 @@ import { MessageThread } from 'stores/MessagesStore'
 import styled from 'styled-components'
 import { stripHtml } from 'utils'
 
+// the legacy grid added the 24px item padding on top of this margin; keep the same skeleton height
 const MarginedGrid = styled(Grid)`
-	margin-top: 1.5px;
+	width: 100%;
+	margin-top: 25.5px;
 	margin-bottom: 1.5px;
 `
 
@@ -27,21 +29,21 @@ const CircleSkeleton = () => <Skeleton variant="circular" height={40} width={40}
 export const SkeletonThreadItem = () => (
 	<ListItem>
 		<MarginedGrid spacing={3} alignItems="center" container>
-			<Grid xs="auto" item>
+			<Grid size="auto">
 				<CircleSkeleton />
 			</Grid>
-			<Grid xs item>
+			<Grid size="grow">
 				<Grid spacing={3} container>
-					<Grid xs={2} item>
+					<Grid size={2}>
 						<Skeleton height={12} />
 					</Grid>
-					<Grid xs={7} item>
+					<Grid size={7}>
 						<Skeleton height={12} />
 					</Grid>
-					<Grid xs={8} item>
+					<Grid size={8}>
 						<Skeleton height={12} />
 					</Grid>
-					<Grid xs={2} item>
+					<Grid size={2}>
 						<Skeleton height={12} />
 					</Grid>
 				</Grid>

@@ -1,4 +1,4 @@
-import { Container, GridLegacy as Grid, Typography } from '@mui/material'
+import { Container, Stack, Typography } from '@mui/material'
 import { formatLong, useLocale } from 'locales'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
@@ -50,18 +50,17 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 						</AllDayEvent>
 					))}
 				</HorizontalView>
-				<Grid spacing={2} direction="column" container>
+				<Stack spacing={2}>
 					{normal.map(e => (
-						<Grid key={e.id} item>
-							<SingleEvent
-								name={e.name}
-								from={[e.startAt.getHours(), e.startAt.getMinutes()]}
-								to={[e.stopAt.getHours(), e.stopAt.getMinutes()]}
-								color={e.backgroundColor}
-							/>
-						</Grid>
+						<SingleEvent
+							key={e.id}
+							name={e.name}
+							from={[e.startAt.getHours(), e.startAt.getMinutes()]}
+							to={[e.stopAt.getHours(), e.stopAt.getMinutes()]}
+							color={e.backgroundColor}
+						/>
 					))}
-				</Grid>
+				</Stack>
 			</Container>
 		</>
 	)

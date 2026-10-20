@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, GridLegacy as Grid, TextField } from '@mui/material'
+import { Checkbox, FormControlLabel, Grid, TextField } from '@mui/material'
 import { BackBar, Container, Snackbar, TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import * as urls from 'constants/urls'
@@ -61,13 +61,13 @@ const NewMessage: React.FC = () => {
 			<BackBar to={urls.internal.messages()} />
 			<Container>
 				<Grid spacing={2} container>
-					<Grid xs={12} item>
+					<Grid size={12}>
 						<AutocompleteRecipients
 							onSelect={ids => setFormData(prevState => ({ ...prevState, recipients: ids }))}
 							error={showValidity && bads.recipients}
 						/>
 					</Grid>
-					<Grid xs={6} item>
+					<Grid size={6}>
 						<TextField
 							label={TITLE}
 							variant="outlined"
@@ -79,7 +79,7 @@ const NewMessage: React.FC = () => {
 							fullWidth
 						/>
 					</Grid>
-					<Grid xs={12} item>
+					<Grid size={12}>
 						<TextField
 							variant="outlined"
 							rows="6"
@@ -92,7 +92,7 @@ const NewMessage: React.FC = () => {
 							fullWidth
 						/>
 					</Grid>
-					<Grid item>
+					<Grid>
 						<FormControlLabel
 							control={
 								<Checkbox

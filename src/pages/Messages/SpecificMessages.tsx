@@ -1,4 +1,4 @@
-import { GridLegacy as Grid, Typography } from '@mui/material'
+import { Grid, Stack, Typography } from '@mui/material'
 import { Skeleton } from '@mui/material'
 import {
 	BackBar,
@@ -29,22 +29,22 @@ const FlexBox = styled.div`
 
 const MessagesSkeleton = () => (
 	<Grid spacing={2} alignItems="center" container>
-		<Grid xs={9} item>
+		<Grid size={9}>
 			<Skeleton height={150} />
 		</Grid>
-		<Grid xs={3} item>
+		<Grid size={3}>
 			<Skeleton height={12} />
 		</Grid>
-		<Grid xs={3} item>
+		<Grid size={3}>
 			<Skeleton height={12} />
 		</Grid>
-		<Grid xs={9} item>
+		<Grid size={9}>
 			<Skeleton height={100} />
 		</Grid>
-		<Grid xs={3} item>
+		<Grid size={3}>
 			<Skeleton height={12} />
 		</Grid>
-		<Grid xs={9} item>
+		<Grid size={9}>
 			<Skeleton height={100} />
 		</Grid>
 	</Grid>
@@ -82,15 +82,15 @@ const SpecificMessages: React.FC = observer(() => {
 				{loading && !thread && <MessagesSkeleton />}
 				{!thread && !loading && <Typography>{NO_SUCH_THREAD}</Typography>}
 				{thread && (
-					<Grid direction="column" spacing={3} container>
+					<Stack spacing={3}>
 						{thread.messages.map(({ body, sentAt, ...rest }, i) => {
 							const date = (
-								<Grid xs="auto" item key={1}>
+								<Grid size="auto" key={1}>
 									<Typography variant="overline">{timeAgo(config.language, sentAt)}</Typography>
 								</Grid>
 							)
 							const message = (
-								<Grid xs={9} item key={2}>
+								<Grid size={9} key={2}>
 									<PaddedPaper>
 										<StrippedHtml>{body}</StrippedHtml>
 									</PaddedPaper>
@@ -100,12 +100,12 @@ const SpecificMessages: React.FC = observer(() => {
 							const imSender = 'to' in rest
 
 							return (
-								<Grid key={i} alignItems="center" justifyContent="space-between" item container>
+								<Grid key={i} alignItems="center" justifyContent="space-between" container>
 									{imSender ? [date, message] : [message, date]}
 								</Grid>
 							)
 						})}
-					</Grid>
+					</Stack>
 				)}
 			</Container>
 			<FlexGrow />

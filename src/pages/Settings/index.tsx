@@ -1,4 +1,4 @@
-import { Divider, GridLegacy as Grid } from '@mui/material'
+import { Box, Divider, Stack } from '@mui/material'
 import { Container } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import React, { useContext, useEffect } from 'react'
@@ -15,34 +15,33 @@ const Settings: React.FC = () => {
 
 	return (
 		<Container>
-			<Grid direction="column" spacing={3} container>
-				<Grid style={{ width: '100%' }} item>
+			{/* each section keeps a wrapper: Stack spaces and resets margins of its direct children */}
+			<Stack spacing={3}>
+				<div>
 					<ChangeLanguage />
-				</Grid>
-				<Grid item>
+				</div>
+				<div>
 					<Divider />
-				</Grid>
-				<Grid item>
+				</div>
+				<div>
 					<ChangeTheme />
-				</Grid>
-				<Grid item>
+				</div>
+				<div>
 					<Divider />
-				</Grid>
-				<Grid item>
+				</div>
+				<div>
 					<ChangeColors />
-				</Grid>
-				<Grid item>
+				</div>
+				<div>
 					<Divider />
-				</Grid>
-				<Grid item>
+				</div>
+				<div>
 					<Logout />
-				</Grid>
-				<Grid alignItems="center" justifyContent="center" container item>
-					<Grid item>
-						<PWAInstall />
-					</Grid>
-				</Grid>
-			</Grid>
+				</div>
+				<Box display="flex" alignItems="center" justifyContent="center">
+					<PWAInstall />
+				</Box>
+			</Stack>
 		</Container>
 	)
 }

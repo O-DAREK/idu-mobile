@@ -1,7 +1,12 @@
 # 06 – MUI v5 → najnowsze
 
 **Cel:** `@mui/material` i `@mui/icons-material` 5.18 → najnowsza główna (w dniu analizy 9.5).
-Każda wersja główna to osobny commit (v6, v7, v8, v9) zgodnie z oficjalnym migration guide.
+Każda wersja główna to osobny commit (v6, v7, v9) zgodnie z oficjalnym migration guide.
+
+**Stan (2026-10-20):** v6 i v7 zrobione, w tym przejście z `GridLegacy` na `Grid`/`Stack`
+(pikselowo bez zmian). MUI nie wydało v8 (skok 7 → 9). Kolejność dalej: task 07 (pickery 9 działają
+z `@mui/material` ^7.3 || ^9) na v7, potem v9. `@mui/codemod@latest` się wywraca
+(`yargs.command is not a function`), zmiany robione ręcznie.
 
 ## Zakres (z kodu)
 

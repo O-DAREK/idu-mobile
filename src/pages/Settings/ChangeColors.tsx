@@ -1,4 +1,4 @@
-import { GridLegacy as Grid, InputAdornment, TextField, Typography } from '@mui/material'
+import { Grid, InputAdornment, TextField, Typography } from '@mui/material'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useState } from 'react'
@@ -56,7 +56,7 @@ const ChangeColors: React.FC = observer(() => {
 		<>
 			<Typography gutterBottom>{ACCENT_COLORS}</Typography>
 			<Grid justifyContent="space-around" container>
-				<Grid xs={4} item>
+				<Grid size={4}>
 					<ColorInput
 						color="primary"
 						label={PRIMARY}
@@ -64,7 +64,7 @@ const ChangeColors: React.FC = observer(() => {
 						onChange={val => config.changePrimaryColor(`#${val}`)}
 					/>
 				</Grid>
-				<Grid xs={4} item>
+				<Grid size={4}>
 					<ColorInput
 						color="secondary"
 						label={SECONDARY}
