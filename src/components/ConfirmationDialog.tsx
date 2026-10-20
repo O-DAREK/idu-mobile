@@ -43,7 +43,7 @@ const ConfirmationDialog: React.FC<React.PropsWithChildren<Props>> = ({
 				<DialogTitle>{CONFIRM_TO_CONTINUE}</DialogTitle>
 				<DialogContent dividers>{children}</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClick} color="primary">
+					<Button autoFocus onClick={handleClick} color="primary">
 						{CONFIRM}
 					</Button>
 				</DialogActions>
