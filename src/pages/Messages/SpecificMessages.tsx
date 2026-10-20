@@ -21,7 +21,8 @@ import useAsync from 'utils/useAsync'
 import MessageBox from './MessageBox'
 
 const FlexBox = styled.div`
-	min-height: calc(var(--visible-height, 1vh) * 100 - ${p => p.theme.spacing()});
+	min-height: calc(100vh - ${p => p.theme.spacing()});
+	min-height: calc(100dvh - ${p => p.theme.spacing()});
 	display: flex;
 	flex-direction: column;
 `

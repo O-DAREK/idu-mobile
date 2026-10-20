@@ -37,7 +37,8 @@ import { emit, EventNames } from './events'
 
 const Content = styled.div<{ $pad: boolean }>`
 	padding-bottom: ${p => (p.$pad ? 90 : 0)}px;
-	min-height: calc(100 * var(--visible-height, 1vh));
+	min-height: 100vh;
+	min-height: 100dvh;
 `
 
 const AppBarBottom = styled(MuiAppBar)`

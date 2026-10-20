@@ -1466,13 +1466,6 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.9.tgz#cf3f0e876d7bee15a93ab925b82bf570a3904a24"
   integrity sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==
 
-"@types/javascript-time-ago@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@types/javascript-time-ago/-/javascript-time-ago-2.5.0.tgz#97218b5ca77b7de08bb8edce297da6286d913f17"
-  integrity sha512-c0GQ02qkkZx138VphjPqU4+PkVSNkWvQcpE3Yy03S6NpWlT9XTSXPUbJ1qv4KV0/eW7wSEAoU87e2YHz7ndHrA==
-  dependencies:
-    javascript-time-ago "*"
-
 "@types/node@^24":
   version "24.19.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-24.19.2.tgz#8718eedbc0f89648de6525be9f4a9c61cdbaa502"
@@ -2015,11 +2008,6 @@ duplexer@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
-
-eev@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/eev/-/eev-0.1.5.tgz#800c04d450b31972b02660b97182cd28a3058e06"
-  integrity sha512-U7+up/+0JaC+ffyrMicGDzb+j2Q04Fy22tKK1Xh6hHFWdVtXwoBF8M2DwFofwsJzJcs3W3NPDvmxcMak5/iQaA==
 
 ejs@^3.1.10, ejs@^3.1.5:
   version "3.1.10"
@@ -2747,7 +2735,7 @@ jake@^10.8.5:
     filelist "^1.0.1"
     minimatch "^3.0.4"
 
-javascript-time-ago@*, javascript-time-ago@^2.6.4:
+javascript-time-ago@^2.6.4:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/javascript-time-ago/-/javascript-time-ago-2.6.4.tgz#3149de049ffe3c374eb5a357cd9aaa911aa98fb9"
   integrity sha512-7K/Z37LuwVaxxjutUDd1pXpznufPcox0b1UYu00ksAMMlV6IsxIvduwL3kgfPxuBVF8jVj7nhrKMPDslMq94aQ==
@@ -3992,11 +3980,6 @@ use-sync-external-store@^1.6.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.7.0.tgz#6dcb66ef569e02f186af6b3d575f414ce746e18f"
   integrity sha512-6L+EeigHMQhdaIPNIFUKwfWJSwWFQ8gJbJ2DLOs5sDIegTwR9fRxvnM3uciHKjIZhFz+KAv2emhWMRvDmMcY8A==
-
-visible-height-css@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/visible-height-css/-/visible-height-css-1.0.0.tgz#318c610663d5d06f89b209668565e2cf7ebb296e"
-  integrity sha512-4GbNrUANcJEBIG3yJVB08Ae//3xtjxgdiY4kAMw1bTSLlt5Ht5H9Vw69Y++0a65mjGyiZf7sVUAmzm+GObf77g==
 
 vite-plugin-pwa@^2.0.0:
   version "2.0.0"
