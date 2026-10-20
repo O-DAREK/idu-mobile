@@ -66,7 +66,8 @@ prettier, react-infinite-scroll-component.
 | 02  | [tsconfig: `paths` zamiast `baseUrl`, osobne typy testów](02-tsconfig.md)  | –         | niskie  | [x]    |
 | 03  | [TypeScript 6/7](03-typescript-7.md)                                       | 02        | niskie  | [x]    |
 | 04  | [react-router 7](04-react-router-7.md)                                     | –         | niskie  | [x]    |
-| 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [ ]    |
+| 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [x]    |
+| 05b | [react-router 8](05b-react-router-8.md)                                    | 04, 05    | niskie  | [ ]    |
 | 06  | [MUI v5 → najnowsze](06-mui-latest.md)                                     | 05        | wysokie | [ ]    |
 | 07  | [Pickery 9](07-pickers-9.md)                                               | 06        | średnie | [ ]    |
 | 08  | [Opcjonalnie: narzędzia i drobne paczki](08-optional-tooling.md)           | –         | niskie  | [ ]    |
@@ -89,3 +90,7 @@ Rzeczy wyłapane w iteracji 1, niezwiązane z wersjami paczek. Osobne branche `f
 
 - Lazy loading stron (`React.lazy` + `Suspense`), zwłaszcza Wydarzeń z pickerem. Bundle ok. 268 kB gzip.
 - `/news/:id` po odświeżeniu pokazuje "news nie istnieje", bo store zapisuje tylko przypięte newsy.
+- Infinite scroll (newsy, wiadomości) nie doładowuje kolejnej strony na wysokim ekranie (np. 412×820,
+  desktop). `react-infinite-scroll-component` 7 używa `IntersectionObserver` i woła `next()` tylko przy
+  wejściu sentinela w widok (+20%); jeśli po pierwszej stronie sentinel już tam jest, kolejne strony
+  nie przychodzą. Na niższym ekranie działa. Występuje też przed iteracją 2.

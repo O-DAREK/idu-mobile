@@ -24,7 +24,7 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const meta = useContext(metaStore)
-	const messageRef = useRef<HTMLInputElement | undefined>()
+	const messageRef = useRef<HTMLInputElement>(null)
 	const { call: sendMessage, loading, error, result } = useAsync(messages.sendMessage)
 
 	const disabled = loading || !meta.isOnline
