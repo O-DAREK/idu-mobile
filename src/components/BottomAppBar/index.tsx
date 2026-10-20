@@ -34,8 +34,8 @@ import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { emit, EventNames } from './events'
 
-const Content = styled.div<{ pad: boolean }>`
-	padding-bottom: ${p => (p.pad ? 90 : 0)}px;
+const Content = styled.div<{ $pad: boolean }>`
+	padding-bottom: ${p => (p.$pad ? 90 : 0)}px;
 	min-height: calc(100 * var(--visible-height, 1vh));
 `
 
@@ -49,12 +49,12 @@ const Title = styled(Typography)`
 	padding: 20px;
 `
 
-const MainFab = styled(Fab)<FabPlacement>`
+const MainFab = styled(Fab)<{ $placement: FabPlacement['placement'] }>`
 	position: absolute;
 	z-index: 1;
 	top: -30px;
 	${p =>
-		p.placement === 'center'
+		p.$placement === 'center'
 			? `
 	left: 0;
 	right: 0;
@@ -205,7 +205,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 
 	return (
 		<>
-			<Content pad={show}>
+			<Content $pad={show}>
 				{title && <Title variant="h5">{title}</Title>}
 				<Grow key={enterAnimationKey.current} in>
 					<div>{children}</div>
@@ -245,7 +245,7 @@ const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children
 						</IconButton>
 						{fab && (
 							<Zoom in key={fab.placement}>
-								<MainFab onClick={fab.onClick} placement={fab.placement} color="secondary">
+								<MainFab onClick={fab.onClick} $placement={fab.placement} color="secondary">
 									<fab.Icon color="action" />
 								</MainFab>
 							</Zoom>

@@ -43,7 +43,7 @@ export const SkeletonThreadItem = () => (
 	</ListItem>
 )
 
-const EllipsisText = styled(Typography).attrs(() => ({ component: 'span' }))`
+const EllipsisText = styled(Typography).attrs<{ component?: React.ElementType }>({ component: 'span' })`
 	text-overflow: ellipsis;
 	max-width: 65%;
 	display: inline-block;

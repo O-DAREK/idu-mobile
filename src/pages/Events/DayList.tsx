@@ -41,8 +41,8 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 				<HorizontalView>
 					{allDay.map(e => (
 						<AllDayEvent
-							bgColor={e.backgroundColor}
-							textColor={e.textColor}
+							$bgColor={e.backgroundColor}
+							$textColor={e.textColor}
 							key={e.id}
 							variant="outlined"
 						>

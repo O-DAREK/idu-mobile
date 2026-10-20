@@ -10,13 +10,13 @@ interface Props {
 	color: string
 }
 
-const AccentedPaper = styled(Paper)<{ accent: string }>`
-	border: 2px solid ${p => p.accent};
+const AccentedPaper = styled(Paper)<{ $accent: string }>`
+	border: 2px solid ${p => p.$accent};
 	padding: 10px;
 `
 
 const SingleEvent: React.FC<Props> = ({ color, from, name, to }) => (
-	<AccentedPaper accent={color}>
+	<AccentedPaper $accent={color}>
 		<Typography component="p" paragraph>
 			{name}
 		</Typography>
