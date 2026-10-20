@@ -38,7 +38,7 @@ husky 4, Jest przez react-scripts. 66 plików w `src/`, 5 testów (wyłącznie s
 | 03  | [Migracja CRA → Vite + Vitest + PWA](03-vite-vitest.md)                    | 02        | wysokie | [x]    |
 | 04  | [React 18 (`createRoot`)](04-react-18.md)                                  | 03        | średnie | [x]    |
 | 05  | [MobX 6](05-mobx-6.md)                                                     | 04        | średnie | [x]    |
-| 06  | [MobX 7 i mobx-react-lite aktualne](06-mobx-latest.md)                     | 05, 12    | niskie  | [ ]    |
+| 06  | [MobX 7 i mobx-react-lite aktualne](06-mobx-latest.md)                     | 05, 12    | niskie  | [x]    |
 | 07  | [react-router 6](07-react-router-6.md)                                     | 04        | wysokie | [ ]    |
 | 08  | [MUI v4 → v5](08-mui-v5.md)                                                | 04        | wysokie | [ ]    |
 | 09  | [Pickery, date-fns 4](09-pickers-date-fns.md)                              | 08        | średnie | [ ]    |
