@@ -3,6 +3,7 @@ import { Events, Login, Profile } from 'constants/responses'
 import { StatusCodes } from 'http-status-codes'
 import { runInAction } from 'mobx'
 import { UserStore } from 'stores/UserStore'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('user store', () => {
 	let userStore: UserStore

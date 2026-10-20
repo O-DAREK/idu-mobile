@@ -1,6 +1,7 @@
 import * as responses from 'constants/responses'
 import { runInAction } from 'mobx'
 import { NewsStore } from 'stores/NewsStore'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('messages store', () => {
 	let newsStore: NewsStore

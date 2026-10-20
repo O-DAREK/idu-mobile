@@ -34,7 +34,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "vitest",
-		"typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
+		"typecheck": "tsc --noEmit",
 		"analyze": "yarn build && source-map-explorer 'build/assets/*.js'",
 		"prepare": "husky"
 	},

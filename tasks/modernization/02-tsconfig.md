@@ -27,6 +27,10 @@
     albo sprawdzany osobno.
 - `npx tsc --noEmit` (i husky w pre-commit) musi nadal sprawdzać testy. Zaktualizować komendę
   w CLAUDE.md i w `.husky/pre-commit`, jeśli się zmieni.
+- **Wynik:** wariant z `exclude` i `tsconfig.test.json` odpadł, bo `resolve.tsconfigPaths` w Vite
+  nie stosuje `paths` do plików wyłączonych z `tsconfig.json`, więc importy absolutne w testach
+  przestają działać. Zamiast tego `globals: false` w vitest, a testy importują `describe`, `it`, `vi`
+  itd. z `'vitest'`. Jeden `tsconfig.json`, komenda `yarn typecheck` (`tsc --noEmit`).
 
 ## Kryteria akceptacji
 

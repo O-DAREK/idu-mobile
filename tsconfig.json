@@ -17,6 +17,5 @@
 		"paths": { "*": ["./src/*"] }
 	},
 	"include": ["src"],
-	"exclude": ["src/tests", "src/setupTests.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
