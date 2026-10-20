@@ -28,7 +28,6 @@
 		"react-router-dom": "^5.3.4",
 		"react-router-last-location": "^2.0.1",
 		"styled-components": "^5.3.11",
-		"use-async-react": "^1.0.0",
 		"use-debounce": "^10",
 		"visible-height-css": "^1.0.0"
 	},
@@ -53,12 +52,6 @@
 		]
 	},
 	"devDependencies": {
-		"@babel/core": "^7",
-		"@babel/plugin-proposal-decorators": "^7",
-		"@babel/plugin-transform-class-properties": "^7",
-		"@babel/preset-typescript": "^7",
-		"@rolldown/plugin-babel": "^0.2.4",
-		"@types/babel__core": "^7.20.5",
 		"@types/javascript-time-ago": "^2.5.0",
 		"@types/node": "^16.18.0",
 		"@types/react": "^18",
