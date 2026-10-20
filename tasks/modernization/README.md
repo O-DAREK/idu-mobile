@@ -42,7 +42,7 @@ prettier, react-infinite-scroll-component.
 
 ## Zasady
 
-- Jedna zmiana wersji głównej na raz. Po każdej: `npx tsc --noEmit`, `CI=true yarn test`, `yarn build`
+- Jedna zmiana wersji głównej na raz. Po każdej: `yarn typecheck`, `CI=true yarn test`, `yarn build`
   oraz ręczny smoke test (punkt "Smoke test" niżej).
 - `yarn add/remove` tylko po uzgodnieniu z właścicielem (zob. CLAUDE.md). Wersje docelowe
   sprawdzamy w momencie wykonania (`yarn outdated`).
@@ -63,7 +63,7 @@ prettier, react-infinite-scroll-component.
 | #   | Task                                                                      | Zależy od | Ryzyko  | Status |
 | --- | ------------------------------------------------------------------------- | --------- | ------- | ------ |
 | 01  | [Porządki w zależnościach (eev, visible-height-css, stub typów)](01-deps-cleanup.md) | –         | niskie  | [x]    |
-| 02  | [tsconfig: `paths` zamiast `baseUrl`, osobne typy testów](02-tsconfig.md)  | –         | niskie  | [ ]    |
+| 02  | [tsconfig: `paths` zamiast `baseUrl`, osobne typy testów](02-tsconfig.md)  | –         | niskie  | [x]    |
 | 03  | [TypeScript 6/7](03-typescript-7.md)                                       | 02        | niskie  | [ ]    |
 | 04  | [react-router 7](04-react-router-7.md)                                     | –         | niskie  | [ ]    |
 | 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [ ]    |

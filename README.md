@@ -20,5 +20,5 @@ Stack: Vite 8, React 18, TypeScript 5, MobX 7, MUI v5, styled-components 6, reac
 - `yarn build` – production build into `build/`
 - `yarn preview` – serve the production build (the service worker only runs here)
 - `yarn test` – tests in watch mode; `CI=true yarn test` runs them once
-- `npx tsc --noEmit` – type check
+- `yarn typecheck` – type check (app code and tests)
 - `yarn analyze` – build and inspect bundle sizes

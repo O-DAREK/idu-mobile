@@ -14,8 +14,9 @@
 		"noEmit": true,
 		"jsx": "react-jsx",
 		"useDefineForClassFields": true,
-		"baseUrl": "src"
+		"paths": { "*": ["./src/*"] }
 	},
 	"include": ["src"],
+	"exclude": ["src/tests", "src/setupTests.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

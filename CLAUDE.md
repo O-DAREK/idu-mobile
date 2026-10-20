@@ -10,7 +10,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 
 - `yarn start` – dev server (wymaga `.env` z `VITE_API_ROOT`, wzór w `.env.example`; `VITE_MOCK_API=true` włącza API w pamięci z `src/mocks/`, dowolny login działa)
 - `CI=true yarn test` – wszystkie testy jednorazowo (bez `CI=true` jest tryb watch, który się nie kończy)
-- `npx tsc --noEmit` – sprawdzenie typów
+- `yarn typecheck` – sprawdzenie typów: kod aplikacji (`tsconfig.json`, bez globali vitest) i testy (`tsconfig.test.json`)
 - `yarn build` – build produkcyjny do `build/`; `yarn preview` – serwuje build (service worker działa tylko w buildzie, PWA testuj tu)
 - `yarn analyze` – build + `source-map-explorer` (rozmiary bundla)
 
@@ -24,7 +24,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 - `src/constants/`, `src/utils/`, `src/typings/` – stałe, helpery (m.in. `utils/useAsync`), deklaracje typów.
 - `src/mocks/` – API w pamięci dla `VITE_MOCK_API`.
 - `src/tests/` – testy Vitest (głównie store'ów), `fetch` mockowany przez `vitest-fetch-mock`.
-- Importy absolutne względem `src` (`baseUrl: src`), np. `import { NewsStore } from 'stores/NewsStore'`.
+- Importy absolutne względem `src` (`paths: { "*": ["./src/*"] }` w `tsconfig.json`), np. `import { NewsStore } from 'stores/NewsStore'`.
 
 ## Styl kodu
 
@@ -36,7 +36,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 
 - Nigdy nie commituj na `master`. Przed zmianami utwórz branch z prefiksem `feat/`, `fix/` albo `chore/`.
 - Commituj **tylko na wyraźną prośbę**.
-- Przed commitem uruchom `npx tsc --noEmit` i `CI=true yarn test` (to samo sprawdza husky w pre-commit).
+- Przed commitem uruchom `yarn typecheck` i `CI=true yarn test` (to samo sprawdza husky w pre-commit).
 - Wiadomości w formacie Conventional Commits: `feat: ...`, `fix: ...`, `chore: ...`, `refactor: ...`, `test: ...`.
 - Nie wykonuj `git push` ani operacji niszczących historię. Push robi użytkownik.
 
