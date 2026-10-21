@@ -47,7 +47,7 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 			{error && <Snackbar variant="error">{ERROR_GENERIC}</Snackbar>}
 			<StickyContainer>
 				<Input
-					inputProps={{ ref: messageRef }}
+					inputRef={messageRef}
 					placeholder={MESSAGE_PLACEHOLDER}
 					disabled={disabled}
 					endAdornment={

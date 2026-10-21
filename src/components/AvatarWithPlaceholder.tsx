@@ -14,8 +14,8 @@ const AvatarWithPlaceholder: React.FC<Props> = ({ placeholder, ...avatarProps })
 			<Avatar
 				{...avatarProps}
 				style={loading ? { display: 'none' } : avatarProps.style}
-				imgProps={{
-					onLoad: () => setLoading(false)
+				slotProps={{
+					img: { onLoad: () => setLoading(false) }
 				}}
 			/>
 		</>

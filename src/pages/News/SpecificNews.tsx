@@ -43,7 +43,7 @@ const SpecificNews: React.FC = observer(() => {
 							<Typography variant="h4" gutterBottom>
 								{foundNews.title}
 							</Typography>
-							<StrippedHtml component="p" paragraph>
+							<StrippedHtml component="p" sx={{ mb: 2 }}>
 								{foundNews.body}
 							</StrippedHtml>
 							<Typography variant="overline">

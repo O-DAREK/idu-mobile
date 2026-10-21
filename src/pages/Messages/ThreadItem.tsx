@@ -28,7 +28,7 @@ const CircleSkeleton = () => <Skeleton variant="circular" height={40} width={40}
 
 export const SkeletonThreadItem = () => (
 	<ListItem>
-		<MarginedGrid spacing={3} alignItems="center" container>
+		<MarginedGrid spacing={3} sx={{ alignItems: 'center' }} container>
 			<Grid size="auto">
 				<CircleSkeleton />
 			</Grid>

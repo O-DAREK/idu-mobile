@@ -53,7 +53,7 @@ const NewsItem: React.FC<Props> = memo(({ body, date, title, requiresConfirmatio
 				<ListItemText
 					primary={`${title} • ${formatShort(config.language, date)}`}
 					secondary={stripHtml(body)}
-					secondaryTypographyProps={{ noWrap: true }}
+					slotProps={{ secondary: { noWrap: true } }}
 				/>
 			</Badge>
 		</ListItemButton>

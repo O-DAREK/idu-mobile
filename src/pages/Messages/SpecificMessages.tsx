@@ -28,7 +28,7 @@ const FlexBox = styled.div`
 `
 
 const MessagesSkeleton = () => (
-	<Grid spacing={2} alignItems="center" container>
+	<Grid spacing={2} sx={{ alignItems: 'center' }} container>
 		<Grid size={9}>
 			<Skeleton height={150} />
 		</Grid>
@@ -100,7 +100,11 @@ const SpecificMessages: React.FC = observer(() => {
 							const imSender = 'to' in rest
 
 							return (
-								<Grid key={i} alignItems="center" justifyContent="space-between" container>
+								<Grid
+									key={i}
+									sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+									container
+								>
 									{imSender ? [date, message] : [message, date]}
 								</Grid>
 							)

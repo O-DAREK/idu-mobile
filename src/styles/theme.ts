@@ -42,6 +42,8 @@ export const muiTheme = (themeType: Theme, primary: string, secondary: string) =
 			// v4 kept the AppBar color in dark mode
 			MuiAppBar: { defaultProps: { enableColorOnDark: true } },
 			// v5 paints dark mode papers with an elevation overlay; v4 used a flat color
-			MuiPaper: { styleOverrides: { root: { backgroundImage: 'none' } } }
+			MuiPaper: { styleOverrides: { root: { backgroundImage: 'none' } } },
+			// v9 narrowed list icons to 36px; keep the previous 56px gap before the drawer labels
+			MuiListItemIcon: { styleOverrides: { root: { minWidth: 56 } } }
 		}
 	})

@@ -102,14 +102,17 @@ const AutocompleteRecipients: React.FC<Props> = ({ onSelect, error }) => {
 					value={searchTerm}
 					error={error}
 					onChange={e => setSearchTerm(e.target.value)}
-					InputProps={{
-						...params.InputProps,
-						endAdornment: (
-							<>
-								{searching && <CircularProgress color="inherit" size={20} />}
-								{params.InputProps.endAdornment}
-							</>
-						)
+					slotProps={{
+						...params.slotProps,
+						input: {
+							...params.slotProps.input,
+							endAdornment: (
+								<>
+									{searching && <CircularProgress color="inherit" size={20} />}
+									{params.slotProps.input.endAdornment}
+								</>
+							)
+						}
 					}}
 				/>
 			)}

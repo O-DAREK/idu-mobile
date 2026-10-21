@@ -17,12 +17,14 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, ...props }) => {
 	return (
 		<TextField
 			variant="outlined"
-			InputProps={{
-				startAdornment: (
-					<InputAdornment position="start">
-						<Typography style={invalid ? { color: 'red' } : undefined}>#</Typography>
-					</InputAdornment>
-				)
+			slotProps={{
+				input: {
+					startAdornment: (
+						<InputAdornment position="start">
+							<Typography style={invalid ? { color: 'red' } : undefined}>#</Typography>
+						</InputAdornment>
+					)
+				}
 			}}
 			onChange={({ target: { value } }) => {
 				if (/^[0-9a-f]{6}$/i.test(value)) {
@@ -55,7 +57,7 @@ const ChangeColors: React.FC = observer(() => {
 	return (
 		<>
 			<Typography gutterBottom>{ACCENT_COLORS}</Typography>
-			<Grid justifyContent="space-around" container>
+			<Grid sx={{ justifyContent: 'space-around' }} container>
 				<Grid size={4}>
 					<ColorInput
 						color="primary"

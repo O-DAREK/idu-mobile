@@ -9,7 +9,7 @@ const ChangeSettings: React.FC = observer(() => {
 	const config = useContext(configStore)
 
 	return (
-		<Grid alignItems="center" justifyContent="space-between" container>
+		<Grid sx={{ alignItems: 'center', justifyContent: 'space-between' }} container>
 			<Grid>
 				<Typography>{CHANGE_LANGUAGE}</Typography>
 			</Grid>

@@ -38,7 +38,7 @@ const Settings: React.FC = () => {
 				<div>
 					<Logout />
 				</div>
-				<Box display="flex" alignItems="center" justifyContent="center">
+				<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 					<PWAInstall />
 				</Box>
 			</Stack>

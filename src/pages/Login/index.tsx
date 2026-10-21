@@ -31,10 +31,10 @@ const Login: React.FC = () => {
 			{user.forcedLogout && <Snackbar variant="warning">{SESSION_EXPIRED}</Snackbar>}
 			{loading && <TopLoading />}
 			{error && <Snackbar variant="error">{FAILED_LOGIN}</Snackbar>}
-			<Stack alignItems="center" justifyContent="center" style={{ minHeight: '100%' }}>
+			<Stack sx={{ alignItems: 'center', justifyContent: 'center', minHeight: '100%' }}>
 				<Paper style={{ position: 'relative', maxWidth: `${(11 / 12) * 100}%`, marginTop: -8 }}>
 					<AbsoluteLogo src={iduLogo} alt="IDU logo" />
-					<PaddedStack alignItems="center" justifyContent="center" spacing={1}>
+					<PaddedStack sx={{ alignItems: 'center', justifyContent: 'center' }} spacing={1}>
 						<TextField
 							label={LOGIN}
 							variant="outlined"

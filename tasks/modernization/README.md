@@ -68,7 +68,7 @@ prettier, react-infinite-scroll-component.
 | 04  | [react-router 7](04-react-router-7.md)                                     | –         | niskie  | [x]    |
 | 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [x]    |
 | 05b | [react-router 8](05b-react-router-8.md)                                    | 04, 05    | niskie  | [x]    |
-| 06  | [MUI v5 → najnowsze](06-mui-latest.md)                                     | 05        | wysokie | v6, v7 ✔; v9 [ ] |
+| 06  | [MUI v5 → najnowsze](06-mui-latest.md)                                     | 05        | wysokie | [x]    |
 | 07  | [Pickery 9](07-pickers-9.md)                                               | 06        | średnie | [x]    |
 | 08  | [Opcjonalnie: narzędzia i drobne paczki](08-optional-tooling.md)           | –         | niskie  | [ ]    |
 | 09  | [Sprzątanie i dokumentacja](09-cleanup-docs.md)                            | 01–08     | niskie  | [ ]    |
@@ -94,3 +94,7 @@ Rzeczy wyłapane w iteracji 1, niezwiązane z wersjami paczek. Osobne branche `f
   desktop). `react-infinite-scroll-component` 7 używa `IntersectionObserver` i woła `next()` tylko przy
   wejściu sentinela w widok (+20%); jeśli po pierwszej stronie sentinel już tam jest, kolejne strony
   nie przychodzą. Na niższym ekranie działa. Występuje też przed iteracją 2.
+- `pages/Messages/AutocompleteRecipients.tsx`: `value={searchTerm}` na `TextField` nie działa (wygrywa
+  wartość z Autocomplete), a `searchTerm` nie czyści się po wyborze odbiorcy. Lepiej `onInputChange`
+  na Autocomplete. Fetch wyszukiwania nie obsługuje błędów (spinner zostaje na zawsze) ani wyścigu
+  starszej odpowiedzi z nowszą (brak AbortController / flagi w cleanupie).

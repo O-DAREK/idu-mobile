@@ -10,7 +10,7 @@ const Logout: React.FC = observer(() => {
 	const user = useContext(userStore)
 
 	return (
-		<Grid alignItems="center" justifyContent="space-between" container>
+		<Grid sx={{ alignItems: 'center', justifyContent: 'space-between' }} container>
 			<Grid>
 				<Typography>{LOG_OUT}</Typography>
 			</Grid>

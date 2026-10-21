@@ -17,7 +17,7 @@ const AccentedPaper = styled(Paper)<{ $accent: string }>`
 
 const SingleEvent: React.FC<Props> = ({ color, from, name, to }) => (
 	<AccentedPaper $accent={color}>
-		<Typography component="p" paragraph>
+		<Typography component="p" sx={{ mb: 2 }}>
 			{name}
 		</Typography>
 		<Typography variant="overline">{`${createTime(...from)}-${createTime(...to)}`}</Typography>

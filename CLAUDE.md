@@ -1,6 +1,6 @@
 # idu-mobile
 
-Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest 5, React 19, TypeScript 7 (strict, natywny kompilator; tylko typecheck, Vite transpiluje sam), MobX 7 + mobx-react-lite 5, MUI v7 (`@mui/material`, `@mui/x-date-pickers`, emotion), styled-components 6, react-router 8, date-fns 4. Node: `.nvmrc` (24), `engines` jak Vite 8.
+Mobilny klient webowy (PWA) systemu IDU. Vite 8 + Vitest 5, React 19, TypeScript 7 (strict, natywny kompilator; tylko typecheck, Vite transpiluje sam), MobX 7 + mobx-react-lite 5, MUI v9 (`@mui/material`, `@mui/x-date-pickers` 9, emotion), styled-components 6, react-router 8, date-fns 4. Node: `.nvmrc` (24), `engines` jak Vite 8.
 
 ## Komendy
 
@@ -30,7 +30,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 
 - Prettier (`.prettierrc`): taby, bez średników, pojedyncze cudzysłowy, szerokość 100, bez trailing commas. Hook formatuje pliki automatycznie po edycji.
 - Komentarze w kodzie i wiadomości commitów **po angielsku**.
-- Trzymaj się istniejących wzorców (styled-components na komponentach MUI, hooki, `observer` z mobx-react-lite). Propsy stylów tylko jako transient props (`$prop`), żeby nie trafiały do DOM. Ikony importuj ścieżką (`@mui/icons-material/Add`), nie z beczki. Nie podbijaj głównych wersji bibliotek bez prośby.
+- Trzymaj się istniejących wzorców (styled-components na komponentach MUI, hooki, `observer` z mobx-react-lite). Propsy stylów tylko jako transient props (`$prop`), żeby nie trafiały do DOM. Ikony importuj ścieżką (`@mui/icons-material/Add`), nie z beczki. MUI v9 nie ma system props (`alignItems`, `display`, `mt` itp. jako propsy `Box`/`Stack`/`Grid`/`Typography`) ani starych propsów typu `InputProps`: używaj `sx` i `slotProps`. Nie podbijaj głównych wersji bibliotek bez prośby.
 
 ## Git
 

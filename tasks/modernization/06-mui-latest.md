@@ -8,6 +8,12 @@ Każda wersja główna to osobny commit (v6, v7, v9) zgodnie z oficjalnym migrat
 z `@mui/material` ^7.3 || ^9) na v7, potem v9. `@mui/codemod@latest` się wywraca
 (`yargs.command is not a function`), zmiany robione ręcznie.
 
+**Stan (2026-10-21):** v9 (9.5) zrobione. Zmiany: system props → `sx` (`Grid`, `Box`, `Stack`),
+`InputProps` → `slotProps.input` (także w `renderInput` Autocomplete), `imgProps` → `slotProps.img`,
+`secondaryTypographyProps` → `slotProps.secondary`, `paragraph` → `sx={{ mb: 2 }}`, `inputProps.ref` →
+`inputRef`. W motywie przywrócony `min-width: 56px` dla `ListItemIcon` (v9 zmniejszyło do 36px).
+Zrzuty pikselowo bez zmian, konsola czysta.
+
 ## Zakres (z kodu)
 
 - MUI jest używane w 33 plikach w `src/`, w tym importy z beczki (`import { Grid } from '@mui/material'`)
