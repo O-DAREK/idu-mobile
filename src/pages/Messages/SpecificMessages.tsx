@@ -10,7 +10,7 @@ import {
 	TopLoading
 } from 'components'
 import * as urls from 'constants/urls'
-import { StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { timeAgo, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'

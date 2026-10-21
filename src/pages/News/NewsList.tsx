@@ -1,6 +1,6 @@
 import { Divider, List } from '@mui/material'
 import { Snackbar, TopLoading } from 'components'
-import { StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'

@@ -1,6 +1,6 @@
 import { Roles } from 'constants/interfaces'
 import { Events, Login, Profile } from 'constants/responses'
-import { StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { runInAction } from 'mobx'
 import { UserStore } from 'stores/UserStore'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'

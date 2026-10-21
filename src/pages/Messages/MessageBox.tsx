@@ -1,7 +1,7 @@
 import { Container, IconButton, Input, InputAdornment } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import { Snackbar } from 'components'
-import { StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useRef } from 'react'
