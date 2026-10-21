@@ -69,7 +69,7 @@ prettier, react-infinite-scroll-component.
 | 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [x]    |
 | 05b | [react-router 8](05b-react-router-8.md)                                    | 04, 05    | niskie  | [x]    |
 | 06  | [MUI v5 → najnowsze](06-mui-latest.md)                                     | 05        | wysokie | v6, v7 ✔; v9 [ ] |
-| 07  | [Pickery 9](07-pickers-9.md)                                               | 06        | średnie | [ ]    |
+| 07  | [Pickery 9](07-pickers-9.md)                                               | 06        | średnie | [x]    |
 | 08  | [Opcjonalnie: narzędzia i drobne paczki](08-optional-tooling.md)           | –         | niskie  | [ ]    |
 | 09  | [Sprzątanie i dokumentacja](09-cleanup-docs.md)                            | 01–08     | niskie  | [ ]    |
 

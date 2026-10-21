@@ -2,6 +2,9 @@
 
 **Cel:** `@mui/x-date-pickers` 8.29 → 9 (najnowsza 9.x), zgodnie z wersją MUI z taska 06.
 
+**Stan (2026-10-21):** zrobione, 9.16 na MUI 7.3. Jedyna zmiana w kodzie: `PickersDay` → `PickerDay`
+(import `@mui/x-date-pickers/PickerDay`, typ `PickerDayProps`). Kalendarz pikselowo bez zmian.
+
 ## Zakres (z kodu)
 
 - Jedyne użycie to `src/pages/Events/index.tsx`:

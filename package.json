@@ -14,7 +14,7 @@
 		"@emotion/styled": "^11.14.1",
 		"@mui/icons-material": "^7",
 		"@mui/material": "^7",
-		"@mui/x-date-pickers": "^8",
+		"@mui/x-date-pickers": "^9",
 		"date-fns": "^4",
 		"http-status-codes": "^2",
 		"javascript-time-ago": "^2.6.4",

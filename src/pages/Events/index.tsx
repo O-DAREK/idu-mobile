@@ -2,7 +2,7 @@ import { Badge } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
-import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay'
+import { PickerDay, PickerDayProps } from '@mui/x-date-pickers/PickerDay'
 import { TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import { endOfDay, startOfDay } from 'date-fns'
@@ -28,11 +28,11 @@ const locales: { [key in Language]: Locale } = {
 	en: enUS
 }
 
-type EventDayProps = PickersDayProps & { hasAllDayEvent?: (day: Date) => boolean }
+type EventDayProps = PickerDayProps & { hasAllDayEvent?: (day: Date) => boolean }
 
 // marks days with all-day events in the calendar
 const EventDay: React.FC<EventDayProps> = ({ hasAllDayEvent, ...props }) => {
-	const day = <PickersDay {...props} />
+	const day = <PickerDay {...props} />
 
 	return hasAllDayEvent?.(props.day) ? (
 		<Badge color="secondary" variant="dot" overlap="circular">
