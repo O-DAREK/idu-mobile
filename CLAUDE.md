@@ -12,7 +12,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 - `CI=true yarn test` – wszystkie testy jednorazowo (bez `CI=true` jest tryb watch, który się nie kończy)
 - `yarn typecheck` – sprawdzenie typów (`tsc --noEmit`, kod i testy)
 - `yarn build` – build produkcyjny do `build/`; `yarn preview` – serwuje build (service worker działa tylko w buildzie, PWA testuj tu)
-- `yarn analyze` – build + `source-map-explorer` (rozmiary bundla)
+- `yarn analyze` – build z `rollup-plugin-visualizer`; raport rozmiarów bundla (w tym gzip/brotli) w `stats.html` w katalogu głównym, otwierany w przeglądarce
 
 ## Struktura
 

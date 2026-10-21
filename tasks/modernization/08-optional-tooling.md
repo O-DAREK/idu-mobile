@@ -3,6 +3,11 @@
 Paczki działają i nie blokują niczego, ale są mało aktywne albo zbędne. Każdy punkt wymaga
 osobnej decyzji właściciela.
 
+**Stan (2026-10-21):** oba punkty zrobione. `yarn analyze` = `vite build --mode analyze`, plugin
+włączany tylko w tym trybie, raport `stats.html` w katalogu głównym (poza `build/`, żeby service
+worker go nie precache'ował; w `.gitignore`). Zamiast `http-status-codes` obiekt `StatusCodes`
+w `src/constants/statusCodes.ts` (zmieniły się tylko importy).
+
 ## `source-map-explorer` → `rollup-plugin-visualizer`
 
 - `source-map-explorer`: ostatnie wydanie 2022, 57 otwartych issue. Używany tylko w `yarn analyze`.

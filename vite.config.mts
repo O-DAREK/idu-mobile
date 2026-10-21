@@ -1,9 +1,10 @@
 /// <reference types="vitest/config" />
 import react from '@vitejs/plugin-react'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	plugins: [
 		react(),
 		VitePWA({
@@ -17,7 +18,10 @@ export default defineConfig({
 				globPatterns: ['**/*.{js,css,html,png,ico,json}'],
 				navigateFallback: '/index.html'
 			}
-		})
+		}),
+		// `yarn analyze` only; the report stays outside build/ so the service worker never precaches it
+		mode === 'analyze' &&
+			visualizer({ filename: 'stats.html', gzipSize: true, brotliSize: true, open: true })
 	],
 	resolve: { tsconfigPaths: true },
 	server: { port: 3000 },
@@ -28,4 +32,4 @@ export default defineConfig({
 		environment: 'jsdom',
 		setupFiles: 'src/setupTests.ts'
 	}
-})
+}))
