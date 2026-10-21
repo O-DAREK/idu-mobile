@@ -2,6 +2,9 @@
 
 **Cel:** domknąć iterację 2.
 
+**Stan (2026-10-21):** zrobione. Mobx 7.1.0 i Vite 8.3.5 podbite w zakresie. Wyniki (bundle, konsola,
+PWA) w sekcji "Wyniki" w [README](README.md).
+
 ## Kroki
 
 1. `yarn outdated`: ponownie sprawdzić wersje i ewentualnie dobić patch/minor, które wyszły w trakcie.

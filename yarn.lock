@@ -3051,9 +3051,9 @@ mobx-react-lite@^5:
   integrity sha512-++LQTCRr4FJCWuaEvYl5gCtGBwOpOwrnWjm9uhCUDI5nmkzLR8eT1jgMeYfJ8wc88YOYyC/ygjw2KpYPBYGsww==
 
 mobx@^7:
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-7.0.6.tgz#0fbf76274138284b77b9e15f2f89ca5d8fbbdb7c"
-  integrity sha512-VJwjVS5K/rojqPSOoDYlXaYl38Lj+gDfLOFeJ/3Pbdh5ITbAO4ks9RgL0TeRI0bydRZ7b/7WrtPPb9Onuj/pcA==
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-7.1.0.tgz#afdc675ecba30942a818184f9e2f697a38fe74fa"
+  integrity sha512-5eGlbA7iJ7bUwtdLaUTu7g9DDQsTo3bhtVkWD/Rii24zhjhSPdTXJ5sjKVd9n7AaJ/h6xlmUvUsyO6B1zK9HVQ==
 
 ms@^2.1.1:
   version "2.1.2"
@@ -3208,10 +3208,10 @@ postcss-value-parser@^4.0.2:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.0.2.tgz#482282c09a42706d1fc9a069b73f44ec08391dc9"
   integrity sha512-LmeoohTpp/K4UiyQCwuGWlONxXamGzCMtFxLq4W1nZVGIQLYvMCJx3yAF9qyyuFpflABI9yVdtJAqbihOsCsJQ==
 
-postcss@^8.5.29:
-  version "8.5.30"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.30.tgz#f76f192357d2b7026b651fd2c7baa60d05325a9e"
-  integrity sha512-zkd+e9S1AQHhmaBKye9zlFHWjOwVgqXl1q3ECYy8561K7qxR2cREf/STLskulBFd78k6AOFeA+ff1TtEzk9bAA==
+postcss@^8.5.30:
+  version "8.5.31"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.31.tgz#d44731fa02f8ae8371629ec7220e2ae0dbdf23ec"
+  integrity sha512-YUbWYCgErwnMAVkjUnYa+KlMBzGpHwiIt/DE7f0G33AuX2LH9UcTk6KgWxd3zRU+pN3u/C+Xl3EnMLM4Hea7Sg==
   dependencies:
     nanoid "^3.3.20"
     picocolors "^1.1.1"
@@ -3402,7 +3402,7 @@ resolve@^1.19.0, resolve@^1.22.1, resolve@^1.22.11:
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
-rolldown@~1.2.12:
+rolldown@~1.2.14:
   version "1.2.14"
   resolved "https://registry.yarnpkg.com/rolldown/-/rolldown-1.2.14.tgz#4005c51ae81e1d07b2e0d22f56d1f040f85aac96"
   integrity sha512-eTBTTqMR6uHKLgcUqpJP8ntzDI6V4LYA8negAMBEI7gkgVvOdrx6VsvS2Ym+83KhOPdLCHWJu0w7UQFJZhHKNw==
@@ -4027,14 +4027,14 @@ vite-plugin-pwa@^2.0.0:
     workbox-window "^7.4.1"
 
 vite@^8.3.4:
-  version "8.3.4"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-8.3.4.tgz#ba08678ba41ba53f41c251b1772946c27b1c874e"
-  integrity sha512-IftLE8phJhdNRIGNEV4JCCvfNScoZQVfcXaN8TQropWGJtOHcu+iAB9pHcuGvmEb/kddw0LBe/jS8ztdC6xdiQ==
+  version "8.3.5"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-8.3.5.tgz#9614f66026cb92fe486cb9d3c90780b2a69fc85d"
+  integrity sha512-z1YpjieJ9g0ebTmQpLBv/oq9E3F9EIlOe+7LahW8SrE3LTiG3udBRUXQOlYXP9b+IC2q2phHeVxj9xGlw34OEQ==
   dependencies:
     lightningcss "^1.33.0"
     picomatch "^4.0.7"
-    postcss "^8.5.29"
-    rolldown "~1.2.12"
+    postcss "^8.5.30"
+    rolldown "~1.2.14"
     tinyglobby "^0.2.17"
   optionalDependencies:
     fsevents "~2.3.3"

@@ -20,7 +20,7 @@ Komendy uruchamiaj przez narzędzie **Bash** (Git Bash), nie PowerShell: poniżs
 - `src/pages/` – ekrany (Events, Login, Messages, News, Settings), routing w `Router.tsx` (react-router 8 w trybie deklaratywnym, importy z `react-router`; `News` i `Messages` mają zagnieżdżone trasy względne pod `/news/*` i `/messages/*`). Poprzednia lokalizacja dla `BackBar`: `utils/LastLocation.tsx`.
 - `src/components/` – współdzielone komponenty, eksportowane przez `components/index.ts`.
 - `src/locales/` – teksty UI (`strings.ts`) i hooki do tłumaczeń. Nie hardkoduj tekstów w komponentach.
-- `src/styles/theme.ts` – motyw MUI z `ConfigStore` (tryb, kolory akcentu); nadpisuje kilka domyślnych wartości v5, żeby zachować wygląd z v4. Ten sam motyw trafia do styled-components (`p.theme`).
+- `src/styles/theme.ts` – motyw MUI z `ConfigStore` (tryb, kolory akcentu); nadpisuje kilka domyślnych wartości MUI (z v5 i v9), żeby zachować dotychczasowy wygląd. Ten sam motyw trafia do styled-components (`p.theme`).
 - `src/constants/`, `src/utils/`, `src/typings/` – stałe, helpery (m.in. `utils/useAsync`), deklaracje typów.
 - `src/mocks/` – API w pamięci dla `VITE_MOCK_API`.
 - `src/tests/` – testy Vitest (głównie store'ów), `fetch` mockowany przez `vitest-fetch-mock`.
