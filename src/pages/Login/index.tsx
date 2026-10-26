@@ -1,6 +1,6 @@
 import { Button, Paper, Stack, TextField } from '@mui/material'
 import iduLogo from 'assets/idu-logo.png'
-import { Snackbar, TopLoading } from 'components'
+import { Snackbar, TopLoading, Turnstile } from 'components'
 import { useLocale } from 'locales'
 import React, { useContext, useState } from 'react'
 import { userStore } from 'stores'
@@ -19,12 +19,22 @@ const AbsoluteLogo = styled.img`
 	transform: translate(-50%, -50%);
 `
 
+const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY
+
 const Login: React.FC = () => {
 	const { LOGIN, LOG_IN, PASSWORD, FAILED_LOGIN, SESSION_EXPIRED } = useLocale()
 	const [login, setLogin] = useState('')
 	const [password, setPassword] = useState('')
 	const user = useContext(userStore)
 	const { call: userLogin, loading, error } = useAsync(user.login)
+	const [turnstileToken, setTurnstileToken] = useState<string>()
+	const [attempt, setAttempt] = useState(0)
+
+	const submit = () => {
+		userLogin(login, password, turnstileToken)
+		// the token is single-use, so every attempt needs a fresh widget
+		setAttempt(a => a + 1)
+	}
 
 	return (
 		<>
@@ -48,7 +58,14 @@ const Login: React.FC = () => {
 							value={password}
 							onChange={e => setPassword(e.target.value)}
 						/>
-						<Button variant="outlined" onClick={() => userLogin(login, password)}>
+						{turnstileSiteKey && (
+							<Turnstile key={attempt} siteKey={turnstileSiteKey} onToken={setTurnstileToken} />
+						)}
+						<Button
+							variant="outlined"
+							disabled={loading || (!!turnstileSiteKey && !turnstileToken)}
+							onClick={submit}
+						>
 							{LOG_IN}
 						</Button>
 					</PaddedStack>

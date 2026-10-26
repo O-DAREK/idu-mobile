@@ -12,6 +12,7 @@ Stack: Vite 8, React 19, TypeScript 7, MobX 7, MUI v9, styled-components 6, reac
 - Populate a `.env` following the `.env.example`:
   - `VITE_API_ROOT` – address of the IDU API
   - `VITE_MOCK_API=true` – optional, uses an in-memory fake API instead (any login works)
+  - `VITE_TURNSTILE_SITE_KEY` – Cloudflare Turnstile site key; the API rejects logins without its token once the check is enabled on the server
 - Run: `yarn start`
 
 ### scripts
