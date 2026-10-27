@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
-import ReactDOM from 'react-dom'
-import { metaStore } from 'stores'
-import * as serviceWorker from './serviceWorker'
+import { createRoot } from 'react-dom/client'
+import { metaStoreInstance } from 'stores'
+import { registerSW } from 'virtual:pwa-register'
 
 const App = lazy(() => import('App'))
 
@@ -57,22 +57,36 @@ const Loading = () => {
 	)
 }
 
-ReactDOM.render(
-	<Suspense fallback={<Loading />}>
-		<App />
-	</Suspense>,
-	document.getElementById('root')
-)
+const render = () =>
+	createRoot(document.getElementById('root')!).render(
+		<React.StrictMode>
+			<Suspense fallback={<Loading />}>
+				<App />
+			</Suspense>
+		</React.StrictMode>
+	)
 
-serviceWorker.register({
-	onUpdate(registration) {
-		// hacky way to access the context
-		// Nothing will be actually rendered
-		ReactDOM.render(
-			<metaStore.Consumer>{s => <>{s.theresAnUpdate()}</>}</metaStore.Consumer>,
-			document.createElement('noop')
-		)
-		// inform workbox to skip waiting, update will be applied after a refresh
-		registration.waiting?.postMessage({ type: 'SKIP_WAITING' })
-	}
-})
+// the mock module is only bundled when VITE_MOCK_API=true at build time
+if (import.meta.env.VITE_MOCK_API === 'true') {
+	import('mocks').then(({ installMockApi }) => {
+		installMockApi()
+		render()
+	})
+} else {
+	render()
+}
+
+if (import.meta.env.PROD) {
+	registerSW({
+		// the plugin reloads the page once the new worker takes control; the update should instead
+		// be applied silently on the next visit, so do nothing here
+		onNeedReload() {},
+		onNeedRefresh() {
+			metaStoreInstance.theresAnUpdate()
+			// inform workbox to skip waiting, update will be applied after a refresh
+			navigator.serviceWorker.getRegistration().then(registration => {
+				registration?.waiting?.postMessage({ type: 'SKIP_WAITING' })
+			})
+		}
+	})
+}

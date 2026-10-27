@@ -1,12 +1,12 @@
-import { Divider, List } from '@material-ui/core'
+import { Divider, List } from '@mui/material'
 import { Snackbar, TopLoading } from 'components'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { metaStore, newsStore, userStore } from 'stores'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import NewsItem, { SkeletonNewsItem } from './NewsItem'
 import PromptConfirmations from './PromptConfirmations'
 import StickyNews from './StickyNews'
@@ -24,7 +24,7 @@ const NewsList: React.FC = observer(() => {
 	}, [meta.isOnline, fetchNextNews, user, news])
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	return (

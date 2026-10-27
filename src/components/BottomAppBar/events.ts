@@ -1,6 +1,4 @@
-import Eev from 'eev'
-
-const eev = new Eev()
+const target = new EventTarget()
 
 export enum EventNames {
 	EVENTS_CALENDAR = 'EVENTS_CALENDAR',
@@ -23,13 +21,14 @@ type WithoutNever = {
 export function emit<T extends WithoutNever>(eventName: T, data: EventTypes[T]): void
 export function emit<T extends WithNever>(eventName: T): void
 export function emit<T extends EventNames>(eventName: T, data?: EventTypes[T]) {
-	eev.emit(eventName, data)
+	target.dispatchEvent(new CustomEvent(eventName, { detail: data }))
 }
 
 export const buildListen = <T extends EventNames>(
 	eventName: T,
 	cb: (data: EventTypes[T]) => void
 ) => {
-	eev.on(eventName, cb)
-	return () => eev.off(eventName, cb)
+	const listener = (event: Event) => cb((event as CustomEvent<EventTypes[T]>).detail)
+	target.addEventListener(eventName, listener)
+	return () => target.removeEventListener(eventName, listener)
 }

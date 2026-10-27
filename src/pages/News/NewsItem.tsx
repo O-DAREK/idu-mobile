@@ -1,29 +1,31 @@
-import { Badge, Grid, ListItem, ListItemText } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Badge, Grid, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import * as urls from 'constants/urls'
 import { formatShort } from 'locales'
 import React, { memo, useContext } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import { configStore } from 'stores'
 import { PieceOfNews } from 'stores/NewsStore'
 import styled from 'styled-components'
 import { stripHtml } from 'utils'
 
+// the legacy grid added the 24px item padding on top of this margin; keep the same skeleton height
 const MarginedGrid = styled(Grid)`
-	margin-top: 1px;
+	width: 100%;
+	margin-top: 25px;
 	margin-bottom: 1px;
 `
 
 export const SkeletonNewsItem = () => (
 	<ListItem>
 		<MarginedGrid spacing={3} container>
-			<Grid xs={4} item>
+			<Grid size={4}>
 				<Skeleton height={12} />
 			</Grid>
-			<Grid xs={3} item>
+			<Grid size={3}>
 				<Skeleton height={12} />
 			</Grid>
-			<Grid xs={12} item>
+			<Grid size={12}>
 				<Skeleton height={12} />
 			</Grid>
 		</MarginedGrid>
@@ -33,11 +35,11 @@ export const SkeletonNewsItem = () => (
 type Props = PieceOfNews
 
 const NewsItem: React.FC<Props> = memo(({ body, date, title, requiresConfirmation, read, id }) => {
-	const history = useHistory()
+	const navigate = useNavigate()
 	const config = useContext(configStore)
 
 	return (
-		<ListItem onClick={() => history.push(urls.internal.specificNews(String(id)))} button>
+		<ListItemButton onClick={() => navigate(urls.internal.specificNews(String(id)))}>
 			<Badge
 				style={{ maxWidth: '100%' }}
 				anchorOrigin={{
@@ -51,10 +53,10 @@ const NewsItem: React.FC<Props> = memo(({ body, date, title, requiresConfirmatio
 				<ListItemText
 					primary={`${title} • ${formatShort(config.language, date)}`}
 					secondary={stripHtml(body)}
-					secondaryTypographyProps={{ noWrap: true }}
+					slotProps={{ secondary: { noWrap: true } }}
 				/>
 			</Badge>
-		</ListItem>
+		</ListItemButton>
 	)
 })
 

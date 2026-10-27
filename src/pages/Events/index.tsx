@@ -1,31 +1,51 @@
-import DateFnsUtils from '@date-io/date-fns'
-import { Badge } from '@material-ui/core'
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import { Badge } from '@mui/material'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
+import { PickerDay, PickerDayProps } from '@mui/x-date-pickers/PickerDay'
 import { TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
-import enLocale from 'date-fns/locale/en-US'
-import plLocale from 'date-fns/locale/pl'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { endOfDay, startOfDay } from 'date-fns'
+import { enUS, Locale, pl } from 'date-fns/locale'
+import { StatusCodes } from 'constants/statusCodes'
 import { Language } from 'locales'
 import { observer } from 'mobx-react-lite'
 import IntervalTree from 'node-interval-tree'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { configStore, metaStore, userStore } from 'stores'
 import { Event } from 'stores/UserStore'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import DayList from './DayList'
 
-const dayInMillis = 1000 * 60 * 60 * 24
+// interval search is inclusive at both ends, so events that end exactly at midnight are dropped
+const eventsOn = (tree: IntervalTree<Event>, day: Date) => {
+	const start = startOfDay(day)
+	return tree.search(+start, +endOfDay(day)).filter(e => +e.stopAt > +start)
+}
 
-const locales: { [key in Language]: any } = {
-	pl: plLocale,
-	en: enLocale
+const locales: { [key in Language]: Locale } = {
+	pl,
+	en: enUS
+}
+
+type EventDayProps = PickerDayProps & { hasAllDayEvent?: (day: Date) => boolean }
+
+// marks days with all-day events in the calendar
+const EventDay: React.FC<EventDayProps> = ({ hasAllDayEvent, ...props }) => {
+	const day = <PickerDay {...props} />
+
+	return hasAllDayEvent?.(props.day) ? (
+		<Badge color="secondary" variant="dot" overlap="circular">
+			{day}
+		</Badge>
+	) : (
+		day
+	)
 }
 
 const Events: React.FC = observer(() => {
 	const [showPicker, setShowPicker] = useState(false)
-	const [selectedDate, setSelectedDate] = useState<MaterialUiPickersDate>(
+	const [selectedDate, setSelectedDate] = useState<Date | null>(
 		(() => {
 			const d = new Date()
 			d.setHours(0, 0, 0, 0)
@@ -42,7 +62,7 @@ const Events: React.FC = observer(() => {
 	}, [meta.isOnline, fetchEvents])
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	useEffect(
@@ -64,34 +84,26 @@ const Events: React.FC = observer(() => {
 	return (
 		<>
 			{loading && <TopLoading />}
-			{selectedDate && (
-				<DayList
-					events={intervalTree.search(+selectedDate, +selectedDate + dayInMillis)}
-					day={selectedDate}
-				/>
-			)}
-			<MuiPickersUtilsProvider utils={DateFnsUtils} locale={locales[config.language]}>
-				<DatePicker
+			{selectedDate && <DayList events={eventsOn(intervalTree, selectedDate)} day={selectedDate} />}
+			<LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locales[config.language]}>
+				<MobileDatePicker
 					value={selectedDate}
-					style={{ display: 'none' }}
+					open={showPicker}
 					onOpen={() => setShowPicker(true)}
 					onClose={() => setShowPicker(false)}
-					onChange={date => setSelectedDate(date)}
-					renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
-						if (day && intervalTree.search(+day, +day + dayInMillis).some(e => e.allDay)) {
-							return (
-								<Badge color="secondary" variant="dot" overlap="circle">
-									{dayComponent}
-								</Badge>
-							)
-						}
-						return dayComponent
+					onAccept={date => setSelectedDate(date)}
+					closeOnSelect
+					slots={{ day: EventDay }}
+					slotProps={{
+						// the picker is opened from the bottom app bar, its own field stays hidden
+						textField: { sx: { display: 'none' } },
+						toolbar: { hidden: true },
+						day: {
+							hasAllDayEvent: (day: Date) => eventsOn(intervalTree, day).some(e => e.allDay)
+						} as Partial<EventDayProps>
 					}}
-					open={showPicker}
-					disableToolbar
-					autoOk
 				/>
-			</MuiPickersUtilsProvider>
+			</LocalizationProvider>
 		</>
 	)
 })

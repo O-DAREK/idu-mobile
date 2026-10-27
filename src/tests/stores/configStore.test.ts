@@ -1,16 +1,17 @@
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Language } from 'locales'
 import { runInAction } from 'mobx'
 import { ConfigStore } from 'stores/ConfigStore'
 
 describe('config store', () => {
 	beforeAll(() => {
-		window.matchMedia = jest.fn().mockImplementation(query => ({
+		window.matchMedia = vi.fn().mockImplementation(query => ({
 			matches: false,
 			media: query,
 			onchange: null,
-			addEventListener: jest.fn(),
-			removeEventListener: jest.fn(),
-			dispatchEvent: jest.fn()
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+			dispatchEvent: vi.fn()
 		}))
 	})
 	const getLS = (dflt = '{}') => JSON.parse(window.localStorage.getItem(ConfigStore.name) || dflt)

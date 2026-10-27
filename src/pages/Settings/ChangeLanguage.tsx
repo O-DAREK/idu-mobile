@@ -1,4 +1,4 @@
-import { FormControl, Grid, MenuItem, Select, Typography } from '@material-ui/core'
+import { FormControl, Grid, MenuItem, Select, Typography } from '@mui/material'
 import { Language, useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
@@ -9,11 +9,11 @@ const ChangeSettings: React.FC = observer(() => {
 	const config = useContext(configStore)
 
 	return (
-		<Grid alignItems="center" justify="space-between" container>
-			<Grid item>
+		<Grid sx={{ alignItems: 'center', justifyContent: 'space-between' }} container>
+			<Grid>
 				<Typography>{CHANGE_LANGUAGE}</Typography>
 			</Grid>
-			<Grid item>
+			<Grid>
 				<FormControl variant="outlined">
 					<Select
 						value={config.language}

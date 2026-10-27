@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core'
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import { Theme } from 'constants/interfaces'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'

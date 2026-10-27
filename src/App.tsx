@@ -1,16 +1,16 @@
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core'
-import { StylesProvider } from '@material-ui/styles'
+import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material'
+import { StyledEngineProvider } from '@mui/material/styles'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { configStore, metaStore, userStore } from 'stores'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { muiTheme } from 'styles/theme'
-import { setVisibleHeight } from 'visible-height-css'
 import Router from './Router'
 
 const GlobalStyles = createGlobalStyle`
 	body, #root {
-		height: calc(100 * var(--visible-height, 1vh));
+		height: 100vh;
+		height: 100dvh;
 	}
 `
 
@@ -25,7 +25,6 @@ const App = observer(() => {
 		?.setAttribute('content', theme.palette.background.default)
 
 	useEffect(() => {
-		setVisibleHeight()
 		window.addEventListener('beforeinstallprompt', e => {
 			e.preventDefault()
 			meta.setPwaInstallEvent(e as any)
@@ -33,7 +32,7 @@ const App = observer(() => {
 	}, [meta])
 
 	return (
-		<StylesProvider injectFirst>
+		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
 				<MuiThemeProvider theme={theme}>
 					<>
@@ -43,7 +42,7 @@ const App = observer(() => {
 					</>
 				</MuiThemeProvider>
 			</ThemeProvider>
-		</StylesProvider>
+		</StyledEngineProvider>
 	)
 })
 

@@ -1,13 +1,13 @@
-import { Container, IconButton, Input, InputAdornment } from '@material-ui/core'
-import SendIcon from '@material-ui/icons/Send'
+import { Container, IconButton, Input, InputAdornment } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send'
 import { Snackbar } from 'components'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useRef } from 'react'
 import { messagesStore, metaStore, userStore } from 'stores'
 import styled from 'styled-components'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 
 interface Props {
 	threadId: number
@@ -24,7 +24,7 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	const user = useContext(userStore)
 	const messages = useContext(messagesStore)
 	const meta = useContext(metaStore)
-	const messageRef = useRef<HTMLInputElement | undefined>()
+	const messageRef = useRef<HTMLInputElement>(null)
 	const { call: sendMessage, loading, error, result } = useAsync(messages.sendMessage)
 
 	const disabled = loading || !meta.isOnline
@@ -35,7 +35,7 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 	}
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	useEffect(() => {
@@ -47,17 +47,17 @@ const MessageBox: React.FC<Props> = observer(({ threadId }) => {
 			{error && <Snackbar variant="error">{ERROR_GENERIC}</Snackbar>}
 			<StickyContainer>
 				<Input
-					inputProps={{ ref: messageRef }}
+					inputRef={messageRef}
 					placeholder={MESSAGE_PLACEHOLDER}
 					disabled={disabled}
 					endAdornment={
 						<InputAdornment position="end">
-							<IconButton onClick={handleClick}>
+							<IconButton onClick={handleClick} size="large">
 								<SendIcon />
 							</IconButton>
 						</InputAdornment>
 					}
-					rowsMax="5"
+					maxRows="5"
 					multiline
 					fullWidth
 				/>

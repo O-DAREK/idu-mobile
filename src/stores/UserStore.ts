@@ -1,7 +1,7 @@
 import { Roles } from 'constants/interfaces'
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import { action, autorun, computed, observable, runInAction } from 'mobx'
+import { action, autorun, computed, makeObservable, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
 export type Event = {
@@ -28,12 +28,22 @@ type Profile = {
 export class UserStore {
 	static localStorageKey = 'UserStore'
 
-	@observable token?: string
-	@observable events?: Event[]
-	@observable profile?: Profile
-	@observable forcedLogout = false
+	token?: string
+	events?: Event[]
+	profile?: Profile
+	forcedLogout = false
 
 	constructor() {
+		makeObservable<UserStore, 'load'>(this, {
+			token: observable,
+			events: observable,
+			profile: observable,
+			forcedLogout: observable,
+			isLoggedIn: computed,
+			load: action,
+			logout: action,
+			decreaseUnreadNews: action
+		})
 		this.load()
 		autorun(this.save)
 	}
@@ -48,7 +58,6 @@ export class UserStore {
 			})
 		)
 
-	@action
 	private load = (): void => {
 		Object.assign(this, JSON.parse(window.localStorage.getItem(UserStore.localStorageKey) || '{}'))
 
@@ -83,7 +92,6 @@ export class UserStore {
 		return (this.token as this['token'])!
 	}
 
-	@action
 	logout = (forced = false): void => {
 		this.token = undefined
 		this.profile = undefined
@@ -91,7 +99,6 @@ export class UserStore {
 		this.forcedLogout = forced
 	}
 
-	@computed
 	get isLoggedIn(): boolean {
 		return !!this.token
 	}
@@ -159,7 +166,6 @@ export class UserStore {
 		return (this.profile as this['profile'])!
 	}
 
-	@action
 	decreaseUnreadNews = () => {
 		if (this.profile) this.profile.unreadNewsCount--
 	}

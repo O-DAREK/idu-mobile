@@ -5,7 +5,7 @@ import {
 	Grow,
 	IconButton,
 	List,
-	ListItem,
+	ListItemButton,
 	ListItemIcon,
 	ListItemText,
 	Slide,
@@ -13,30 +13,32 @@ import {
 	Toolbar,
 	Typography,
 	Zoom
-} from '@material-ui/core'
-import { Restore as RestoreIcon, SvgIconComponent } from '@material-ui/icons'
-import AddIcon from '@material-ui/icons/Add'
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
-import EventIcon from '@material-ui/icons/Event'
-import InfoIcon from '@material-ui/icons/Info'
-import MenuIcon from '@material-ui/icons/Menu'
-import MessageIcon from '@material-ui/icons/Message'
-import SendIcon from '@material-ui/icons/Send'
-import SettingsIcon from '@material-ui/icons/Settings'
+} from '@mui/material'
+import type { SvgIconComponent } from '@mui/icons-material'
+import RestoreIcon from '@mui/icons-material/Restore'
+import AddIcon from '@mui/icons-material/Add'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import EventIcon from '@mui/icons-material/Event'
+import InfoIcon from '@mui/icons-material/Info'
+import MenuIcon from '@mui/icons-material/Menu'
+import MessageIcon from '@mui/icons-material/Message'
+import SendIcon from '@mui/icons-material/Send'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { FlexGrow } from 'components'
 import * as urls from 'constants/urls'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { useHistory } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { metaStore, userStore } from 'stores'
 import styled from 'styled-components'
 import { emit, EventNames } from './events'
 
-const Content = styled.div<{ pad: boolean }>`
-	padding-bottom: ${p => (p.pad ? 90 : 0)}px;
-	min-height: calc(100 * var(--visible-height, 1vh));
+const Content = styled.div<{ $pad: boolean }>`
+	padding-bottom: ${p => (p.$pad ? 90 : 0)}px;
+	min-height: 100vh;
+	min-height: 100dvh;
 `
 
 const AppBarBottom = styled(MuiAppBar)`
@@ -49,12 +51,12 @@ const Title = styled(Typography)`
 	padding: 20px;
 `
 
-const MainFab = styled(Fab)<FabPlacement>`
+const MainFab = styled(Fab)<{ $placement: FabPlacement['placement'] }>`
 	position: absolute;
 	z-index: 1;
 	top: -30px;
 	${p =>
-		p.placement === 'center'
+		p.$placement === 'center'
 			? `
 	left: 0;
 	right: 0;
@@ -89,11 +91,12 @@ interface NavigationElement {
 }
 
 /* ⚠ THIS IS A SMART COMPONENT, ITS STATE IS FULLY DEPENDANT ON THE CURRENT URL, NOT PROPS ⚠ */
-const BottomAppBar: React.FC = observer(({ children }) => {
+const BottomAppBar: React.FC<React.PropsWithChildren<{}>> = observer(({ children }) => {
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const [forceHide, setForceHide] = useState(false)
 	const enterAnimationKey = useRef(0)
-	const history = useHistory()
+	const navigate = useNavigate()
+	const { pathname } = useLocation()
 	const { MESSAGES, NEWS, SETTINGS, EVENTS } = useLocale()
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
@@ -101,7 +104,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 	useEffect(() => {
 		if (meta.isOnline)
 			user.fetchProfile().catch(err => {
-				if (err.status === UNAUTHORIZED) user.logout(true)
+				if (err.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 			})
 	}, [meta.isOnline, user])
 
@@ -125,7 +128,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 				title: MESSAGES,
 				fab: {
 					Icon: AddIcon,
-					onClick: () => history.push(urls.internal.newMessage()),
+					onClick: () => navigate(urls.internal.newMessage()),
 					placement: 'center'
 				}
 			},
@@ -162,7 +165,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 				]
 			}
 		],
-		[MESSAGES, NEWS, SETTINGS, EVENTS, history]
+		[MESSAGES, NEWS, SETTINGS, EVENTS, navigate]
 	)
 
 	// navigation drawer options
@@ -197,7 +200,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 		}
 	]
 
-	const state = states.find(s => s.test.test(history.location.pathname))
+	const state = states.find(s => s.test.test(pathname))
 
 	const show = !!state && !forceHide
 
@@ -205,7 +208,7 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 
 	return (
 		<>
-			<Content pad={show}>
+			<Content $pad={show}>
 				{title && <Title variant="h5">{title}</Title>}
 				<Grow key={enterAnimationKey.current} in>
 					<div>{children}</div>
@@ -219,40 +222,39 @@ const BottomAppBar: React.FC = observer(({ children }) => {
 			>
 				<List component="nav">
 					{navigation.map(({ name, url, Icon }) => (
-						<ListItem
-							selected={history.location.pathname === url}
+						<ListItemButton
+							selected={pathname === url}
 							onClick={() => {
 								enterAnimationKey.current = +new Date()
-								history.push(url)
+								navigate(url)
 								setOpenDrawer(false)
 							}}
 							key={url}
-							button
 						>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
 							<ListItemText primary={name} />
-						</ListItem>
+						</ListItemButton>
 					))}
 				</List>
 			</SwipeableDrawer>
 			<Slide direction="up" in={show}>
 				<AppBarBottom>
 					<Toolbar>
-						<IconButton onClick={() => setOpenDrawer(true)} edge="start">
+						<IconButton onClick={() => setOpenDrawer(true)} edge="start" size="large">
 							<MenuIcon />
 						</IconButton>
 						{fab && (
 							<Zoom in key={fab.placement}>
-								<MainFab onClick={fab.onClick} placement={fab.placement} color="secondary">
+								<MainFab onClick={fab.onClick} $placement={fab.placement} color="secondary">
 									<fab.Icon color="action" />
 								</MainFab>
 							</Zoom>
 						)}
 						{fab?.placement !== 'right' && <FlexGrow />}
 						{actions?.map(({ onClick, Icon }, i) => (
-							<IconButton onClick={onClick} key={i}>
+							<IconButton onClick={onClick} key={i} size="large">
 								<Icon />
 							</IconButton>
 						))}

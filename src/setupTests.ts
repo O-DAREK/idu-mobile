@@ -1,3 +1,4 @@
-import jestFetchMock from 'jest-fetch-mock'
+import { vi } from 'vitest'
+import createFetchMock from 'vitest-fetch-mock'
 
-jestFetchMock.enableMocks()
+createFetchMock(vi).enableMocks()

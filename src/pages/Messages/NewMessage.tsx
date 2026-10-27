@@ -1,12 +1,12 @@
-import { Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core'
+import { Checkbox, FormControlLabel, Grid, TextField } from '@mui/material'
 import { BackBar, Container, Snackbar, TopLoading } from 'components'
 import { buildListen, EventNames } from 'components/BottomAppBar/events'
 import * as urls from 'constants/urls'
 import { useLocale } from 'locales'
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import { messagesStore, userStore } from 'stores'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import AutocompleteRecipients from './AutocompleteRecipients'
 
 const NewMessage: React.FC = () => {
@@ -21,7 +21,7 @@ const NewMessage: React.FC = () => {
 	})
 	const [showValidity, setShowValidity] = useState(false)
 	const { call: createThread, loading, error, result } = useAsync(messages.createThread)
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const bads: { [key in keyof typeof formData]: boolean } = {
 		recipients: formData.recipients.length === 0,
@@ -50,9 +50,9 @@ const NewMessage: React.FC = () => {
 
 	useEffect(() => {
 		if (result) {
-			history.push(urls.internal.messages())
+			navigate(urls.internal.messages())
 		}
-	}, [result, history])
+	}, [result, navigate])
 
 	return (
 		<>
@@ -61,13 +61,13 @@ const NewMessage: React.FC = () => {
 			<BackBar to={urls.internal.messages()} />
 			<Container>
 				<Grid spacing={2} container>
-					<Grid xs={12} item>
+					<Grid size={12}>
 						<AutocompleteRecipients
 							onSelect={ids => setFormData(prevState => ({ ...prevState, recipients: ids }))}
 							error={showValidity && bads.recipients}
 						/>
 					</Grid>
-					<Grid xs={6} item>
+					<Grid size={6}>
 						<TextField
 							label={TITLE}
 							variant="outlined"
@@ -79,7 +79,7 @@ const NewMessage: React.FC = () => {
 							fullWidth
 						/>
 					</Grid>
-					<Grid xs={12} item>
+					<Grid size={12}>
 						<TextField
 							variant="outlined"
 							rows="6"
@@ -92,7 +92,7 @@ const NewMessage: React.FC = () => {
 							fullWidth
 						/>
 					</Grid>
-					<Grid item>
+					<Grid>
 						<FormControlLabel
 							control={
 								<Checkbox

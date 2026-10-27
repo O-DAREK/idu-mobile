@@ -1,9 +1,13 @@
-/// <reference types="react-scripts" />
+/// <reference types="vite/client" />
+/// <reference types="vite-plugin-pwa/client" />
 
-declare namespace NodeJS {
-	interface ProcessEnv {
-		REACT_APP_API_ROOT: string
-	}
+interface ImportMetaEnv {
+	readonly VITE_API_ROOT: string
+	readonly VITE_MOCK_API?: string
+}
+
+interface ImportMeta {
+	readonly env: ImportMetaEnv
 }
 
 declare interface BeforeInstallPromptEvent extends Event {

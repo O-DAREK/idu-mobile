@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from '@material-ui/core'
+import { Container, Stack, Typography } from '@mui/material'
 import { formatLong, useLocale } from 'locales'
 import React, { useContext } from 'react'
 import { configStore } from 'stores'
@@ -41,8 +41,8 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 				<HorizontalView>
 					{allDay.map(e => (
 						<AllDayEvent
-							bgColor={e.backgroundColor}
-							textColor={e.textColor}
+							$bgColor={e.backgroundColor}
+							$textColor={e.textColor}
 							key={e.id}
 							variant="outlined"
 						>
@@ -50,18 +50,17 @@ const DayList: React.FC<Props> = ({ events, day }) => {
 						</AllDayEvent>
 					))}
 				</HorizontalView>
-				<Grid spacing={2} direction="column" container>
+				<Stack spacing={2}>
 					{normal.map(e => (
-						<Grid key={e.id} item>
-							<SingleEvent
-								name={e.name}
-								from={[e.startAt.getHours(), e.startAt.getMinutes()]}
-								to={[e.stopAt.getHours(), e.stopAt.getMinutes()]}
-								color={e.backgroundColor}
-							/>
-						</Grid>
+						<SingleEvent
+							key={e.id}
+							name={e.name}
+							from={[e.startAt.getHours(), e.startAt.getMinutes()]}
+							to={[e.stopAt.getHours(), e.stopAt.getMinutes()]}
+							color={e.backgroundColor}
+						/>
 					))}
-				</Grid>
+				</Stack>
 			</Container>
 		</>
 	)

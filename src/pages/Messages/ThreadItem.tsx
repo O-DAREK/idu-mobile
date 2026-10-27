@@ -1,40 +1,49 @@
-import { Grid, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import {
+	Grid,
+	ListItem,
+	ListItemAvatar,
+	ListItemButton,
+	ListItemText,
+	Typography
+} from '@mui/material'
+import { Skeleton } from '@mui/material'
 import { AvatarWithPlaceholder } from 'components'
 import * as urls from 'constants/urls'
 import { timeAgo } from 'locales'
 import React, { memo, useContext } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import { configStore } from 'stores'
 import { MessageThread } from 'stores/MessagesStore'
 import styled from 'styled-components'
 import { stripHtml } from 'utils'
 
+// the legacy grid added the 24px item padding on top of this margin; keep the same skeleton height
 const MarginedGrid = styled(Grid)`
-	margin-top: 1.5px;
+	width: 100%;
+	margin-top: 25.5px;
 	margin-bottom: 1.5px;
 `
 
-const CircleSkeleton = () => <Skeleton variant="circle" height={40} width={40} />
+const CircleSkeleton = () => <Skeleton variant="circular" height={40} width={40} />
 
 export const SkeletonThreadItem = () => (
 	<ListItem>
-		<MarginedGrid spacing={3} alignItems="center" container>
-			<Grid xs="auto" item>
+		<MarginedGrid spacing={3} sx={{ alignItems: 'center' }} container>
+			<Grid size="auto">
 				<CircleSkeleton />
 			</Grid>
-			<Grid xs item>
+			<Grid size="grow">
 				<Grid spacing={3} container>
-					<Grid xs={2} item>
+					<Grid size={2}>
 						<Skeleton height={12} />
 					</Grid>
-					<Grid xs={7} item>
+					<Grid size={7}>
 						<Skeleton height={12} />
 					</Grid>
-					<Grid xs={8} item>
+					<Grid size={8}>
 						<Skeleton height={12} />
 					</Grid>
-					<Grid xs={2} item>
+					<Grid size={2}>
 						<Skeleton height={12} />
 					</Grid>
 				</Grid>
@@ -43,7 +52,9 @@ export const SkeletonThreadItem = () => (
 	</ListItem>
 )
 
-const EllipsisText = styled(Typography).attrs(() => ({ component: 'span' }))`
+const EllipsisText = styled(Typography).attrs<{ component?: React.ElementType }>({
+	component: 'span'
+})`
 	text-overflow: ellipsis;
 	max-width: 65%;
 	display: inline-block;
@@ -60,12 +71,12 @@ type Props = MessageThread
 
 const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) => {
 	const config = useContext(configStore)
-	const history = useHistory()
+	const navigate = useNavigate()
 	// const imSender = 'to' in rest
 	const other = 'to' in rest ? rest.to : rest.from
 
 	return (
-		<ListItem onClick={() => history.push(urls.internal.specificMessage(String(id)))} button>
+		<ListItemButton onClick={() => navigate(urls.internal.specificMessage(String(id)))}>
 			<ListItemAvatar>
 				<AvatarWithPlaceholder
 					alt="avatar"
@@ -82,7 +93,7 @@ const ThreadItem: React.FC<Props> = memo(({ id, body, title, sentAt, ...rest }) 
 					</>
 				}
 			/>
-		</ListItem>
+		</ListItemButton>
 	)
 })
 
