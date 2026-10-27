@@ -41,7 +41,7 @@ process.stdin.on('end', () => {
 		.slice(0, 40)
 		.join('\n')
 	process.stderr.write(
-		`TypeScript errors after your changes (npx tsc --noEmit):\n${output}\nFix them before finishing.`
+		`TypeScript errors after your changes (yarn typecheck):\n${output}\nFix them before finishing.`
 	)
 	process.exit(2)
 })

@@ -1,10 +1,10 @@
-import { Typography } from '@material-ui/core'
-import React from 'react'
+import { Typography } from '@mui/material'
+import React, { ComponentProps } from 'react'
 import styled from 'styled-components'
 import { stripHtml } from 'utils'
 
-const StrippedHtml = styled(({ children, ...rest }) => (
-	<Typography children={stripHtml(children)} {...rest} />
+const StrippedHtml = styled(({ children, ...rest }: ComponentProps<typeof Typography>) => (
+	<Typography children={stripHtml(children as string)} {...rest} />
 ))`
 	overflow-wrap: break-word;
 	white-space: pre-line;

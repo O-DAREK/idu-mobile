@@ -1,4 +1,4 @@
-import { Container as MuiContainer } from '@material-ui/core'
+import { Container as MuiContainer } from '@mui/material'
 import styled from 'styled-components'
 
 const Container = styled(MuiContainer)`

@@ -1,71 +1,121 @@
-# Plan modernizacji stacku
+# Plan modernizacji stacku – iteracja 2
 
-Branch: `chore/modernize-stack` (z `chore/claude-config`). Każdy task = osobny commit (lub kilka),
-kolejność ma znaczenie. Statusy w tabeli poniżej aktualizujemy na bieżąco.
+Branch: `chore/modernize-stack-2` (z `chore/modernize-stack`). Każdy task to osobny commit (lub kilka).
+Kolejność ma znaczenie. Statusy w tabeli poniżej aktualizujemy na bieżąco.
 
-## Stan wyjściowy (2026-10-14)
+Iteracja 1 (CRA → Vite, React 18, MobX 7, MUI v5, react-router 6, styled-components 6, TS 5.9) jest
+zakończona. Jej taski usunięto, historia jest w commitach brancha `chore/modernize-stack`.
 
-CRA 5, React 16, TS 4.9, MobX 5 (dekoratory), MUI v4 + pickers 3, react-router 5, styled-components 5,
-husky 4, Jest przez react-scripts. 66 plików w `src/`, 5 testów (wyłącznie store'y).
+## Stan wyjściowy (2026-10-20)
+
+Analiza `yarn outdated`, rejestru npm i repozytoriów na GitHubie.
+
+**Aktualne i utrzymywane:** vite, vitest, @vitejs/plugin-react, vite-plugin-pwa, workbox-*, mobx,
+mobx-react-lite, styled-components, emotion, date-fns, use-debounce, javascript-time-ago, jsdom,
+prettier, react-infinite-scroll-component.
+
+**Za nami o wersję główną:**
+
+| Paczka                          | Mamy  | Najnowsza   | Task   |
+| ------------------------------- | ----- | ----------- | ------ |
+| react, react-dom, @types/react* | 18.3  | 19.3        | 05     |
+| @mui/material, icons-material   | 5.18  | 9.5         | 06     |
+| @mui/x-date-pickers             | 8.29  | 9.15        | 07     |
+| react-router-dom                | 6.30  | 7.18        | 04     |
+| typescript                      | 5.9   | 6.0 / 7.0   | 02, 03 |
+| @types/node                     | 24    | 26          | –      |
+
+`@types/node` zostaje na 24, bo odpowiada wersji Node z `.nvmrc`.
+
+**Nieutrzymywane albo zbędne:**
+
+| Paczka                       | Ostatnie wydanie         | Decyzja                                    | Task |
+| ---------------------------- | ------------------------ | ------------------------------------------ | ---- |
+| `@types/javascript-time-ago` | deprecated (stub)        | usunąć                                     | 01   |
+| `eev`                        | 2018, repo martwe        | zastąpić `EventTarget`                     | 01   |
+| `visible-height-css`         | 2019                     | zastąpić CSS `100dvh`                      | 01   |
+| `source-map-explorer`        | 2022, 57 otwartych issue | opcjonalnie `rollup-plugin-visualizer`     | 08   |
+| `http-status-codes`          | 2023                     | opcjonalnie jedna stała (używamy tylko 401) | 08   |
+| `node-interval-tree`         | 2022                     | zostaje (stabilna, 0 issue)                | –    |
+| `vitest-fetch-mock`          | 03.2025                  | zostaje (wspiera vitest ≥2)                | –    |
+| `jwt-decode`                 | 4.0 (2023)               | zostaje (repo aktywne, API skończone)      | –    |
 
 ## Zasady
 
-- Jedna zmiana wersji głównej na raz; po każdej: `npx tsc --noEmit`, `CI=true yarn test`, `yarn build`
-  oraz ręczny smoke test z punktu "Smoke test" poniżej.
-- `yarn add/remove` tylko po uzgodnieniu z właścicielem (zob. CLAUDE.md). Taski wskazują, jakie paczki
-  i do jakich wersji; wersje docelowe sprawdzamy w momencie wykonania (`yarn outdated`).
+- Jedna zmiana wersji głównej na raz. Po każdej: `yarn typecheck`, `CI=true yarn test`, `yarn build`
+  oraz ręczny smoke test (punkt "Smoke test" niżej).
+- `yarn add/remove` tylko po uzgodnieniu z właścicielem (zob. CLAUDE.md). Wersje docelowe
+  sprawdzamy w momencie wykonania (`yarn outdated`).
 - Nie edytujemy ręcznie `yarn.lock` ani `build/`.
 - Komentarze w kodzie i commity po angielsku (Conventional Commits).
-- Nie wykonujemy `git push`; push robi użytkownik.
-- Komendy w taskach (`yarn test`, `yarn build`) dotyczą stanu sprzed taska 03; po migracji na Vite
-  obowiązują nowe komendy z CLAUDE.md.
+- Nie wykonujemy `git push`. Push robi użytkownik.
 
 ## Decyzje do potwierdzenia przed startem
 
-1. **Vite + Vitest zamiast CRA/Jest** (task 03). CRA jest porzucony; to warunek sensownych aktualizacji dalej.
-2. **React 18, nie 19** (task 04): MUI v4 nie wspiera 19. Podbicie do 19 jako opcjonalny task 14 po MUI v5.
-3. **MUI v5 (`@mui/*`), nie v6/v7** w jednym kroku (task 08); dalsze podbicie opcjonalne w tasku 14.
-4. **TypeScript 5.x, nie 7** (task 12) – natywny kompilator (7) dopiero gdy ekosystem go wspiera.
-5. Zamiana `react-router-last-location` na własną implementację (task 07).
+1. **TypeScript 6 czy od razu 7** (task 03). Oba przechodzą typecheck po zmianie z taska 02.
+   7 to natywny kompilator (szybszy), 6 to wersja przejściowa z ostrzeżeniami.
+2. **MUI: od razu do najnowszej (9) czy zatrzymać się wcześniej** (task 06). Migracja przechodzi
+   przez v6, v7 i v8; każda główna wersja to osobny commit.
+3. **React Compiler** (task 05): osobna decyzja, domyślnie nie w tej iteracji.
 
 ## Kolejność i zależności
 
-| #   | Task                                                                       | Zależy od | Ryzyko  | Status |
-| --- | -------------------------------------------------------------------------- | --------- | ------- | ------ |
-| 00  | [Baseline i smoke test](00-baseline.md)                                    | –         | niskie  | [x]    |
-| 01  | [Bezpieczne patch/minor + usunięcie nieużywanych](01-safe-bumps.md)        | 00        | niskie  | [x]    |
-| 02  | [Husky 9 i Prettier 3](02-husky-prettier.md)                               | 01        | niskie  | [x]    |
-| 03  | [Migracja CRA → Vite + Vitest + PWA](03-vite-vitest.md)                    | 02        | wysokie | [ ]    |
-| 04  | [React 18 (`createRoot`)](04-react-18.md)                                  | 03        | średnie | [ ]    |
-| 05  | [MobX 6](05-mobx-6.md)                                                     | 04        | średnie | [ ]    |
-| 06  | [MobX 7 i mobx-react-lite aktualne](06-mobx-latest.md)                     | 05, 12    | niskie  | [ ]    |
-| 07  | [react-router 6](07-react-router-6.md)                                     | 04        | wysokie | [ ]    |
-| 08  | [MUI v4 → v5](08-mui-v5.md)                                                | 04        | wysokie | [ ]    |
-| 09  | [Pickery, date-fns 4](09-pickers-date-fns.md)                              | 08        | średnie | [ ]    |
-| 10  | [styled-components 6](10-styled-components-6.md)                           | 04        | średnie | [ ]    |
-| 11  | [Pozostałe biblioteki](11-misc-libs.md)                                    | 03        | niskie  | [ ]    |
-| 12  | [TypeScript 5.x i tsconfig](12-typescript.md)                              | 03        | niskie  | [ ]    |
-| 13  | [Sprzątanie i dokumentacja](13-cleanup-docs.md)                            | 01–12     | niskie  | [ ]    |
-| 14  | [Opcjonalnie: React 19, MUI najnowszy](14-optional-react-19-mui-latest.md) | 13        | średnie | [ ]    |
+| #   | Task                                                                      | Zależy od | Ryzyko  | Status |
+| --- | ------------------------------------------------------------------------- | --------- | ------- | ------ |
+| 01  | [Porządki w zależnościach (eev, visible-height-css, stub typów)](01-deps-cleanup.md) | –         | niskie  | [x]    |
+| 02  | [tsconfig: `paths` zamiast `baseUrl`, osobne typy testów](02-tsconfig.md)  | –         | niskie  | [x]    |
+| 03  | [TypeScript 6/7](03-typescript-7.md)                                       | 02        | niskie  | [x]    |
+| 04  | [react-router 7](04-react-router-7.md)                                     | –         | niskie  | [x]    |
+| 05  | [React 19](05-react-19.md)                                                 | –         | średnie | [x]    |
+| 05b | [react-router 8](05b-react-router-8.md)                                    | 04, 05    | niskie  | [x]    |
+| 06  | [MUI v5 → najnowsze](06-mui-latest.md)                                     | 05        | wysokie | [x]    |
+| 07  | [Pickery 9](07-pickers-9.md)                                               | 06        | średnie | [x]    |
+| 08  | [Opcjonalnie: narzędzia i drobne paczki](08-optional-tooling.md)           | –         | niskie  | [x]    |
+| 09  | [Sprzątanie i dokumentacja](09-cleanup-docs.md)                            | 01–08     | niskie  | [x]    |
 
-Po tasku 04 taski 05, 07, 08 (z 09) i 10 są wzajemnie niezależne i mogą iść w dowolnej kolejności.
-Task 12 (TypeScript) najlepiej wykonać przed 06, bo MobX 7 może wymagać standardowych dekoratorów TS 5.
+Taski 01, 02, 04 i 08 są od siebie niezależne. 05 → 06 → 07 idą po kolei.
 
 ## Smoke test (ręczny, po każdym większym tasku)
 
-Logowanie i wylogowanie; lista newsów → szczegóły newsa → powrót (BackBar); wiadomości: lista →
-wątek → nowa wiadomość; wydarzenia (picker dat); ustawienia (język, motyw, kolory akcentu);
-nawigacja dolnym paskiem i szufladą; tryb offline i komunikat o aktualizacji PWA (tylko build prod);
-widok mobilny w DevTools.
+Uruchomienie z `VITE_MOCK_API=true`. Logowanie i wylogowanie; lista newsów → szczegóły newsa →
+powrót (BackBar); dialog potwierdzenia newsa; wiadomości: lista → wątek → odpowiedź → nowa wiadomość
+(autocomplete odbiorców); wydarzenia (picker dat, kropka przy wydarzeniu całodniowym); ustawienia
+(język, motyw jasny/ciemny, kolory akcentu); nawigacja dolnym paskiem i szufladą; tryb offline i
+komunikat o aktualizacji PWA (tylko `yarn build` + `yarn preview`); widok mobilny w DevTools
+(wysokość ekranu, pasek adresu).
 
-## Odnotowane fakty z kodu
+## Wyniki (2026-10-21)
 
-- `react-swipeable-views` jest w `package.json`, ale **nie jest importowany** – do usunięcia, nie wymiany.
-- Dekoratory MobX (`@observable`, `@action`) w `ConfigStore`, `MessagesStore`, `MetaStore`, `NewsStore`;
-  `configure({ enforceActions: 'always' })` w `stores/index.ts`.
-- `Router.tsx`: `Switch`, `Redirect`, `Route path={[...]}`, `LastLocationProvider`; `useHistory` w 5 plikach, `useParams` w 2.
-- MUI v4 w 33 plikach; `@material-ui/pickers` + `@date-io/date-fns` tylko w `pages/Events/index.tsx`.
-- `serviceWorker.ts` to szablon CRA (workbox generowany przez react-scripts); `index.tsx` używa
-  `ReactDOM.render` (także hack z `metaStore.Consumer`).
-- `process.env.REACT_APP_API_ROOT` w `constants/urls.ts`, typ w `react-app-env.d.ts`.
-- `public/_redirects` (hosting typu Netlify) – zachować w buildzie.
+Iteracja zakończona. Stan: React 19.3, TypeScript 7.0, react-router 8.5, MUI 9.5, pickery 9.16,
+Vite 8.3, MobX 7.1. Usunięte paczki: `eev`, `visible-height-css`, `@types/javascript-time-ago`,
+`react-router-dom`, `source-map-explorer`, `http-status-codes`. `yarn outdated` pokazuje tylko
+`@types/node` 26 (celowo 24).
+
+- **Wygląd:** zrzuty wszystkich ekranów (jasny i ciemny motyw, nakładki, szkielety) pikselowo zgodne
+  ze stanem sprzed iteracji. Stare domyślne wartości trzymają nadpisania w `styles/theme.ts`.
+- **Konsola:** dev i prod bez ostrzeżeń i błędów w scenariuszu interakcji.
+- **Bundle (gzip, `index` + `App`):** 268 kB → 303 kB (+35 kB). Po minifikacji: react-dom 19 +76 kB,
+  MUI (material, system, utils) ok. +50 kB, react-router 8 netto ok. +15 kB, pickery 9 −14 kB.
+  Wzrost wynika z bibliotek; sposób na zmniejszenie to lazy loading stron (backlog).
+- **PWA (`yarn preview`):** service worker instaluje się i przejmuje stronę; start offline i deep linki
+  offline działają; nowa wersja instaluje się w tle i wchodzi przy następnej wizycie. Zachowanie
+  identyczne jak przed iteracją.
+
+## Poza zakresem (backlog)
+
+Rzeczy wyłapane w iteracji 1, niezwiązane z wersjami paczek. Osobne branche `feat/` lub `fix/`:
+
+- Lazy loading stron (`React.lazy` + `Suspense`), zwłaszcza Wydarzeń z pickerem. Bundle ok. 268 kB gzip.
+- `/news/:id` po odświeżeniu pokazuje "news nie istnieje", bo store zapisuje tylko przypięte newsy.
+- Infinite scroll (newsy, wiadomości) nie doładowuje kolejnej strony na wysokim ekranie (np. 412×820,
+  desktop). `react-infinite-scroll-component` 7 używa `IntersectionObserver` i woła `next()` tylko przy
+  wejściu sentinela w widok (+20%); jeśli po pierwszej stronie sentinel już tam jest, kolejne strony
+  nie przychodzą. Na niższym ekranie działa. Występuje też przed iteracją 2.
+- `pages/Messages/AutocompleteRecipients.tsx`: `value={searchTerm}` na `TextField` nie działa (wygrywa
+  wartość z Autocomplete), a `searchTerm` nie czyści się po wyborze odbiorcy. Lepiej `onInputChange`
+  na Autocomplete. Fetch wyszukiwania nie obsługuje błędów (spinner zostaje na zawsze) ani wyścigu
+  starszej odpowiedzi z nowszą (brak AbortController / flagi w cleanupie).
+- Komunikat o aktualizacji PWA nie istnieje w UI: `onNeedRefresh` ustawia `metaStore.availableUpdate`,
+  ale nic go nie wyświetla (tak od początku projektu). Nowa wersja i tak wchodzi przy następnej wizycie.
+- Offline wątek wiadomości pokazuje "te wiadomości nie istnieją", a wydarzenia są puste: dane
+  wiadomości i wydarzeń nie są zapisywane do pracy offline (tak samo przed iteracją).

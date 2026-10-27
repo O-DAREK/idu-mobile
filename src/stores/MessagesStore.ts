@@ -1,7 +1,7 @@
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import jwtDecode from 'jwt-decode'
-import { action, autorun, computed, observable, runInAction } from 'mobx'
+import { jwtDecode } from 'jwt-decode'
+import { action, autorun, computed, makeObservable, observable, runInAction } from 'mobx'
 import { constructFetchErr, ignoreRejection } from 'utils'
 
 export type MessageThread = {
@@ -35,20 +35,25 @@ export type SpecificMessages = {
 export class MessagesStore {
 	static localStorageKey = 'MessagesStore'
 
-	@observable messages: { [k: number]: SpecificMessages } = {}
-	@observable threads?: MessageThread[]
+	messages: { [k: number]: SpecificMessages } = {}
+	threads?: MessageThread[]
 
-	@computed
 	get page() {
 		return Math.floor((this.threads?.length || 0) / 10) + 1
 	}
 
-	@computed
 	get noMoreThreads() {
 		return (this.threads?.length || 0) % 10 !== 0
 	}
 
 	constructor() {
+		makeObservable<MessagesStore, 'load'>(this, {
+			messages: observable,
+			threads: observable,
+			page: computed,
+			noMoreThreads: computed,
+			load: action
+		})
 		this.load()
 		autorun(this.save)
 	}
@@ -61,7 +66,6 @@ export class MessagesStore {
 			})
 		)
 
-	@action
 	private load = (): void => {
 		Object.assign(
 			this,
@@ -117,7 +121,17 @@ export class MessagesStore {
 		return this.messages[threadId]
 	}
 
-	fetchNextThreads = async (token: string): Promise<NonNullable<this['threads']>> => {
+	// concurrent calls (e.g. StrictMode double effects) would load the same page twice and duplicate items
+	fetchNextThreads = (token: string): Promise<NonNullable<this['threads']>> => {
+		this.pendingNextThreads ??= this.loadNextThreads(token).finally(() => {
+			this.pendingNextThreads = undefined
+		})
+		return this.pendingNextThreads
+	}
+
+	private pendingNextThreads?: Promise<NonNullable<this['threads']>>
+
+	private loadNextThreads = async (token: string): Promise<NonNullable<this['threads']>> => {
 		if (this.noMoreThreads) return ([] as this['threads'])!
 
 		const res = await fetch(urls.api.messages(this.page), {

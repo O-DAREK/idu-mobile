@@ -1,7 +1,7 @@
 // *https://www.registers.service.gov.uk/registers/country/use-the-api*
-import CircularProgress from '@material-ui/core/CircularProgress'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import CircularProgress from '@mui/material/CircularProgress'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
 import * as responses from 'constants/responses'
 import { UsersSearch } from 'constants/responses'
 import * as urls from 'constants/urls'
@@ -82,19 +82,18 @@ const AutocompleteRecipients: React.FC<Props> = ({ onSelect, error }) => {
 			onClose={() => setOpen(false)}
 			// this generates warnings because when new options are
 			// loaded old ones disappear meaning it cant find a match
-			getOptionSelected={(option, value) => option.id === value.id}
+			isOptionEqualToValue={(option, value) => option.id === value.id}
 			getOptionLabel={option => option.name}
 			options={options}
 			loading={searching}
 			loadingText={`${LOADING}...`}
 			noOptionsText={NO_OPTIONS}
-			// @ts-ignore
-			onChange={(_: React.ChangeEvent<{}>, selected: ListOption) =>
-				// this casting has to be done because the typescript definitions are not yet finished
-				// on MUI's side and changing the type in the function signature breaks everything
-				onSelect((selected as any as ListOption[]).map(e => e.id))
-			}
-			renderOption={option => option.display}
+			onChange={(_, selected) => onSelect(selected.map(e => e.id))}
+			renderOption={({ key, ...props }, option) => (
+				<li key={key} {...props}>
+					{option.display}
+				</li>
+			)}
 			renderInput={params => (
 				<TextField
 					{...params}
@@ -103,14 +102,17 @@ const AutocompleteRecipients: React.FC<Props> = ({ onSelect, error }) => {
 					value={searchTerm}
 					error={error}
 					onChange={e => setSearchTerm(e.target.value)}
-					InputProps={{
-						...params.InputProps,
-						endAdornment: (
-							<>
-								{searching && <CircularProgress color="inherit" size={20} />}
-								{params.InputProps.endAdornment}
-							</>
-						)
+					slotProps={{
+						...params.slotProps,
+						input: {
+							...params.slotProps.input,
+							endAdornment: (
+								<>
+									{searching && <CircularProgress color="inherit" size={20} />}
+									{params.slotProps.input.endAdornment}
+								</>
+							)
+						}
 					}}
 				/>
 			)}

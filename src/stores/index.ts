@@ -10,6 +10,8 @@ configure({ enforceActions: 'always' })
 
 export const userStore = createContext(new UserStore())
 export const configStore = createContext(new ConfigStore())
-export const metaStore = createContext(new MetaStore())
+// exposed separately so non-React code (e.g. the service worker callback) can reach the store
+export const metaStoreInstance = new MetaStore()
+export const metaStore = createContext(metaStoreInstance)
 export const messagesStore = createContext(new MessagesStore())
 export const newsStore = createContext(new NewsStore())

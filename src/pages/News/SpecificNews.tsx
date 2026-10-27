@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { BackBar, Container, PaddedPaper, StrippedHtml } from 'components'
 import * as urls from 'constants/urls'
 import { formatLong, useLocale } from 'locales'
@@ -23,7 +23,7 @@ const SpecificNews: React.FC = observer(() => {
 	const user = useContext(userStore)
 	const meta = useContext(metaStore)
 	const config = useContext(configStore)
-	const id = Number(useParams<Params>().id)
+	const id = Number(useParams<keyof Params>().id)
 
 	const foundNews = news.news?.find(e => e.id === id) || news.stickyNews?.find(e => e.id === id)
 
@@ -43,7 +43,7 @@ const SpecificNews: React.FC = observer(() => {
 							<Typography variant="h4" gutterBottom>
 								{foundNews.title}
 							</Typography>
-							<StrippedHtml component="p" paragraph>
+							<StrippedHtml component="p" sx={{ mb: 2 }}>
 								{foundNews.body}
 							</StrippedHtml>
 							<Typography variant="overline">

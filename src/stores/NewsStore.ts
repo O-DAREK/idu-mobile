@@ -1,6 +1,6 @@
 import * as responses from 'constants/responses'
 import * as urls from 'constants/urls'
-import { action, autorun, computed, observable, runInAction } from 'mobx'
+import { action, autorun, computed, makeObservable, observable, runInAction } from 'mobx'
 import { constructFetchErr } from 'utils'
 
 export type PieceOfNews = {
@@ -15,20 +15,25 @@ export type PieceOfNews = {
 export class NewsStore {
 	static localStorageKey = 'NewsStore'
 
-	@observable news?: PieceOfNews[]
-	@observable stickyNews?: PieceOfNews[]
+	news?: PieceOfNews[]
+	stickyNews?: PieceOfNews[]
 
-	@computed
 	get page() {
 		return Math.floor((this.news?.length || 0) / 10) + 1
 	}
 
-	@computed
 	get noMoreNews() {
 		return (this.news?.length || 0) % 10 !== 0
 	}
 
 	constructor() {
+		makeObservable<NewsStore, 'load'>(this, {
+			news: observable,
+			stickyNews: observable,
+			page: computed,
+			noMoreNews: computed,
+			load: action
+		})
 		this.load()
 		autorun(this.save)
 	}
@@ -39,7 +44,6 @@ export class NewsStore {
 			JSON.stringify({ stickyNews: this.stickyNews })
 		)
 
-	@action
 	private load = (): void => {
 		Object.assign(this, JSON.parse(window.localStorage.getItem(NewsStore.localStorageKey) || '{}'))
 
@@ -80,7 +84,17 @@ export class NewsStore {
 		return (this.stickyNews as this['stickyNews'])!
 	}
 
-	fetchNextNews = async (token: string): Promise<NonNullable<this['news']>> => {
+	// concurrent calls (e.g. StrictMode double effects) would load the same page twice and duplicate items
+	fetchNextNews = (token: string): Promise<NonNullable<this['news']>> => {
+		this.pendingNextNews ??= this.loadNextNews(token).finally(() => {
+			this.pendingNextNews = undefined
+		})
+		return this.pendingNextNews
+	}
+
+	private pendingNextNews?: Promise<NonNullable<this['news']>>
+
+	private loadNextNews = async (token: string): Promise<NonNullable<this['news']>> => {
 		if (this.noMoreNews) return ([] as this['news'])!
 
 		const res = await fetch(urls.api.news(this.page), {

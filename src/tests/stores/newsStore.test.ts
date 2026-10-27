@@ -1,6 +1,7 @@
 import * as responses from 'constants/responses'
 import { runInAction } from 'mobx'
 import { NewsStore } from 'stores/NewsStore'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('messages store', () => {
 	let newsStore: NewsStore
@@ -24,6 +25,29 @@ describe('messages store', () => {
 	})
 
 	describe('fetch news', () => {
+		it('should share a page fetch between concurrent calls', async () => {
+			fetchMock.mockResponse(
+				JSON.stringify({
+					data: new Array(10).fill(null).map((_, i) => ({
+						id: i,
+						title: 'yes',
+						body: 'hello',
+						start_at: new Date().toString(),
+						read_at: null,
+						is_confirmation_required: false
+					}))
+				})
+			)
+
+			await Promise.all([newsStore.fetchNextNews('123'), newsStore.fetchNextNews('123')])
+			expect(fetchMock.mock.calls.length).toEqual(1)
+			expect(newsStore.news?.length).toEqual(10)
+			expect(newsStore.page).toEqual(2)
+
+			await newsStore.fetchNextNews('123')
+			expect(fetchMock.mock.calls.length).toEqual(2)
+		})
+
 		it('should correctly fetch', async () => {
 			const data = [
 				{

@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { ConfirmationDialog, StrippedHtml } from 'components'
 import React, { useContext } from 'react'
 import { newsStore, userStore } from 'stores'

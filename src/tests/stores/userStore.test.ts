@@ -1,8 +1,9 @@
 import { Roles } from 'constants/interfaces'
 import { Events, Login, Profile } from 'constants/responses'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { runInAction } from 'mobx'
 import { UserStore } from 'stores/UserStore'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('user store', () => {
 	let userStore: UserStore
@@ -28,7 +29,7 @@ describe('user store', () => {
 
 	describe('forcedLogout', () => {
 		it('reset forcedLogout on login', async () => {
-			fetchMock.mockResponseOnce(':)', { status: UNAUTHORIZED })
+			fetchMock.mockResponseOnce(':)', { status: StatusCodes.UNAUTHORIZED })
 			userStore.token = '123'
 
 			await expect(userStore.fetchProfile()).rejects.toBeTruthy()

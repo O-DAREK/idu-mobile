@@ -1,11 +1,11 @@
-import { Divider, List, Typography } from '@material-ui/core'
+import { Divider, List, Typography } from '@mui/material'
 import { PaddedPaper, Snackbar, TopLoading } from 'components'
-import { UNAUTHORIZED } from 'http-status-codes'
+import { StatusCodes } from 'constants/statusCodes'
 import { useLocale } from 'locales'
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { metaStore, newsStore, userStore } from 'stores'
-import useAsync from 'use-async-react'
+import useAsync from 'utils/useAsync'
 import NewsItem, { SkeletonNewsItem } from './NewsItem'
 import PromptConfirmations from './PromptConfirmations'
 
@@ -21,7 +21,7 @@ const StickyNews: React.FC = observer(() => {
 	}, [meta.isOnline, fetchStickyNews, user])
 
 	useEffect(() => {
-		if (error?.status === UNAUTHORIZED) user.logout(true)
+		if (error?.status === StatusCodes.UNAUTHORIZED) user.logout(true)
 	}, [error, user])
 
 	return (

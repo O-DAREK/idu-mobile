@@ -1,4 +1,4 @@
-import { Avatar, AvatarProps } from '@material-ui/core'
+import { Avatar, AvatarProps } from '@mui/material'
 import React, { useState } from 'react'
 
 interface Props extends Omit<AvatarProps, 'placeholder'> {
@@ -14,8 +14,8 @@ const AvatarWithPlaceholder: React.FC<Props> = ({ placeholder, ...avatarProps })
 			<Avatar
 				{...avatarProps}
 				style={loading ? { display: 'none' } : avatarProps.style}
-				imgProps={{
-					onLoad: () => setLoading(false)
+				slotProps={{
+					img: { onLoad: () => setLoading(false) }
 				}}
 			/>
 		</>
