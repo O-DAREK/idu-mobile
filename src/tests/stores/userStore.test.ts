@@ -47,6 +47,16 @@ describe('user store', () => {
 			expect(userStore.token).toEqual('12345')
 			expect(getLS()).toEqual({ token: '12345' })
 		})
+		it('should send the Turnstile token with the credentials', async () => {
+			fetchMock.mockResponseOnce(JSON.stringify({ token: '12345', exp: 'asd' } as Login))
+
+			await userStore.login('123', '456', 'abc')
+			expect(JSON.parse(fetchMock.mock.calls[0][1]!.body as string)).toEqual({
+				login: '123',
+				password: '456',
+				turnstile_token: 'abc'
+			})
+		})
 		it('should fail log in', async () => {
 			const err = new Error('')
 			fetchMock.mockReject(err)

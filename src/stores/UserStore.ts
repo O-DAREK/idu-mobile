@@ -68,7 +68,11 @@ export class UserStore {
 		}))
 	}
 
-	login = async (login: string, password: string): Promise<NonNullable<this['token']>> => {
+	login = async (
+		login: string,
+		password: string,
+		turnstileToken?: string
+	): Promise<NonNullable<this['token']>> => {
 		runInAction(() => (this.forcedLogout = false))
 
 		const res = await fetch(urls.api.login(), {
@@ -78,7 +82,8 @@ export class UserStore {
 			},
 			body: JSON.stringify({
 				login,
-				password
+				password,
+				turnstile_token: turnstileToken
 			})
 		})
 
